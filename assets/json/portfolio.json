@@ -102,5 +102,13 @@
     "image": "./assets/images/cup-jam-escape.jpg",
     "alt": "Cup Jam Escape",
     "link": "https://play.google.com/store/apps/details?id=com.together.CupManiaGP"
+  },
+  {
+    "id": 14,
+    "title": "Cube Surfer",
+    "category": "GameVideos",
+    "type": "video",
+    "video": "./assets/videos/CubeSurfer.mp4",
+    "alt": "Cube Surfer"
   }
 ]
