@@ -1,0 +1,106 @@
+[
+  {
+    "id": 1,
+    "title": "Idle Bank - Money Games",
+    "category": "Mobile Casual",
+    "image": "./assets/images/idle-bank.jpg",
+    "alt": "Idle Bank - Money Games",
+    "link": "https://play.google.com/store/apps/details?id=com.doublefun.moneyflow"
+  },
+  {
+    "id": 2,
+    "title": "Figurine Art",
+    "category": "Mobile Casual",
+    "image": "./assets/images/figurine-art.jpg",
+    "alt": "Figurine Art",
+    "link": "https://play.google.com/store/apps/details?id=com.hcg.figurineart"
+  },
+  {
+    "id": 3,
+    "title": "Sneaker Art! (Hit)",
+    "category": "Mobile Casual",
+    "image": "./assets/images/sneaker-art.jpg",
+    "alt": "Sneaker Art! (Hit)",
+    "link": "https://play.google.com/store/apps/details?id=com.majorfrank.sneakerart"
+  },
+  {
+    "id": 4,
+    "title": "Match Cruise (LiveOps)",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/match-cruise.jpg",
+    "alt": "Match Cruise (LiveOps)",
+    "link": "https://play.google.com/store/apps/details?id=com.dteamstudio.matchcruise"
+  },
+  {
+    "id": 5,
+    "title": "Fill The Puzzle",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/fill-puzzle.jpg",
+    "alt": "Fill The Puzzle",
+    "link": "https://play.google.com/store/apps/details?id=com.kobgames.fillthepuzzle"
+  },
+  {
+    "id": 6,
+    "title": "Nuts and Bolts",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/nuts-bolts.jpg",
+    "alt": "Nuts and Bolts",
+    "link": "https://play.google.com/store/apps/details?id=com.wood.nuts.bolts.screw.puzzle"
+  },
+  {
+    "id": 7,
+    "title": "Web Master 3D",
+    "category": "Mobile Casual",
+    "image": "./assets/images/web-master.jpg",
+    "alt": "Web Master 3D",
+    "link": "https://play.google.com/store/apps/details?id=com.ouazgames.SpiderMaster"
+  },
+  {
+    "id": 8,
+    "title": "Dino Run: Dinosaur Runner Game",
+    "category": "Mobile Casual",
+    "image": "./assets/images/dino-run.jpg",
+    "alt": "Dino Run: Dinosaur Runner Game",
+    "link": "https://play.google.com/store/apps/details?id=com.spiky.DinoRun"
+  },
+  {
+    "id": 9,
+    "title": "Car Escape - Parking Jam Games",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/car-escape.jpg",
+    "alt": "Car Escape - Parking Jam Games",
+    "link": "https://play.google.com/store/apps/details?id=com.trafficescape.master.car.parkingjam"
+  },
+  {
+    "id": 10,
+    "title": "Hunter's Jungle Path",
+    "category": "GameVideos",
+    "type": "video",
+    "video": "./assets/videos/Hunter%27sJungle%20Path.mp4",
+    "alt": "Hunter's Jungle Path"
+  },
+  {
+    "id": 11,
+    "title": "Treasure Hunter",
+    "category": "GameVideos",
+    "type": "video",
+    "video": "./assets/videos/TeasureHunter.mp4",
+    "alt": "Treasure Hunter"
+  },
+  {
+    "id": 12,
+    "title": "Prison Escape",
+    "category": "GameVideos",
+    "type": "video",
+    "video": "./assets/videos/PrisonEscape.mp4",
+    "alt": "Prison Escape"
+  },
+  {
+    "id": 13,
+    "title": "Cup Jam Escape",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/cup-jam-escape.jpg",
+    "alt": "Cup Jam Escape",
+    "link": "https://play.google.com/store/apps/details?id=com.together.CupManiaGP"
+  }
+]
