@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "image": "./assets/images/blog-1.jpg",
+    "alt": "Game Development Journey",
+    "category": "Game Development",
+    "date": "2024-03-20",
+    "title": "My Game Development Journey",
+    "description": "From indie game developer to Senior Game Developer, exploring diverse projects from mobile games to complex multiplayer systems.",
+    "link": "#"
+  },
+  {
+    "id": 2,
+    "image": "./assets/images/blog-2.jpg",
+    "alt": "Unity Tips",
+    "category": "Game Development",
+    "date": "2024-03-15",
+    "title": "Unity Optimization Tips",
+    "description": "Learn how to optimize your Unity games for better performance across all platforms.",
+    "link": "#"
+  },
+  {
+    "id": 3,
+    "image": "./assets/images/blog-1.jpg",
+    "alt": "Unity Tips 2",
+    "category": "Game Development",
+    "date": "2024-03-15",
+    "title": "Unity Optimization Tips 2",
+    "description": "Learn how to optimize your Unity games for better performance across all platforms.",
+    "link": "#"
+  }
+]
