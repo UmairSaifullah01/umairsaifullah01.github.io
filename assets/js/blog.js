@@ -13,6 +13,13 @@ const blogModalText = document.querySelector("[data-blog-modal-text]");
 const blogModalFullText = document.querySelector("[data-blog-modal-full-text]");
 const blogReadMoreBtn = document.querySelector("[data-blog-read-more]");
 
+// Configure marked.js for security
+marked.setOptions({
+  sanitize: true,
+  breaks: true,
+  gfm: true,
+});
+
 // blog modal toggle function
 const blogModalFunc = function () {
   blogModalContainer.classList.toggle("active");
@@ -49,8 +56,9 @@ const setupBlogItems = function () {
       // Get first sentence for preview (split by period and take first one)
       const firstSentence = fullText.split(".")[0] + ".";
 
-      blogModalText.innerHTML = firstSentence;
-      blogModalFullText.innerHTML = fullText;
+      // Convert markdown to HTML for both preview and full text
+      blogModalText.innerHTML = marked.parse(firstSentence);
+      blogModalFullText.innerHTML = marked.parse(fullText);
 
       // Always show read more button since we're only showing one sentence
       blogReadMoreBtn.style.display = "flex";

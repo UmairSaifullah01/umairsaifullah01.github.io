@@ -110,5 +110,13 @@
     "type": "video",
     "video": "./assets/videos/CubeSurfer.mp4",
     "alt": "Cube Surfer"
+  },
+  {
+    "id": 14,
+    "title": "Merge the Number - 2048 Puzzle",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/Merge2048Puzzle.jpg",
+    "alt": "Merge the Number - 2048 Puzzle",
+    "link": "https://play.google.com/store/apps/details?id=com.merge.number.block.puzzle.games"
   }
 ]
