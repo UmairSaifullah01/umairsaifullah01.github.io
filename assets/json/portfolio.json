@@ -112,11 +112,19 @@
     "alt": "Cube Surfer"
   },
   {
-    "id": 14,
+    "id": 15,
     "title": "Merge the Number - 2048 Puzzle",
     "category": "Mobile Puzzle",
     "image": "./assets/images/Merge2048Puzzle.jpg",
     "alt": "Merge the Number - 2048 Puzzle",
     "link": "https://play.google.com/store/apps/details?id=com.merge.number.block.puzzle.games"
+  },
+  {
+    "id": 16,
+    "title": "Go Travel Mania",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/gotravel.jpg",
+    "alt": "Go Travel Mania",
+    "link": "https://play.google.com/store/apps/details?id=com.zplay.GoTravel&gl=US"
   }
 ]
