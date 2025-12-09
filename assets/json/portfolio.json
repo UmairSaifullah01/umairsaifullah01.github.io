@@ -126,5 +126,13 @@
     "image": "./assets/images/gotravel.jpg",
     "alt": "Go Travel Mania",
     "link": "https://play.google.com/store/apps/details?id=com.zplay.GoTravel&gl=US"
+  },
+    {
+    "id": 16,
+    "title": "Park Jam Master",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/pjm.jpg",
+    "alt": "ParkJamMaster",
+    "link": "https://apps.apple.com/us/app/park-jam-escape-master/id6751706860"
   }
 ]
