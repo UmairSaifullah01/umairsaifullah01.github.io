@@ -2431,3 +2431,31 @@ textarea.form-input::-webkit-resizer {
     font-size: var(--fs-5);
   }
 }
+
+/* Override GitHub markdown CSS for modal background and text color */
+.blog-content-full.markdown-body {
+  background: var(--eerie-black-2, #18191a);
+  color: var(--white-1, #fff);
+  border-radius: 12px;
+  padding: 1.5em;
+  box-shadow: var(--shadow-1, 0 4px 24px rgba(0,0,0,0.25));
+  margin-bottom: 1em;
+  max-height: 400px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.blog-content-full.markdown-body h1,
+.blog-content-full.markdown-body h2,
+.blog-content-full.markdown-body h3,
+.blog-content-full.markdown-body h4,
+.blog-content-full.markdown-body h5,
+.blog-content-full.markdown-body h6 {
+  color: var(--white-1, #fff);
+}
+
+.blog-content-full.markdown-body code,
+.blog-content-full.markdown-body pre {
+  background: #222;
+  color: #ffb300;
+}

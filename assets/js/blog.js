@@ -41,28 +41,45 @@ const blogModalFunc = function () {
 const setupBlogItems = function () {
   const blogItems = document.querySelectorAll(".blog-post-item");
 
-  blogItems.forEach((item) => {
-    item.addEventListener("click", function (e) {
+  blogItems.forEach((item, idx) => {
+    item.addEventListener("click", async function (e) {
       e.preventDefault();
 
       // Set modal content
       blogModalImg.src = this.querySelector(".blog-banner-box img").src;
       blogModalImg.alt = this.querySelector(".blog-banner-box img").alt;
-      blogModalTitle.innerHTML =
-        this.querySelector(".blog-item-title").innerHTML;
+      blogModalTitle.innerHTML = this.querySelector(".blog-item-title").innerHTML;
       blogModalMeta.innerHTML = this.querySelector(".blog-meta").innerHTML;
 
-      const fullText = this.querySelector(".blog-text").innerHTML;
-      // Get first sentence for preview (split by period and take first one)
-      const firstSentence = fullText.split(".")[0] + ".";
-
-      // Convert markdown to HTML for both preview and full text
-      blogModalText.innerHTML = marked.parse(firstSentence);
-      blogModalFullText.innerHTML = marked.parse(fullText);
-
-      // Always show read more button since we're only showing one sentence
-      blogReadMoreBtn.style.display = "flex";
-
+      // Get the markdown file path from blogs.json
+      const response = await fetch("./assets/json/blogs.json");
+      const blogPosts = await response.json();
+      const post = blogPosts[idx];
+      if (post && post.markdown) {
+        // Load markdown file and show preview/full in modal
+        const mdResponse = await fetch(post.markdown);
+        const markdownContent = await mdResponse.text();
+        const htmlContent = marked.parse(markdownContent);
+        // Get first paragraph as preview
+        const firstParagraph = htmlContent.split(/<p>|<h1|<h2|<h3|<h4|<h5|<h6/)[1];
+        blogModalText.innerHTML = firstParagraph ? '<p>' + firstParagraph.split('</p>')[0] + '</p>' : '';
+        blogModalFullText.innerHTML = htmlContent;
+        blogModalText.style.display = "block";
+        blogModalFullText.style.display = "none";
+        blogReadMoreBtn.style.display = "flex";
+        blogReadMoreBtn.querySelector("span").textContent = "Show Full";
+        blogReadMoreBtn.querySelector("ion-icon").setAttribute("name", "chevron-down-outline");
+      } else {
+        // fallback to description if markdown not found
+        const fullText = this.querySelector(".blog-text").innerHTML;
+        blogModalText.innerHTML = marked.parse(fullText.split(".")[0] + ".");
+        blogModalFullText.innerHTML = marked.parse(fullText);
+        blogModalText.style.display = "block";
+        blogModalFullText.style.display = "none";
+        blogReadMoreBtn.style.display = "flex";
+        blogReadMoreBtn.querySelector("span").textContent = "Show Full";
+        blogReadMoreBtn.querySelector("ion-icon").setAttribute("name", "chevron-down-outline");
+      }
       blogModalFunc();
     });
   });
@@ -71,16 +88,15 @@ const setupBlogItems = function () {
 // Toggle between preview and full text
 blogReadMoreBtn.addEventListener("click", function () {
   const isShowingPreview = blogModalText.style.display !== "none";
-
   if (isShowingPreview) {
     blogModalText.style.display = "none";
     blogModalFullText.style.display = "block";
-    this.querySelector("span").textContent = "Show less";
+    this.querySelector("span").textContent = "Show Less";
     this.querySelector("ion-icon").setAttribute("name", "chevron-up-outline");
   } else {
     blogModalText.style.display = "block";
     blogModalFullText.style.display = "none";
-    this.querySelector("span").textContent = "Click to read full story";
+    this.querySelector("span").textContent = "Show Full";
     this.querySelector("ion-icon").setAttribute("name", "chevron-down-outline");
   }
 });
@@ -156,6 +172,27 @@ const loadBlogPosts = async function () {
     console.error("Error loading blog posts:", error);
   }
 };
+
+// Function to load and display markdown file
+const loadMarkdownFile = async function (filePath) {
+  try {
+    const response = await fetch(filePath);
+    const markdownContent = await response.text();
+    const htmlContent = marked.parse(markdownContent);
+    const blogModalFullText = document.querySelector("[data-blog-modal-full-text]");
+    blogModalFullText.innerHTML = htmlContent;
+  } catch (error) {
+    console.error("Error loading markdown file:", error);
+  }
+};
+
+// Add click event to grid button to load markdown file
+const gridButton = document.querySelector("[data-grid-button]");
+if (gridButton) {
+  gridButton.addEventListener("click", function () {
+    loadMarkdownFile("./assets/blogs/unitytips.md");
+  });
+}
 
 // Initialize blog functionality when DOM is loaded
 document.addEventListener("DOMContentLoaded", function () {
