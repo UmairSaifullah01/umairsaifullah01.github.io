@@ -2,57 +2,43 @@ document.addEventListener("DOMContentLoaded", function () {
   const toolsList = document.querySelector(".tools-list");
   if (!toolsList) return;
 
-  let scrollPosition = 0;
-  const scrollAmount = 1;
-  let isScrollingRight = true;
-  let scrollInterval;
+  const scrollSpeed = 1;
+  const scrollPause = 2000;
+  let isPaused = false;
+  let isWaiting = false;
+  let scrollDirection = 1;
+  let animationFrameId;
 
-  function startAutoScroll() {
-    scrollInterval = setInterval(() => {
+  function autoScroll() {
+    if (!isPaused && !isWaiting) {
+      toolsList.scrollLeft += scrollSpeed * scrollDirection;
+
       const maxScroll = toolsList.scrollWidth - toolsList.clientWidth;
 
-      if (isScrollingRight) {
-        scrollPosition += scrollAmount;
-        if (scrollPosition >= maxScroll) {
-          isScrollingRight = false;
-          setTimeout(() => {
-            scrollPosition = maxScroll;
-          }, 1000);
-        }
-      } else {
-        scrollPosition -= scrollAmount;
-        if (scrollPosition <= 0) {
-          isScrollingRight = true;
-          setTimeout(() => {
-            scrollPosition = 0;
-          }, 1000);
-        }
+      if (scrollDirection === 1 && toolsList.scrollLeft >= maxScroll - 1) {
+        isWaiting = true;
+        setTimeout(() => {
+          scrollDirection = -1;
+          isWaiting = false;
+        }, scrollPause);
+      } else if (scrollDirection === -1 && toolsList.scrollLeft <= 0) {
+        isWaiting = true;
+        setTimeout(() => {
+          scrollDirection = 1;
+          isWaiting = false;
+        }, scrollPause);
       }
-
-      toolsList.scrollLeft = scrollPosition;
-    }, 20);
-  }
-
-  function stopAutoScroll() {
-    clearInterval(scrollInterval);
-  }
-
-  // Start auto-scrolling
-  startAutoScroll();
-
-  // Pause on hover
-  toolsList.addEventListener("mouseenter", stopAutoScroll);
-  toolsList.addEventListener("mouseleave", startAutoScroll);
-
-  // Stop scrolling when the page is not visible
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-      stopAutoScroll();
-    } else {
-      startAutoScroll();
     }
+    animationFrameId = requestAnimationFrame(autoScroll);
+  }
+
+  autoScroll();
+
+  toolsList.addEventListener("mouseenter", () => {
+    isPaused = true;
   });
 
-  // Cleanup
-  window.addEventListener("beforeunload", stopAutoScroll);
+  toolsList.addEventListener("mouseleave", () => {
+    isPaused = false;
+  });
 });

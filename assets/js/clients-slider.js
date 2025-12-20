@@ -2,65 +2,38 @@ document.addEventListener("DOMContentLoaded", function () {
   const clientsList = document.querySelector(".clients-list");
   if (!clientsList) return;
 
-  let scrollAmount = 0;
-  const scrollSpeed = 0.5; // Reduced speed for smoother movement
-  const scrollPause = 3000; // 3 seconds pause at each end
+  const scrollSpeed = 1;
+  const scrollPause = 3000;
   let isPaused = false;
+  let isWaiting = false;
   let scrollDirection = 1;
-  let pauseTimeout;
   let animationFrameId;
 
-  function smoothScroll(targetScroll) {
-    const currentScroll = clientsList.scrollLeft;
-    const difference = targetScroll - currentScroll;
-    const step = difference * 0.05; // Smooth interpolation factor
-
-    if (Math.abs(difference) > 1) {
-      clientsList.scrollLeft = currentScroll + step;
-      requestAnimationFrame(() => smoothScroll(targetScroll));
-    } else {
-      clientsList.scrollLeft = targetScroll;
-    }
-  }
-
   function autoScroll() {
-    if (isPaused) {
-      animationFrameId = requestAnimationFrame(autoScroll);
-      return;
+    if (!isPaused && !isWaiting) {
+      clientsList.scrollLeft += scrollSpeed * scrollDirection;
+
+      const maxScroll = clientsList.scrollWidth - clientsList.clientWidth;
+
+      if (scrollDirection === 1 && clientsList.scrollLeft >= maxScroll - 1) {
+        isWaiting = true;
+        setTimeout(() => {
+          scrollDirection = -1;
+          isWaiting = false;
+        }, scrollPause);
+      } else if (scrollDirection === -1 && clientsList.scrollLeft <= 0) {
+        isWaiting = true;
+        setTimeout(() => {
+          scrollDirection = 1;
+          isWaiting = false;
+        }, scrollPause);
+      }
     }
-
-    scrollAmount += scrollSpeed * scrollDirection;
-
-    // Calculate the maximum scroll position
-    const maxScroll = clientsList.scrollWidth - clientsList.clientWidth;
-
-    // Check if we've reached the end
-    if (scrollAmount >= maxScroll) {
-      isPaused = true;
-      clearTimeout(pauseTimeout);
-      pauseTimeout = setTimeout(() => {
-        scrollDirection = -1;
-        isPaused = false;
-      }, scrollPause);
-    }
-    // Check if we've reached the start
-    else if (scrollAmount <= 0) {
-      isPaused = true;
-      clearTimeout(pauseTimeout);
-      pauseTimeout = setTimeout(() => {
-        scrollDirection = 1;
-        isPaused = false;
-      }, scrollPause);
-    }
-
-    smoothScroll(scrollAmount);
     animationFrameId = requestAnimationFrame(autoScroll);
   }
 
-  // Start auto-scrolling
   autoScroll();
 
-  // Pause on hover
   clientsList.addEventListener("mouseenter", () => {
     isPaused = true;
   });
@@ -69,9 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
     isPaused = false;
   });
 
-  // Cleanup on page change/unmount
-  return () => {
-    cancelAnimationFrame(animationFrameId);
-    clearTimeout(pauseTimeout);
-  };
+  // Cleanup if needed (though this is a global script)
+  // window.addEventListener('unload', () => cancelAnimationFrame(animationFrameId));
 });
