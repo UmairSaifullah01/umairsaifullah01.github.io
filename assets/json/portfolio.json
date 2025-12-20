@@ -127,12 +127,28 @@
     "alt": "Go Travel Mania",
     "link": "https://play.google.com/store/apps/details?id=com.zplay.GoTravel&gl=US"
   },
-    {
-    "id": 16,
+  {
+    "id": 17,
     "title": "Park Jam Master",
     "category": "Mobile Puzzle",
     "image": "./assets/images/pjm.jpg",
     "alt": "ParkJamMaster",
     "link": "https://apps.apple.com/us/app/park-jam-escape-master/id6751706860"
+  },
+  {
+    "id": 18,
+    "title": "Card Sort Blast",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/card-sort-blast.png",
+    "alt": "Card Sort Blast",
+    "link": "https://play.google.com/store/apps/details?id=com.hcgames.cardsortblastgp"
+  },
+  {
+    "id": 19,
+    "title": "Knit Sort Puzzle - Color Paint",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/knit-sort-puzzle.png",
+    "alt": "Knit Sort Puzzle - Color Paint",
+    "link": "https://play.google.com/store/apps/details?id=com.zplay.KnitColorSort"
   }
 ]
