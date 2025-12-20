@@ -252,6 +252,36 @@
         "name": "Blender",
         "logo": "./assets/images/blender-logo.png",
         "link": "https://www.blender.org/"
+      },
+      {
+        "name": "Trello",
+        "logo": "./assets/images/trello-logo.png",
+        "link": "https://trello.com/"
+      },
+      {
+        "name": "Asana",
+        "logo": "./assets/images/asana-logo.png",
+        "link": "https://asana.com/"
+      },
+      {
+        "name": "Jira",
+        "logo": "./assets/images/jira-logo.png",
+        "link": "https://www.atlassian.com/software/jira"
+      },
+      {
+        "name": "GitHub",
+        "logo": "./assets/images/github-logo.png",
+        "link": "https://github.com/"
+      },
+      {
+        "name": "GitLab",
+        "logo": "./assets/images/gitlab-logo.png",
+        "link": "https://gitlab.com/"
+      },
+      {
+        "name": "AWS",
+        "logo": "./assets/images/aws-logo.png",
+        "link": "https://aws.amazon.com/"
       }
     ],
     "skills": [
@@ -260,8 +290,16 @@
         "percentage": 95
       },
       {
+        "name": "Unreal Engine",
+        "percentage": 75
+      },
+      {
         "name": "C#",
         "percentage": 90
+      },
+      {
+        "name": "C++",
+        "percentage": 85
       },
       {
         "name": "Game Design",
@@ -270,6 +308,14 @@
       {
         "name": "AR/VR Development",
         "percentage": 80
+      },
+      {
+        "name": "Blender",
+        "percentage": 75
+      },
+      {
+        "name": "Adobe Photoshop",
+        "percentage": 75
       }
     ]
   }
