@@ -1,0 +1,276 @@
+{
+  "sidebar": {
+    "name": "Umair Saifullah",
+    "title": "Senior Game Developer",
+    "avatar": "./assets/images/my-profile.jpg",
+    "contacts": [
+      {
+        "type": "email",
+        "icon": "mail-outline",
+        "title": "Email",
+        "value": "contact@umairsaifullah.com",
+        "link": "mailto:contact@umairsaifullah.com"
+      },
+      {
+        "type": "github",
+        "icon": "logo-github",
+        "title": "GitHub",
+        "value": "github.com/umairsaifullah01",
+        "link": "https://github.com/umairsaifullah01"
+      },
+      {
+        "type": "linkedin",
+        "icon": "logo-linkedin",
+        "title": "LinkedIn",
+        "value": "linkedin.com/in/umairsaifullah01",
+        "link": "https://linkedin.com/in/umairsaifullah01"
+      }
+    ],
+    "social": [
+      {
+        "platform": "instagram",
+        "icon": "logo-instagram",
+        "link": "https://www.instagram.com/umair.jutt45"
+      },
+      {
+        "platform": "facebook",
+        "icon": "logo-facebook",
+        "link": "https://www.facebook.com/umair.jutt45"
+      },
+      {
+        "platform": "twitter",
+        "icon": "logo-twitter",
+        "link": "#"
+      }
+    ]
+  },
+  "about": {
+    "title": "About me",
+    "description": [
+      "Senior Game Developer with over 7 years of experience in Unity3D and C#. Passionate about creating immersive gaming experiences and solving complex technical challenges. Specialized in developing high-performance games and interactive applications.",
+      "Experienced in leading development teams, implementing game mechanics, optimizing performance, and delivering polished products. Strong background in mobile game development, AR/VR applications, and cross-platform development."
+    ],
+    "services": [
+      {
+        "icon": "./assets/images/icon-design.svg",
+        "title": "Game Development",
+        "description": "Development of professional games for mobile and desktop platforms using Unity3D."
+      },
+      {
+        "icon": "./assets/images/icon-dev.svg",
+        "title": "AR/VR Development",
+        "description": "Creating immersive AR/VR experiences and applications."
+      },
+      {
+        "icon": "./assets/images/icon-app.svg",
+        "title": "Mobile Development",
+        "description": "Professional mobile game development for iOS and Android platforms."
+      },
+      {
+        "icon": "./assets/images/icon-photo.svg",
+        "title": "Technical Leadership",
+        "description": "Leading development teams and providing technical direction for game projects."
+      }
+    ],
+    "testimonials": [
+      {
+        "name": "Raza Butt",
+        "avatar": "./assets/images/testimonial-1.jpg",
+        "role": "Lead Game Developer at MindStrom",
+        "text": "\"Umair has been the most versatile developer I have seen till date!! He has a natural apptitude towards coding and it comes as natural to him as speaking or breathing. He is no doubt a great asset to me and the team and has proven his worth time and time again.\""
+      },
+      {
+        "name": "Daniyal Azram",
+        "avatar": "./assets/images/testimonial-2.jpg",
+        "role": "Sr.Engineer At OutPlay",
+        "text": "\"Umair is multi talented and very valuable team member. Not only he is a highly skilled game developer but he also have very keen eye on game design. He has remarkable problem solving and programming skills which adds great amount of value to the team. Really glad to have worked with him, highly recommended.\""
+      },
+      {
+        "name": "Mansoor Ahmad",
+        "avatar": "./assets/images/testimonial-3.jpg",
+        "role": "Sr.Game Developer At Carda Station",
+        "text": "\"Umair is now on the \"other side of the Camera\" at one of the top game developers.\""
+      },
+      {
+        "name": "Abdus Samad",
+        "avatar": "./assets/images/testimonial-4.jpg",
+        "role": "Sr.Game Developer At Mood Games",
+        "text": "\"Highly skilled and professional software engineer always writes a well structured code with creativity, His gaming sense is beyond i will highly recommend me as a developer learned too much from him\""
+      }
+    ],
+    "clients": [
+      {
+        "name": "Tap Nation",
+        "logo": "./assets/images/tapnation-logo.png",
+        "link": "https://tapnation.io/"
+      },
+      {
+        "name": "Rollic Games",
+        "logo": "./assets/images/rollic-logo.png",
+        "link": "https://rollicgames.com/"
+      },
+      {
+        "name": "ZPlay Games",
+        "logo": "./assets/images/zplay-logo.png",
+        "link": "https://www.zplay.com/"
+      },
+      {
+        "name": "Mood Games",
+        "logo": "./assets/images/mood-games-logo.png",
+        "link": "https://mood.games/"
+      },
+      {
+        "name": "Supertal",
+        "logo": "./assets/images/supertal-logo.png",
+        "link": "https://www.supertal.io/"
+      },
+      {
+        "name": "Leyla Games",
+        "logo": "./assets/images/leyla-logo.png",
+        "link": "https://leyla.games/"
+      }
+    ]
+  },
+  "resume": {
+    "title": "Resume",
+    "experience": [
+      {
+        "position": "Senior Game Developer at ZPlay",
+        "period": "2025-01 — Present",
+        "description": [
+          "• Specialized in developing and optimizing puzzle casual games",
+          "• Implemented innovative game mechanics and features for enhanced player engagement",
+          "• Collaborated with cross-functional teams to deliver high-quality gaming experiences",
+          "• Focused on performance optimization and user experience improvements"
+        ]
+      },
+      {
+        "position": "Lead Game Developer at HazelMobile",
+        "period": "2024-05 — 2025-01",
+        "description": [
+          "• Spearheaded the development of innovative puzzle games, including \"Nuts and Bolts,\" by evaluating current trends and implementing effective live operations strategies.",
+          "• Implemented live ops strategies for real-time engagement",
+          "• Achieved significant growth in player base and revenue"
+        ]
+      },
+      {
+        "position": "Senior Game Developer at Tap Nation",
+        "period": "2023-01 — 2024-05",
+        "description": [
+          "Metaverse Game Production:",
+          "• Manage 30 metaverse areas inside game by making content delivery system with Addressables",
+          "• Made customizable avatar system custom rig system",
+          "• Added Multiplayer players, chat and stores using darkrift2",
+          "• Rest API Implemented for all remote works (User data, user registration system)",
+          "• Manage project version control with plastic SCM",
+          "• Implemented MVVM design for UI"
+        ]
+      },
+      {
+        "position": "Senior Game Developer at Tap Nation",
+        "period": "2022-04 — 2023-01",
+        "description": [
+          "Live Ops Games:",
+          "• Worked and improved already hit games like Rock Crawling, Teeth Runner, Color Water Sort and Tippy Toe",
+          "• Used debugging techniques to identify issues with Games and resolve errors",
+          "• Improve KPIs with AB test and other analytics techniques",
+          "",
+          "Hyper and Hybrid Casual Production:",
+          "• Produce Game prototypes Like Hive Takeover, Pixel Fall run, Color Mixing",
+          "• Created Own Game base project with full generic and reusable patterns",
+          "• Participate in Game Storming and Idea Creation meetings"
+        ]
+      },
+      {
+        "position": "Senior Game Developer at Mood Games",
+        "period": "2021-09 — 2022-03",
+        "description": [
+          "• Produce a lot of Hyper Casual games prototypes like Queen Bee (Hit game of 2021), Hammer, Smash, Unstoppable! and more",
+          "• Learn Game Designing for Hyper Casual",
+          "• Cultivated professional working relationships with marketing department, other design personnel and upper management",
+          "• Mentored newly hired and junior developers in office and departmental policies and procedures"
+        ]
+      },
+      {
+        "position": "Tech Lead/Senior Game Developer at OZI Technology",
+        "period": "2019-04 — 2021-09",
+        "description": [
+          "• Manage a team (10 persons) and made games too at same time",
+          "• Created prototypes based upon design ideas using such programming languages as C# and Python(Blender Only)",
+          "• Introduce game designs and programming design patterns to team",
+          "• Introduce Git system in teams and made a flow of working with more agile",
+          "• Create CCID system for creative build system (android) Bitbucket",
+          "• A part of hire management system",
+          "• Used debugging techniques (test cases) to identify issues with computer code and resolve errors"
+        ]
+      },
+      {
+        "position": "Game Developer at Occess Inc",
+        "period": "2020-01 — 2021-09",
+        "description": [
+          "• Worked on multiple live project to improve them (Bus Simulator, Offroad Driving Truck)",
+          "• Worked on projects from scratch (Farming Simulator, Stunt Quad bike, Limo Taxi, tractor farming)",
+          "• Improved C# Language and worked on multiplayer(photon multiplayer system) games like (Kung fu fighting)",
+          "• Improved operations through consistent hard work and dedication"
+        ]
+      }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor's degree at Government College University",
+        "period": "2013-01 — 2017-01",
+        "description": "Studies BS Software Engineering with remarkable grades"
+      }
+    ],
+    "tools": [
+      {
+        "name": "Unity",
+        "logo": "./assets/images/unity-logo.png",
+        "link": "https://unity.com/"
+      },
+      {
+        "name": "C#",
+        "logo": "./assets/images/csharp-logo.png",
+        "link": "https://learn.microsoft.com/en-us/dotnet/csharp/"
+      },
+      {
+        "name": "C++",
+        "logo": "./assets/images/cpp-logo.png",
+        "link": "https://isocpp.org/"
+      },
+      {
+        "name": "Adobe Photoshop",
+        "logo": "./assets/images/photoshop-logo.png",
+        "link": "https://www.adobe.com/products/photoshop.html"
+      },
+      {
+        "name": "Figma",
+        "logo": "./assets/images/figma-logo.png",
+        "link": "https://www.figma.com/"
+      },
+      {
+        "name": "Blender",
+        "logo": "./assets/images/blender-logo.png",
+        "link": "https://www.blender.org/"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Unity3D",
+        "percentage": 95
+      },
+      {
+        "name": "C#",
+        "percentage": 90
+      },
+      {
+        "name": "Game Design",
+        "percentage": 85
+      },
+      {
+        "name": "AR/VR Development",
+        "percentage": 80
+      }
+    ]
+  }
+}

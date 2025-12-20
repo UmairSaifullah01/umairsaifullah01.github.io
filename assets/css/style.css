@@ -810,6 +810,13 @@ main {
   margin-bottom: 30px;
 }
 
+.favorite-tools .title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
 .tools-list {
   display: flex;
   gap: 15px;
@@ -928,6 +935,13 @@ main {
 /**
  * skills 
  */
+
+.skill .title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
 
 .skills-title {
   margin-bottom: 20px;
