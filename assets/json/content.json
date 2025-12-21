@@ -47,7 +47,7 @@
   "about": {
     "title": "About me",
     "description": [
-      "Senior Game Developer with over 7 years of experience in Unity3D and C#. Passionate about creating immersive gaming experiences and solving complex technical challenges. Specialized in developing high-performance games and interactive applications.",
+      "Senior Game Developer with over 8 years of experience in Unity3D and C#. Passionate about creating immersive gaming experiences and solving complex technical challenges. Specialized in developing high-performance games and interactive applications.",
       "Experienced in leading development teams, implementing game mechanics, optimizing performance, and delivering polished products. Strong background in mobile game development, AR/VR applications, and cross-platform development."
     ],
     "services": [
@@ -315,6 +315,10 @@
       },
       {
         "name": "Adobe Photoshop",
+        "percentage": 75
+      },
+        {
+        "name": "Multiplayer Server Management",
         "percentage": 75
       }
     ]
