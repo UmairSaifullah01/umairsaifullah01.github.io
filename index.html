@@ -1,891 +1,536 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Umair Saifullah - Game Developer Portfolio</title>
-
-  <!--
-    - favicon
-  -->
-  <link rel="shortcut icon" href="./assets/images/logo.png" type="image/png" />
-
-  <!--
-    - custom css link
-  -->
-  <link rel="stylesheet" href="./assets/css/style.css" />
-
-  <!--
-    - google font link
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
-  <!--
-    - markdown library
-    -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-  <!--
-    - GitHub markdown CSS CDN link
-    -->
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Umair Saifullah - Game Developer</title>
+<link rel="icon" type="image/png" href="./assets/images/logo.png">
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="assets/css/style.css" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#8B5CF6",
+              "primary-hover": "#7C3AED",
+              "background-light": "#F3F4F6",
+              "background-dark": "#0F0F0F",
+              "card-light": "#FFFFFF",
+              "card-dark": "#1A1A1A",
+              "text-light": "#1F2937",
+              "text-dark": "#E5E7EB",
+              "subtext-dark": "#9CA3AF",
+            },
+            fontFamily: {
+              display: ['"Plus Jakarta Sans"', 'sans-serif'],
+              body: ['"Plus Jakarta Sans"', 'sans-serif'],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem",
+              'xl': "1rem",
+              '2xl': "1.5rem",
+              '3xl': "2rem",
+            },
+          },
+        },
+      };
+    </script>
 </head>
-
-<body>
-  <!--
-    - #MAIN
-  -->
-
-  <main>
-    <!--
-      - #SIDEBAR
-    -->
-
-    <aside class="sidebar" data-sidebar>
-      <div class="sidebar-info">
-        <figure class="avatar-box">
-          <img src="./assets/images/my-profile.jpg" alt="Umair Saifullah" width="80" />
-        </figure>
-
-        <div class="info-content">
-          <h1 class="name" title="Umair Saifullah">Umair Saifullah</h1>
-
-          <p class="title">Senior Game Developer</p>
-        </div>
-
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Contacts</span>
-
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
-      </div>
-
-      <div class="sidebar-info_more">
-        <div class="separator"></div>
-
-        <ul class="contacts-list">
-          <li class="contact-item">
-            <div class="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Email</p>
-              <a href="mailto:contact@umairsaifullah.com" class="contact-link">contact@umairsaifullah.com</a>
-            </div>
-          </li>
-
-          <li class="contact-item">
-            <div class="icon-box">
-              <ion-icon name="logo-github"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">GitHub</p>
-              <a href="https://github.com/umairsaifullah01" class="contact-link">github.com/umairsaifullah01</a>
-            </div>
-          </li>
-
-          <li class="contact-item">
-            <div class="icon-box">
-              <ion-icon name="logo-linkedin"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">LinkedIn</p>
-              <a href="https://linkedin.com/in/umairsaifullah01"
-                class="contact-link">linkedin.com/in/umairsaifullah01</a>
-            </div>
-          </li>
-        </ul>
-
-        <div class="separator"></div>
-
-        <ul class="social-list">
-          <li class="social-item">
-            <a href="https://www.instagram.com/umair.jutt45" class="social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="https://www.facebook.com/umair.jutt45" class="social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-twitter"></ion-icon>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </aside>
-
-    <!--
-      - #main-content
-    -->
-
-    <div class="main-content">
-      <!--
-        - #NAVBAR
-      -->
-
-      <nav class="navbar">
-        <ul class="navbar-list">
-          <li class="navbar-item">
-            <button class="navbar-link active" data-nav-link>About</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Resume</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Portfolio</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Blog</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Contact</button>
-          </li>
-        </ul>
-      </nav>
-
-      <!--
-        - #ABOUT
-      -->
-
-      <article class="about active" data-page="about">
-        <header>
-          <h2 class="h2 article-title">About me</h2>
-        </header>
-
-        <section class="about-text">
-          <p>
-            Senior Game Developer with over 7 years of experience in Unity3D
-            and C#. Passionate about creating immersive gaming experiences and
-            solving complex technical challenges. Specialized in developing
-            high-performance games and interactive applications.
-          </p>
-
-          <p>
-            Experienced in leading development teams, implementing game
-            mechanics, optimizing performance, and delivering polished
-            products. Strong background in mobile game development, AR/VR
-            applications, and cross-platform development.
-          </p>
-        </section>
-
-        <!--
-          - service
-        -->
-
-        <section class="service">
-          <h3 class="h3 service-title">What I'm doing</h3>
-
-          <ul class="service-list">
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-design.svg" alt="Game development icon" width="40" />
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Game Development</h4>
-
-                <p class="service-item-text">
-                  Development of professional games for mobile and desktop
-                  platforms using Unity3D.
-                </p>
-              </div>
-            </li>
-
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" alt="AR/VR development icon" width="40" />
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">AR/VR Development</h4>
-
-                <p class="service-item-text">
-                  Creating immersive AR/VR experiences and applications.
-                </p>
-              </div>
-            </li>
-
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-app.svg" alt="Mobile development icon" width="40" />
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Mobile Development</h4>
-
-                <p class="service-item-text">
-                  Professional mobile game development for iOS and Android
-                  platforms.
-                </p>
-              </div>
-            </li>
-
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-photo.svg" alt="Technical leadership icon" width="40" />
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Technical Leadership</h4>
-
-                <p class="service-item-text">
-                  Leading development teams and providing technical direction
-                  for game projects.
-                </p>
-              </div>
-            </li>
-          </ul>
-        </section>
-
-        <!--
-          - testimonials
-        -->
-
-        <section class="testimonials">
-          <h3 class="h3 testimonials-title">Testimonials</h3>
-
-          <ul class="testimonials-list has-scrollbar">
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/testimonial-1.jpg" alt="Raza Butt" width="60" data-testimonials-avatar />
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>
-                  Raza Butt
-                </h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    "Umair has been the most versatile developer I have seen
-                    till date!! He has a natural apptitude towards coding and
-                    it comes as natural to him as speaking or breathing. He is
-                    no doubt a great asset to me and the team and has proven
-                    his worth time and time again."
-                  </p>
-                  <p class="testimonial-role">
-                    Lead Game Developer at MindStrom
-                  </p>
-                </div>
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/testimonial-2.jpg" alt="Daniyal Azram" width="60"
-                    data-testimonials-avatar />
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>
-                  Daniyal Azram
-                </h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    "Umair is multi talented and very valuable team member.
-                    Not only he is a highly skilled game developer but he also
-                    have very keen eye on game design. He has remarkable
-                    problem solving and programming skills which adds great
-                    amount of value to the team. Really glad to have worked
-                    with him, highly recommended."
-                  </p>
-                  <p class="testimonial-role">Sr.Engineer At OutPlay</p>
-                </div>
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/testimonial-3.jpg" alt="Mansoor Ahmad" width="60"
-                    data-testimonials-avatar />
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>
-                  Mansoor Ahmad
-                </h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    "Umair is now on the "other side of the Camera" at one of
-                    the top game developers."
-                  </p>
-                  <p class="testimonial-role">
-                    Sr.Game Developer At Carda Station
-                  </p>
-                </div>
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/testimonial-4.jpg" alt="Abdus Samad" width="60" data-testimonials-avatar />
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>
-                  Abdus Samad
-                </h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    "Highly skilled and professional software engineer always
-                    writes a well structured code with creativity, His gaming
-                    sense is beyond i will highly recommend me as a developer
-                    learned too much from him"
-                  </p>
-                  <p class="testimonial-role">
-                    Sr.Game Developer At Mood Games
-                  </p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </section>
-
-        <!--
-          - testimonials modal
-        -->
-
-        <div class="modal-container" data-modal-container>
-          <div class="overlay" data-overlay></div>
-
-          <section class="testimonials-modal">
-            <button class="modal-close-btn" data-modal-close-btn>
-              <ion-icon name="close-outline"></ion-icon>
-            </button>
-
-            <div class="modal-img-wrapper">
-              <figure class="modal-avatar-box">
-                <img src="./assets/images/testimonial-1.jpg" alt="Raza Butt" width="80" data-modal-img />
-              </figure>
-
-              <img src="./assets/images/icon-quote.svg" alt="quote icon" />
-            </div>
-
-            <div class="modal-content">
-              <h4 class="h3 modal-title" data-modal-title>Raza Butt</h4>
-
-              <div data-modal-text>
-                <p>
-                  "Umair has been the most versatile developer I have seen
-                  till date!! He has a natural apptitude towards coding and it
-                  comes as natural to him as speaking or breathing. He is no
-                  doubt a great asset to me and the team and has proven his
-                  worth time and time again."
-                </p>
-                <p class="testimonial-role">
-                  Lead Game Developer at MindStrom
-                </p>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <!--
-          - clients
-        -->
-
-        <section class="clients">
-          <h3 class="h3 clients-title">Clients</h3>
-
-          <ul class="clients-list has-scrollbar">
-            <li class="clients-item">
-              <a href="https://tapnation.io/" target="_blank">
-                <img src="./assets/images/tapnation-logo.png" alt="Tap Nation logo" />
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="https://rollicgames.com/" target="_blank">
-                <img src="./assets/images/rollic-logo.png" alt="Rollic Games logo" />
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="https://www.zplaygames.com/" target="_blank">
-                <img src="./assets/images/zplay-logo.png" alt="ZPlay Games logo" />
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="https://moodgames.co/" target="_blank">
-                <img src="./assets/images/mood-games-logo.png" alt="Mood Games logo" />
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="https://www.supertal.com/" target="_blank">
-                <img src="./assets/images/supertal-logo.png" alt="Supertal logo" />
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="https://leyla.games/" target="_blank">
-                <img src="./assets/images/leyla-logo.png" alt="Leyla Games logo" />
-              </a>
-            </li>
-          </ul>
-        </section>
-      </article>
-
-      <!--
-        - #RESUME
-      -->
-
-      <article class="resume" data-page="resume">
-        <header>
-          <h2 class="h2 article-title">Resume</h2>
-        </header>
-
-        <section class="timeline">
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Experience</h3>
-          </div>
-
-          <ol class="timeline-list">
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">
-                Senior Game Developer at ZPlay
-              </h4>
-              <span>2025-02 — Present</span>
-              <p class="timeline-text">
-                • Specialized in developing and optimizing puzzle casual
-                games<br />
-                • Implemented innovative game mechanics and features for
-                enhanced player engagement<br />
-                • Collaborated with cross-functional teams to deliver
-                high-quality gaming experiences<br />
-                • Focused on performance optimization and user experience
-                improvements
-              </p>
-            </li>
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">
-                Lead Game Developer at HazelMobile
-              </h4>
-              <span>2024-05 — 2025-01</span>
-              <p class="timeline-text">
-                • Spearheaded the development of innovative puzzle games,
-                including "Nuts and Bolts," by evaluating current trends and
-                implementing effective live operations strategies.<br />
-                • Implemented live ops strategies for real-time engagement<br />
-                • Achieved significant growth in player base and revenue
-              </p>
-            </li>
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">
-                Senior Game Developer at Tap Nation
-              </h4>
-              <span>2023-01 — 2024-05</span>
-              <p class="timeline-text">
-                Metaverse Game Production:<br />
-                • Manage 30 metaverse areas inside game by making content
-                delivery system with Addressables<br />
-                • Made customizable avatar system custom rig system<br />
-                • Added Multiplayer players, chat and stores using
-                darkrift2<br />
-                • Rest API Implemented for all remote works (User data, user
-                registration system)<br />
-                • Manage project version control with plastic SCM<br />
-                • Implemented MVVM design for UI
-              </p>
-            </li>
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">
-                Senior Game Developer at Tap Nation
-              </h4>
-              <span>2022-04 — 2023-01</span>
-              <p class="timeline-text">
-                Live Ops Games:<br />
-                • Worked and improved already hit games like Rock Crawling,
-                Teeth Runner, Color Water Sort and Tippy Toe<br />
-                • Used debugging techniques to identify issues with Games and
-                resolve errors<br />
-                • Improve KPIs with AB test and other analytics techniques<br /><br />
-
-                Hyper and Hybrid Casual Production:<br />
-                • Produce Game prototypes Like Hive Takeover, Pixel Fall run,
-                Color Mixing<br />
-                • Created Own Game base project with full generic and reusable
-                patterns<br />
-                • Participate in Game Storming and Idea Creation meetings
-              </p>
-            </li>
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">
-                Senior Game Developer at Mood Games
-              </h4>
-              <span>2021-09 — 2022-03</span>
-              <p class="timeline-text">
-                • Produce a lot of Hyper Casual games prototypes like Queen
-                Bee (Hit game of 2021), Hammer, Smash, Unstoppable! and
-                more<br />
-                • Learn Game Designing for Hyper Casual<br />
-                • Cultivated professional working relationships with marketing
-                department, other design personnel and upper management<br />
-                • Mentored newly hired and junior developers in office and
-                departmental policies and procedures
-              </p>
-            </li>
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">
-                Tech Lead/Senior Game Developer at OZI Technology
-              </h4>
-              <span>2019-04 — 2021-09</span>
-              <p class="timeline-text">
-                • Manage a team (10 persons) and made games too at same
-                time<br />
-                • Created prototypes based upon design ideas using such
-                programming languages as C# and Python(Blender Only)<br />
-                • Introduce game designs and programming design patterns to
-                team<br />
-                • Introduce Git system in teams and made a flow of working
-                with more agile<br />
-                • Create CCID system for creative build system (android)
-                Bitbucket<br />
-                • A part of hire management system<br />
-                • Used debugging techniques (test cases) to identify issues
-                with computer code and resolve errors
-              </p>
-            </li>
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">
-                Game Developer at Occess Inc
-              </h4>
-              <span>2020-01 — 2021-09</span>
-              <p class="timeline-text">
-                • Worked on multiple live project to improve them (Bus
-                Simulator, Offroad Driving Truck)<br />
-                • Worked on projects from scratch (Farming Simulator, Stunt
-                Quad bike, Limo Taxi, tractor farming)<br />
-                • Improved C# Language and worked on multiplayer(photon
-                multiplayer system) games like (Kung fu fighting)<br />
-                • Improved operations through consistent hard work and
-                dedication
-              </p>
-            </li>
-          </ol>
-        </section>
-
-        <section class="timeline">
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Education</h3>
-          </div>
-
-          <ol class="timeline-list">
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">
-                Bachelor's degree at Government College University
-              </h4>
-              <span>2013-01 — 2017-01</span>
-              <p class="timeline-text">
-                Studies BS Software Engineering with remarkable grades
-              </p>
-            </li>
-          </ol>
-        </section>
-
-        <section class="favorite-tools">
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="construct-outline"></ion-icon>
-            </div>
-            <h3 class="h3">Favorite Tools</h3>
-          </div>
-
-          <ul class="tools-list has-scrollbar">
-            <li class="tools-item">
-              <a href="https://unity.com/" target="_blank">
-                <img src="./assets/images/unity-logo.png" alt="Unity" />
-              </a>
-            </li>
-
-            <li class="tools-item">
-              <a href="https://learn.microsoft.com/en-us/dotnet/csharp/" target="_blank">
-                <img src="./assets/images/csharp-logo.png" alt="C#" />
-              </a>
-            </li>
-
-            <li class="tools-item">
-              <a href="https://isocpp.org/" target="_blank">
-                <img src="./assets/images/cpp-logo.png" alt="C++" />
-              </a>
-            </li>
-
-            <li class="tools-item">
-              <a href="https://www.adobe.com/products/photoshop.html" target="_blank">
-                <img src="./assets/images/photoshop-logo.png" alt="Adobe Photoshop" />
-              </a>
-            </li>
-
-            <li class="tools-item">
-              <a href="https://www.figma.com/" target="_blank">
-                <img src="./assets/images/figma-logo.png" alt="Figma" />
-              </a>
-            </li>
-
-            <li class="tools-item">
-              <a href="https://www.blender.org/" target="_blank">
-                <img src="./assets/images/blender-logo.png" alt="Blender" />
-              </a>
-            </li>
-          </ul>
-        </section>
-
-        <section class="skill">
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="stats-chart-outline"></ion-icon>
-            </div>
-            <h3 class="h3">My skills</h3>
-          </div>
-
-          <ul class="skills-list content-card">
-            <li class="skills-item">
-              <div class="title-wrapper">
-                <h5 class="h5">Unity3D</h5>
-                <data value="95">95%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 95%"></div>
-              </div>
-            </li>
-
-            <li class="skills-item">
-              <div class="title-wrapper">
-                <h5 class="h5">C#</h5>
-                <data value="90">90%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 90%"></div>
-              </div>
-            </li>
-
-            <li class="skills-item">
-              <div class="title-wrapper">
-                <h5 class="h5">Game Design</h5>
-                <data value="85">85%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 85%"></div>
-              </div>
-            </li>
-
-            <li class="skills-item">
-              <div class="title-wrapper">
-                <h5 class="h5">AR/VR Development</h5>
-                <data value="80">80%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 80%"></div>
-              </div>
-            </li>
-          </ul>
-        </section>
-      </article>
-
-      <!--
-        - #PORTFOLIO
-      -->
-
-      <article class="portfolio" data-page="portfolio">
-        <header>
-          <h2 class="h2 article-title">Portfolio</h2>
-        </header>
-
-        <section class="projects">
-          <ul class="filter-list">
-            <li class="filter-item">
-              <button class="active" data-filter-btn>All</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Mobile</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Puzzle</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Casual</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Videos</button>
-            </li>
-          </ul>
-
-          <div class="filter-select-box">
-            <button class="filter-select" data-select>
-              <div class="select-value" data-select-value>All</div>
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-            </button>
-
-            <ul class="select-list">
-              <li class="select-item">
-                <button data-select-item>All</button>
-              </li>
-              <li class="select-item">
-                <button data-select-item>Mobile</button>
-              </li>
-              <li class="select-item">
-                <button data-select-item>Puzzle</button>
-              </li>
-              <li class="select-item">
-                <button data-select-item>Casual</button>
-              </li>
-              <li class="select-item">
-                <button data-select-item>Videos</button>
-              </li>
-            </ul>
-          </div>
-
-          <ul class="project-list">
-            <!-- Projects will be dynamically loaded here -->
-          </ul>
-        </section>
-      </article>
-
-      <!--
-        - #BLOG
-      -->
-
-      <article class="blog" data-page="blog">
-        <header>
-          <h2 class="h2 article-title">Blog</h2>
-        </header>
-
-        <section class="blog-posts">
-          <ul class="blog-list">
-            <!-- Blog posts will be dynamically loaded here -->
-          </ul>
-        </section>
-
-        <!-- Blog Modal -->
-        <div class="modal-container" data-blog-modal-container>
-          <div class="overlay" data-blog-overlay></div>
-
-          <section class="blog-modal">
-            <button class="modal-close-btn" data-blog-modal-close-btn>
-              <ion-icon name="close-outline"></ion-icon>
-            </button>
-
-            <div class="modal-img-wrapper">
-              <figure class="modal-banner-box">
-                <img src="" alt="blog post" data-blog-modal-img />
-              </figure>
-            </div>
-
-            <div class="modal-content">
-              <div class="blog-meta" data-blog-modal-meta></div>
-              <h4 class="h3 modal-title" data-blog-modal-title></h4>
-              <div class="blog-content-preview" data-blog-modal-text></div>
-              <div class="blog-content-full markdown-body" data-blog-modal-full-text style="display: none"></div>
-              <button class="read-more-btn" data-blog-read-more>
-                <span>Read More</span>
-                <ion-icon name="chevron-down-outline"></ion-icon>
-              </button>
-            </div>
-          </section>
-        </div>
-      </article>
-
-      <!--
-        - #CONTACT
-      -->
-
-      <article class="contact" data-page="contact">
-        <header>
-          <h2 class="h2 article-title">Contact</h2>
-        </header>
-
-        <section class="mapbox" data-mapbox>
-          <figure>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d217897.62046611723!2d74.17411935401217!3d31.482940343441375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190483e58107d9%3A0xc23abe6ccc7e2462!2sLahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1710861027346!5m2!1sen!2s"
-              width="400" height="300" loading="lazy"></iframe>
-          </figure>
-        </section>
-
-        <section class="contact-form">
-          <h3 class="h3 form-title">Contact Form</h3>
-
-          <form action="#" class="form" data-form>
-            <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input />
-
-              <input type="email" name="email" class="form-input" placeholder="Email address" required
-                data-form-input />
-            </div>
-
-            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
-
-            <button class="form-btn" type="submit" disabled data-form-btn>
-              <ion-icon name="paper-plane"></ion-icon>
-              <span>Send Message</span>
-            </button>
-          </form>
-        </section>
-      </article>
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark transition-colors duration-300 antialiased font-body min-h-screen">
+<!-- Loading Indicator -->
+<div id="loading-indicator" class="fixed inset-0 bg-background-light dark:bg-background-dark flex items-center justify-center z-50">
+    <div class="text-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+        <p class="text-gray-600 dark:text-gray-400">Loading...</p>
     </div>
-  </main>
+</div>
+<!-- Top Navigation -->
+<div class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
+<div class="bg-card-light dark:bg-[#1E1E1E] dark:bg-opacity-80 backdrop-blur-md px-4 py-3 rounded-full shadow-lg border border-gray-200 dark:border-gray-800 flex items-center gap-4">
+<div class="relative group">
+<button onclick="showPage('home')" class="nav-btn w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white transition hover:opacity-90" data-section="home">
+<span class="material-symbols-outlined text-[20px]">home</span>
+</button>
+<span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-800 dark:bg-gray-700 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Home</span>
+</div>
+<div class="relative group">
+<button onclick="showPage('projects')" class="nav-btn w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 transition" data-section="projects">
+<span class="material-symbols-outlined text-[20px]">folder_open</span>
+</button>
+<span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-800 dark:bg-gray-700 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Projects</span>
+</div>
+<div class="relative group">
+<button onclick="showPage('resume')" class="nav-btn w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 transition" data-section="resume">
+<span class="material-symbols-outlined text-[20px]">work</span>
+</button>
+<span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-800 dark:bg-gray-700 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Resume</span>
+</div>
+<div class="relative group">
+<button onclick="showPage('blog')" class="nav-btn w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 transition" data-section="blog">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-800 dark:bg-gray-700 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Blog</span>
+</div>
+<div class="relative group">
+<button onclick="showPage('contact')" class="nav-btn w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 transition" data-section="contact">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+</button>
+<span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-800 dark:bg-gray-700 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Contact</span>
+</div>
+</div>
+</div>
 
-  <!--
-    - custom js link
-  -->
-  <script src="./assets/js/content-loader.js"></script>
-  <script src="./assets/js/script.js"></script>
-  <script src="./assets/js/blog.js" defer></script>
-  <script src="./assets/js/portfolio.js" defer></script>
-  <script src="./assets/js/clients-slider.js" defer></script>
-  <script src="./assets/js/tools-slider.js" defer></script>
+<!-- Main Container with Two-Column Layout -->
+<div class="container mx-auto px-4 lg:px-8 xl:px-12 pt-28 pb-20 max-w-7xl">
+<div class="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16">
+<!-- Left Column - Profile Card (Floating) -->
+<aside class="w-full lg:w-80 xl:w-96 flex-shrink-0 mb-8 lg:mb-0">
+<div class="lg:sticky lg:top-28">
+<div class="bg-card-light dark:bg-card-dark rounded-3xl p-6 lg:p-8 border border-gray-200 dark:border-gray-800 shadow-sm text-center">
+<div class="w-full max-w-[280px] mx-auto rounded-2xl overflow-hidden mb-6 relative aspect-[3/4]">
+<img id="sidebar-avatar" alt="Profile" class="object-cover w-full h-full" src=""/>
+</div>
+<h2 id="sidebar-name" class="text-2xl lg:text-3xl font-bold mb-2 text-white dark:text-white"></h2>
+<p id="sidebar-title" class="text-base lg:text-lg text-white dark:text-white mb-2"></p>
+<p id="sidebar-location" class="text-sm text-gray-400 dark:text-gray-400 mb-6">Pakistan</p>
+<div id="sidebar-social" class="flex justify-center gap-4 mb-6"></div>
+<div class="flex justify-center">
+<button onclick="showPage('contact')" class="w-1/2 py-3 bg-primary text-white rounded-xl font-medium text-sm hover:bg-primary-hover transition shadow-lg shadow-primary/30">
+Let's Talk
+</button>
+</div>
+</div>
+</div>
+</aside>
 
-  <!--
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<!-- Right Column - Main Content -->
+<main class="flex-1 min-w-0">
+<!-- Home Page -->
+<div id="page-home" class="page-content">
+<!-- Hero Section -->
+<section id="home" class="space-y-8 mb-16">
+<div class="space-y-6">
+<h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+Transforming Your<br/>Ideas into <span class="text-primary">Reality</span>
+</h1>
+<p id="hero-description" class="text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl">
+Passionate about creating intuitive and engaging user experiences. Specialize in transforming ideas into beautifully crafted products.
+</p>
+
+<!-- Statistics Section -->
+<div class="grid grid-cols-3 pt-6 statistics-grid">
+<div>
+<div id="stat-years" class="text-4xl md:text-5xl font-bold text-white dark:text-white">+8</div>
+<div class="text-xs uppercase tracking-wider text-gray-400 dark:text-gray-400 mt-2">Years of<br/>Experience</div>
+</div>
+<div>
+<div id="stat-projects" class="text-4xl md:text-5xl font-bold text-white dark:text-white">+100</div>
+<div class="text-xs uppercase tracking-wider text-gray-400 dark:text-gray-400 mt-2">Projects<br/>Completed</div>
+</div>
+<div>
+<div id="stat-clients" class="text-4xl md:text-5xl font-bold text-white dark:text-white">+10</div>
+<div class="text-xs uppercase tracking-wider text-gray-400 dark:text-gray-400 mt-2">Worldwide<br/>Clients</div>
+</div>
+</div>
+
+<!-- CTA Buttons -->
+<div class="flex items-center gap-4 pt-6">
+<button onclick="showPage('resume')" class="px-6 py-3 bg-primary text-white rounded-xl font-medium text-sm hover:bg-primary-hover transition shadow-lg shadow-primary/30">
+Resume
+</button>
+<a onclick="showPage('projects')" class="flex items-center gap-1 text-sm font-medium text-white dark:text-white hover:text-primary transition cursor-pointer">
+My Work <span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+</div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-800 pt-6 mt-8">
+<p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Relied on by companies near, far, and worldwide</p>
+<div class="relative" onmouseenter="stopClientsAutoScroll()" onmouseleave="startClientsAutoScroll()">
+<button onclick="scrollClients(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-card-light dark:bg-card-dark border border-gray-200 dark:border-gray-800 flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition shadow-lg" aria-label="Previous clients">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<div id="clients-container" class="overflow-hidden mx-12">
+<div id="clients-section" class="flex items-center transition-transform duration-500 ease-in-out"></div>
+</div>
+<button onclick="scrollClients(1)" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-card-light dark:bg-card-dark border border-gray-200 dark:border-gray-800 flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition shadow-lg" aria-label="Next clients">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="mb-16">
+<h2 class="text-3xl font-bold mb-6" id="about-title">About me</h2>
+<div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="mb-16">
+<div class="flex items-end justify-between mb-6">
+<h2 class="text-3xl font-bold leading-tight">What are my <span class="text-primary">Testimonials</span></h2>
+<div class="flex gap-2">
+<button onclick="changeTestimonial(-1)" class="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+</button>
+<button onclick="changeTestimonial(1)" class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary-hover transition">
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<div id="testimonial-container" class="bg-card-light dark:bg-card-dark p-6 rounded-2xl border border-gray-200 dark:border-gray-800">
+<div class="flex items-center gap-3 mb-4">
+<img id="testimonial-img" alt="Client" class="w-12 h-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFYfFU_gRaPYm_VQihINsy8s5aln_NkpG98IpAS3wNzGXOy2BpjzFQ-OKIZlNPTNofKwT_ScH-Ij3U_k6Fc-QCj6O0Zn37V2MvQwIY65cerqGUVUWtHJTC9O2Zj0CxuEoYpM6EKRb6nQPYtGw8U0RPemSwHmT6yEtV3hYSeiRYwjqG7FhyRba8Ue62fazm0SJUvcOLisd76AfMQndsimnBshURF50ewLqadM6haWTpGNWMO-hJthRwvCzchcJL0Xz2OvT0O53pT_8"/>
+<h4 id="testimonial-name" class="font-bold">William M.</h4>
+</div>
+<p id="testimonial-text" class="text-sm text-gray-600 dark:text-gray-400 italic leading-relaxed">
+"John expertly blends design with functionality, transforming our product into a sleek, user-friendly experience that our customers love!"
+</p>
+</div>
+</section>
+
+<!-- Let's Collaborate Section -->
+<section class="mb-16">
+<div class="bg-card-light dark:bg-card-dark rounded-3xl p-8 border border-gray-200 dark:border-gray-800 relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Let's<br/><span class="text-primary">collaborate</span></h2>
+<p class="text-sm text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
+Unlock the potential of your product with expert design and development services. Let's collaborate to create user-centered solutions that not only meet your goals but also delight your users.
+</p>
+</div>
+<button onclick="showPage('contact')" class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:scale-110 transition shadow-lg shadow-primary/50 flex-shrink-0">
+<span class="material-symbols-outlined text-lg transform -rotate-45">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+<div class="absolute bottom-0 left-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
+</div>
+</section>
+</div>
+
+<!-- Projects Page -->
+<div id="page-projects" class="page-content hidden">
+<section id="projects" class="mb-16">
+<h2 class="text-3xl font-bold mb-6">Recent Projects and <span class="text-primary">Achievements</span></h2>
+
+<!-- Filter Tabs -->
+<div class="flex flex-wrap gap-2 mb-6">
+<button onclick="filterPortfolio('all')" class="filter-tab active px-4 py-2 rounded-full text-sm font-medium transition bg-primary text-white hover:bg-primary-hover" data-filter="all">
+All
+</button>
+<button onclick="filterPortfolio('puzzle')" class="filter-tab px-4 py-2 rounded-full text-sm font-medium transition bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700" data-filter="puzzle">
+Puzzle
+</button>
+<button onclick="filterPortfolio('casual')" class="filter-tab px-4 py-2 rounded-full text-sm font-medium transition bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700" data-filter="casual">
+Casual
+</button>
+<button onclick="filterPortfolio('videos')" class="filter-tab px-4 py-2 rounded-full text-sm font-medium transition bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700" data-filter="videos">
+Videos
+</button>
+</div>
+
+<div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</section>
+
+<!-- Let's Collaborate Section -->
+<section class="mb-16">
+<div class="bg-card-light dark:bg-card-dark rounded-3xl p-8 border border-gray-200 dark:border-gray-800 relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Let's<br/><span class="text-primary">collaborate</span></h2>
+<p class="text-sm text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
+Unlock the potential of your product with expert design and development services. Let's collaborate to create user-centered solutions that not only meet your goals but also delight your users.
+</p>
+</div>
+<button onclick="showPage('contact')" class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:scale-110 transition shadow-lg shadow-primary/50 flex-shrink-0">
+<span class="material-symbols-outlined text-lg transform -rotate-45">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+<div class="absolute bottom-0 left-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
+</div>
+</section>
+</div>
+
+<!-- Resume/Work Experience Page -->
+<div id="page-resume" class="page-content hidden">
+<section id="resume" class="mb-16">
+<h2 class="text-3xl font-bold mb-6" id="resume-title">Work Experience</h2>
+
+<!-- Experience -->
+<div class="mb-12">
+<h3 class="text-xl font-bold mb-4">Experience</h3>
+<div id="experience-list" class="space-y-6"></div>
+</div>
+
+<!-- Education -->
+<div class="mb-12">
+<h3 class="text-xl font-bold mb-4">Education</h3>
+<div id="education-list" class="space-y-6"></div>
+</div>
+
+<!-- Skills -->
+<div class="mb-12">
+<h3 class="text-xl font-bold mb-4">Skills</h3>
+<div id="skills-list" class="space-y-4"></div>
+</div>
+
+<!-- Tools Section -->
+<div class="mb-12">
+<h3 class="text-xl font-bold mb-4">Tools & Technologies</h3>
+<div id="tools-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div>
+</div>
+</section>
+
+<!-- Let's Collaborate Section -->
+<section class="mb-16">
+<div class="bg-card-light dark:bg-card-dark rounded-3xl p-8 border border-gray-200 dark:border-gray-800 relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Let's<br/><span class="text-primary">collaborate</span></h2>
+<p class="text-sm text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
+Unlock the potential of your product with expert design and development services. Let's collaborate to create user-centered solutions that not only meet your goals but also delight your users.
+</p>
+</div>
+<button onclick="showPage('contact')" class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:scale-110 transition shadow-lg shadow-primary/50 flex-shrink-0">
+<span class="material-symbols-outlined text-lg transform -rotate-45">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+<div class="absolute bottom-0 left-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
+</div>
+</section>
+</div>
+
+<!-- Blog Page -->
+<div id="page-blog" class="page-content hidden">
+<section id="blog" class="mb-16">
+<h2 class="text-3xl font-bold mb-6">Design Thoughts and <span class="text-primary">Perspectives</span></h2>
+<div id="blog-grid" class="grid grid-cols-1 gap-6"></div>
+</section>
+
+<!-- Let's Collaborate Section -->
+<section class="mb-16">
+<div class="bg-card-light dark:bg-card-dark rounded-3xl p-8 border border-gray-200 dark:border-gray-800 relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Let's<br/><span class="text-primary">collaborate</span></h2>
+<p class="text-sm text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
+Unlock the potential of your product with expert design and development services. Let's collaborate to create user-centered solutions that not only meet your goals but also delight your users.
+</p>
+</div>
+<button onclick="showPage('contact')" class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:scale-110 transition shadow-lg shadow-primary/50 flex-shrink-0">
+<span class="material-symbols-outlined text-lg transform -rotate-45">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+<div class="absolute bottom-0 left-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
+</div>
+</section>
+</div>
+
+<!-- Blog Post Page -->
+<div id="page-blog-post" class="page-content hidden">
+<!-- Back Navigation -->
+<div class="mb-6">
+<button onclick="showPage('blog')" class="text-gray-400 hover:text-white transition flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+<span class="text-sm">All Thoughts</span>
+</button>
+</div>
+
+<!-- Hero Image -->
+<div class="relative mb-8 rounded-2xl overflow-hidden">
+<img id="blog-post-image" alt="Blog Image" class="w-full h-[400px] md:h-[500px] object-cover" src="" />
+</div>
+
+<!-- Date -->
+<div class="mb-4">
+<span id="blog-post-date" class="text-sm text-gray-400"></span>
+</div>
+
+<!-- Title -->
+<h1 id="blog-post-title" class="text-4xl md:text-5xl font-bold mb-8 text-white"></h1>
+
+<!-- Content -->
+<div id="blog-post-content" class="mb-16 text-gray-300 prose prose-lg dark:prose-invert max-w-none prose-headings:text-white prose-p:text-gray-300 prose-strong:text-white prose-a:text-primary prose-code:text-gray-200 prose-pre:bg-gray-900 prose-blockquote:text-gray-400"></div>
+
+<!-- Related Posts -->
+<div id="blog-post-related" class="mb-16">
+<h2 class="text-2xl font-bold mb-6 text-white">Related <span class="text-primary">Posts</span></h2>
+<div id="blog-post-related-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+</div>
+
+<!-- Let's Collaborate Section -->
+<section class="mb-16">
+<div class="bg-card-light dark:bg-card-dark rounded-3xl p-8 border border-gray-200 dark:border-gray-800 relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Let's<br/><span class="text-primary">collaborate</span></h2>
+<p class="text-sm text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
+Unlock the potential of your product with expert design and development services. Let's collaborate to create user-centered solutions that not only meet your goals but also delight your users.
+</p>
+</div>
+<button onclick="showPage('contact')" class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:scale-110 transition shadow-lg shadow-primary/50 flex-shrink-0">
+<span class="material-symbols-outlined text-lg transform -rotate-45">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+<div class="absolute bottom-0 left-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
+</div>
+</section>
+</div>
+
+<!-- Experience Detail Page -->
+<div id="page-experience" class="page-content hidden">
+<!-- Back Navigation -->
+<div class="mb-6">
+<button onclick="showPage('resume')" class="text-gray-400 hover:text-white transition flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+<span class="text-sm">Back to Resume</span>
+</button>
+</div>
+
+<!-- Company Name -->
+<h1 id="experience-company" class="text-4xl md:text-5xl font-bold mb-4 text-white"></h1>
+
+<!-- Period -->
+<div class="mb-6">
+<span id="experience-period" class="text-sm text-gray-400"></span>
+</div>
+
+<!-- Description -->
+<div id="experience-description" class="mb-16 text-gray-300 prose prose-lg dark:prose-invert max-w-none prose-headings:text-white prose-p:text-gray-300 prose-strong:text-white prose-a:text-primary prose-code:text-gray-200 prose-pre:bg-gray-900 prose-blockquote:text-gray-400"></div>
+</div>
+
+<!-- Contact Page -->
+<div id="page-contact" class="page-content hidden">
+<section id="contact" class="mb-16">
+<h2 class="text-3xl font-bold mb-6">Let's<br/><span class="text-primary">collaborate</span></h2>
+<div class="bg-card-light dark:bg-card-dark rounded-3xl p-8 border border-gray-200 dark:border-gray-800">
+<form id="contact-form" class="space-y-6">
+<div class="space-y-2">
+<label for="contact-name" class="text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">person</span>
+<input type="text" id="contact-name" name="name" placeholder="Your Name" required class="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500">
+</div>
+</div>
+
+<div class="space-y-2">
+<label for="contact-email" class="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">alternate_email</span>
+<input type="email" id="contact-email" name="email" placeholder="you@company.com" required class="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500">
+</div>
+</div>
+
+<div class="space-y-2">
+<label for="contact-subject" class="text-sm font-medium text-gray-700 dark:text-gray-300">Subject</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">description</span>
+<select id="contact-subject" name="subject" required class="w-full pl-12 pr-10 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-gray-900 dark:text-gray-100 appearance-none cursor-pointer">
+<option value="">Select a subject</option>
+<option value="job-opportunity">Job Opportunity</option>
+<option value="collaboration">Collaboration</option>
+<option value="consultation">Consultation</option>
+<option value="other">Other</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">expand_more</span>
+</div>
+</div>
+
+<div class="space-y-2">
+<label for="contact-message" class="text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
+<textarea id="contact-message" name="message" rows="6" placeholder="Tell me about your project..." required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 resize-none"></textarea>
+</div>
+
+<button type="submit" class="w-full bg-primary text-white py-3 px-6 rounded-xl font-medium hover:bg-primary-hover transition shadow-lg shadow-primary/30 flex items-center justify-center gap-2">
+<span>Launch Message</span>
+<span class="material-symbols-outlined">send</span>
+</button>
+</form>
+</div>
+</section>
+
+<!-- FAQ Section -->
+<section class="mb-16">
+<h2 class="text-3xl font-bold mb-6">Frequently Asked <span class="text-primary">Questions</span></h2>
+<div class="space-y-3">
+<details class="group bg-card-light dark:bg-card-dark rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+<summary class="flex justify-between items-center p-4 font-medium text-sm cursor-pointer list-none">
+<span>What services do you offer?</span>
+<span class="material-symbols-outlined transform group-open:rotate-180 transition-transform text-gray-500 text-lg">expand_more</span>
+</summary>
+<div class="px-4 pb-4 text-xs text-gray-500 leading-relaxed">
+I offer product design, web development, UI/UX audits, and consulting services to help bring your digital products to life.
+</div>
+</details>
+<details class="group bg-card-light dark:bg-card-dark rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+<summary class="flex justify-between items-center p-4 font-medium text-sm cursor-pointer list-none">
+<span>What is your design process?</span>
+<span class="material-symbols-outlined transform group-open:rotate-180 transition-transform text-gray-500 text-lg">expand_more</span>
+</summary>
+<div class="px-4 pb-4 text-xs text-gray-500 leading-relaxed">
+My design process follows a user-centered approach: discovery and research, ideation and wireframing, design and prototyping, user testing, and iterative refinement. I collaborate closely with clients throughout each phase.
+</div>
+</details>
+<details class="group bg-card-light dark:bg-card-dark rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+<summary class="flex justify-between items-center p-4 font-medium text-sm cursor-pointer list-none">
+<span>How do you handle project timelines?</span>
+<span class="material-symbols-outlined transform group-open:rotate-180 transition-transform text-gray-500 text-lg">expand_more</span>
+</summary>
+<div class="px-4 pb-4 text-xs text-gray-500 leading-relaxed">
+I provide clear timelines at project kickoff and maintain regular communication about progress. Most projects range from 2-8 weeks depending on scope. I always prioritize quality while respecting deadlines.
+</div>
+</details>
+<details class="group bg-card-light dark:bg-card-dark rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+<summary class="flex justify-between items-center p-4 font-medium text-sm cursor-pointer list-none">
+<span>Can you work with existing teams?</span>
+<span class="material-symbols-outlined transform group-open:rotate-180 transition-transform text-gray-500 text-lg">expand_more</span>
+</summary>
+<div class="px-4 pb-4 text-xs text-gray-500 leading-relaxed">
+Absolutely! I'm experienced in collaborating with in-house teams, remote teams, and cross-functional groups. I adapt my workflow to integrate seamlessly with your existing processes and tools.
+</div>
+</details>
+<details class="group bg-card-light dark:bg-card-dark rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+<summary class="flex justify-between items-center p-4 font-medium text-sm cursor-pointer list-none">
+<span>What tools do you use?</span>
+<span class="material-symbols-outlined transform group-open:rotate-180 transition-transform text-gray-500 text-lg">expand_more</span>
+</summary>
+<div class="px-4 pb-4 text-xs text-gray-500 leading-relaxed">
+I use industry-standard tools including Figma for design, Framer for prototyping, React for development, and various collaboration tools like Slack, Notion, and GitHub. I'm flexible and can work with your preferred stack.
+</div>
+</details>
+</div>
+</section>
+</div>
+
+<!-- Blog Modal -->
+</main>
+</div>
+</div>
+
+<footer class="text-center text-[10px] text-gray-500 py-6">
+<p>Made by Templyo | Powered by Framer</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
 </body>
-
 </html>

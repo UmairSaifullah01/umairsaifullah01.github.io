@@ -52,22 +52,22 @@
     ],
     "services": [
       {
-        "icon": "./assets/images/icon-design.svg",
+        "icon": "./assets/images/icon-game-dev.svg",
         "title": "Game Development",
         "description": "Development of professional games for mobile and desktop platforms using Unity3D."
       },
       {
-        "icon": "./assets/images/icon-dev.svg",
+        "icon": "./assets/images/icon-vr.svg",
         "title": "AR/VR Development",
         "description": "Creating immersive AR/VR experiences and applications."
       },
       {
-        "icon": "./assets/images/icon-app.svg",
+        "icon": "./assets/images/icon-mobile-dev.svg",
         "title": "Mobile Development",
         "description": "Professional mobile game development for iOS and Android platforms."
       },
       {
-        "icon": "./assets/images/icon-photo.svg",
+        "icon": "./assets/images/icon-leadership.svg",
         "title": "Technical Leadership",
         "description": "Leading development teams and providing technical direction for game projects."
       }
