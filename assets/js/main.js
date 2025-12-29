@@ -242,7 +242,7 @@ function scrollClients(direction) {
     if (!contentData?.about?.clients) return;
     
     const totalClients = contentData.about.clients.length;
-    const maxIndex = Math.max(0, totalClients - clientsPerView);
+    const maxIndex = getMaxClientIndex();
     
     currentClientIndex += direction;
     
@@ -255,18 +255,59 @@ function scrollClients(direction) {
     updateClientsPosition();
 }
 
+// Get maximum scroll index to ensure last item is visible
+function getMaxClientIndex() {
+    const clientsEl = document.getElementById('clients-section');
+    const containerEl = document.getElementById('clients-container');
+    if (!clientsEl || !containerEl || !contentData?.about?.clients) return 0;
+    
+    const firstItem = clientsEl.querySelector('a');
+    if (!firstItem) return 0;
+    
+    const containerWidth = containerEl.offsetWidth;
+    const itemWidth = firstItem.offsetWidth;
+    const totalWidth = clientsEl.scrollWidth;
+    
+    // Calculate how many items can fit in the container
+    const itemsThatFit = Math.floor(containerWidth / itemWidth);
+    
+    // Calculate max index to ensure last item is fully visible
+    const totalClients = contentData.about.clients.length;
+    const maxIndex = Math.max(0, totalClients - itemsThatFit);
+    
+    return maxIndex;
+}
+
 // Update clients position
 function updateClientsPosition() {
     const clientsEl = document.getElementById('clients-section');
-    if (!clientsEl || !contentData?.about?.clients) return;
+    const containerEl = document.getElementById('clients-container');
+    if (!clientsEl || !containerEl || !contentData?.about?.clients) return;
     
     // Get the first client item to calculate width
     const firstItem = clientsEl.querySelector('a');
     if (!firstItem) return;
     
-    // Calculate item width (no gap)
+    // Calculate item width
     const itemWidth = firstItem.offsetWidth;
-    const translateX = -(currentClientIndex * itemWidth);
+    const containerWidth = containerEl.offsetWidth;
+    const totalWidth = clientsEl.scrollWidth;
+    
+    // Calculate the maximum translateX to ensure last item is visible
+    const maxTranslateX = -(totalWidth - containerWidth);
+    
+    // Calculate desired translateX
+    let translateX = -(currentClientIndex * itemWidth);
+    
+    // Ensure we don't scroll past the last item
+    if (Math.abs(translateX) > Math.abs(maxTranslateX)) {
+        translateX = maxTranslateX;
+    }
+    
+    // Ensure we don't scroll before the first item
+    if (translateX > 0) {
+        translateX = 0;
+    }
     
     clientsEl.style.transform = `translateX(${translateX}px)`;
 }
@@ -279,8 +320,7 @@ function startClientsAutoScroll() {
     
     clientsAutoScrollInterval = setInterval(() => {
         if (!contentData?.about?.clients) return;
-        const totalClients = contentData.about.clients.length;
-        const maxIndex = Math.max(0, totalClients - clientsPerView);
+        const maxIndex = getMaxClientIndex();
         
         if (currentClientIndex >= maxIndex) {
             currentClientIndex = 0;
@@ -301,6 +341,11 @@ function stopClientsAutoScroll() {
 // Update on window resize
 window.addEventListener('resize', () => {
     updateClientsPerView();
+    // Ensure current index doesn't exceed max after resize
+    const maxIndex = getMaxClientIndex();
+    if (currentClientIndex > maxIndex) {
+        currentClientIndex = maxIndex;
+    }
     updateClientsPosition();
 });
 
@@ -460,13 +505,16 @@ function renderResume() {
             <div class="bg-card-light dark:bg-card-dark p-4 rounded-xl border border-gray-200 dark:border-gray-800">
                 <div class="flex justify-between items-center mb-2">
                     <span class="font-medium text-sm">${skill.name}</span>
-                    <span class="text-xs text-gray-500 dark:text-gray-400">${skill.percentage}%</span>
+                    <span class="skill-percentage text-xs text-gray-500 dark:text-gray-400">0%</span>
                 </div>
                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div class="bg-primary h-2 rounded-full transition-all duration-500" style="width: ${skill.percentage}%"></div>
+                    <div class="skill-bar bg-primary h-2 rounded-full transition-all duration-1000 ease-out" style="width: 0%" data-percentage="${skill.percentage}"></div>
                 </div>
             </div>
         `).join('');
+        
+        // Initialize scroll animation for skills
+        initSkillsAnimation();
     }
     
     // Tools
@@ -566,15 +614,39 @@ async function openBlog(blogId) {
     
     // Load markdown content
     try {
-        const response = await fetch(blog.markdown);
+        // Add cache-busting parameter to ensure fresh content
+        const cacheBuster = `?v=${Date.now()}`;
+        const markdownUrl = blog.markdown + cacheBuster;
+        console.log('Loading markdown from:', markdownUrl);
+        
+        const response = await fetch(markdownUrl, {
+            cache: 'no-store', // Prevent caching
+            headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Failed to load markdown: ${response.status} ${response.statusText}`);
+        }
+        
         const markdown = await response.text();
+        console.log('Markdown loaded, length:', markdown.length);
         
         // Convert markdown to HTML
         const html = convertMarkdownToHTML(markdown);
-        if (contentEl) contentEl.innerHTML = html;
+        if (contentEl) {
+            contentEl.innerHTML = html;
+            console.log('Blog content rendered successfully');
+        }
     } catch (error) {
         console.error('Error loading markdown:', error);
-        if (contentEl) contentEl.innerHTML = '<p class="text-red-500">Error loading blog content.</p>';
+        console.error('Markdown URL:', blog.markdown);
+        if (contentEl) {
+            contentEl.innerHTML = `<p class="text-red-500">Error loading blog content: ${error.message}<br/>Please try refreshing the page (Ctrl+Shift+R for hard refresh).</p>`;
+        }
     }
     
     // Render related posts (exclude current blog)
@@ -613,42 +685,115 @@ function convertMarkdownToHTML(markdown) {
         // Use marked.js for proper markdown parsing
         marked.setOptions({
             breaks: true,
-            gfm: true
+            gfm: true,
+            highlight: null // We'll handle syntax highlighting styling manually
         });
         let html = marked.parse(markdown);
+        
+        // Process code blocks first (before inline code) - use placeholder approach
+        const codeBlockPlaceholders = [];
+        let placeholderIndex = 0;
+        
+        // Replace code blocks with placeholders
+        html = html.replace(/<pre><code(?: class="language-(\w+)")?>(.*?)<\/code><\/pre>/gs, (match, lang, code) => {
+            const placeholder = `__CODE_BLOCK_${placeholderIndex}__`;
+            const langClass = lang ? `language-${lang}` : '';
+            codeBlockPlaceholders[placeholderIndex] = `<pre class="bg-[#1A1A1A] dark:bg-[#0F0F0F] border border-gray-800 dark:border-gray-700 p-4 rounded-lg mb-6 overflow-x-auto"><code class="text-sm font-mono text-gray-200 dark:text-gray-300 ${langClass}">${code}</code></pre>`;
+            placeholderIndex++;
+            return placeholder;
+        });
+        
+        // Now handle inline code (all remaining <code> tags)
+        html = html.replace(/<code(?: class="[^"]*")?>(.*?)<\/code>/g, '<code class="inline-code">$1</code>');
+        
+        // Restore code blocks
+        codeBlockPlaceholders.forEach((block, index) => {
+            html = html.replace(`__CODE_BLOCK_${index}__`, block);
+        });
+        
         // Add Tailwind classes to the generated HTML
         html = html
-            .replace(/<h1>/g, '<h1 class="text-3xl font-bold mt-8 mb-4 text-gray-900 dark:text-white">')
-            .replace(/<h2>/g, '<h2 class="text-2xl font-bold mt-6 mb-3 text-gray-900 dark:text-white">')
-            .replace(/<h3>/g, '<h3 class="text-xl font-bold mt-6 mb-3 text-gray-900 dark:text-white">')
-            .replace(/<h4>/g, '<h4 class="text-lg font-bold mt-4 mb-2 text-gray-900 dark:text-white">')
-            .replace(/<p>/g, '<p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">')
-            .replace(/<ul>/g, '<ul class="list-disc ml-6 mb-4 space-y-2 text-gray-700 dark:text-gray-300">')
-            .replace(/<ol>/g, '<ol class="list-decimal ml-6 mb-4 space-y-2 text-gray-700 dark:text-gray-300">')
-            .replace(/<li>/g, '<li class="mb-1">')
-            .replace(/<code(?! class)/g, '<code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm font-mono text-gray-800 dark:text-gray-200">')
-            .replace(/<pre>/g, '<pre class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4 overflow-x-auto"><code class="text-sm">')
-            .replace(/<\/pre>/g, '</code></pre>')
-            .replace(/<a href=/g, '<a class="text-primary hover:underline" href=')
-            .replace(/<strong>/g, '<strong class="font-bold text-gray-900 dark:text-white">')
-            .replace(/<em>/g, '<em class="italic">')
-            .replace(/<blockquote>/g, '<blockquote class="border-l-4 border-primary pl-4 italic my-4 text-gray-600 dark:text-gray-400">')
-            .replace(/<img/g, '<img class="rounded-lg my-4 max-w-full"');
+            // Headings - white text for dark theme
+            .replace(/<h1>/g, '<h1 class="text-3xl font-bold mt-8 mb-4 text-white">')
+            .replace(/<h2>/g, '<h2 class="text-2xl font-bold mt-6 mb-3 text-white">')
+            .replace(/<h3>/g, '<h3 class="text-xl font-bold mt-6 mb-3 text-white">')
+            .replace(/<h4>/g, '<h4 class="text-lg font-bold mt-4 mb-2 text-white">')
+            .replace(/<h5>/g, '<h5 class="text-base font-bold mt-4 mb-2 text-white">')
+            .replace(/<h6>/g, '<h6 class="text-sm font-bold mt-4 mb-2 text-white">')
+            // Paragraphs - gray-300 for readability
+            .replace(/<p>/g, '<p class="mb-4 text-gray-300 leading-relaxed">')
+            // Lists
+            .replace(/<ul>/g, '<ul class="list-disc ml-6 mb-4 space-y-2 text-gray-300">')
+            .replace(/<ol>/g, '<ol class="list-decimal ml-6 mb-4 space-y-2 text-gray-300">')
+            .replace(/<li>/g, '<li class="mb-2 leading-relaxed">')
+            // Links - primary color
+            .replace(/<a href=/g, '<a class="text-primary hover:text-primary-hover hover:underline transition-colors" href=')
+            // Strong/Bold - white
+            .replace(/<strong>/g, '<strong class="font-bold text-white">')
+            // Emphasis/Italic
+            .replace(/<em>/g, '<em class="italic text-gray-300">')
+            // Blockquotes
+            .replace(/<blockquote>/g, '<blockquote class="border-l-4 border-primary pl-4 italic my-4 text-gray-400 bg-gray-900/30 dark:bg-gray-800/30 py-2 rounded-r">')
+            // Images
+            .replace(/<img/g, '<img class="rounded-lg my-6 max-w-full shadow-lg"')
+            // Horizontal rules
+            .replace(/<hr>/g, '<hr class="my-8 border-gray-700 dark:border-gray-800">')
+            // Tables (if any)
+            .replace(/<table>/g, '<table class="w-full mb-6 border-collapse">')
+            .replace(/<thead>/g, '<thead class="bg-gray-800 dark:bg-gray-900">')
+            .replace(/<th>/g, '<th class="px-4 py-2 text-left border border-gray-700 text-white font-bold">')
+            .replace(/<td>/g, '<td class="px-4 py-2 border border-gray-700 text-gray-300">')
+            .replace(/<tbody>/g, '<tbody>');
+        
         return html;
     } else {
-        // Fallback simple implementation
-        let html = markdown
-            .replace(/^#### (.*$)/gim, '<h4 class="text-lg font-bold mt-4 mb-2 text-gray-900 dark:text-white">$1</h4>')
-            .replace(/^### (.*$)/gim, '<h3 class="text-xl font-bold mt-6 mb-3 text-gray-900 dark:text-white">$1</h3>')
-            .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-8 mb-4 text-gray-900 dark:text-white">$1</h2>')
-            .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mt-8 mb-4 text-gray-900 dark:text-white">$1</h1>')
-            .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold text-gray-900 dark:text-white">$1</strong>')
-            .replace(/\*(.*?)\*/gim, '<em class="italic">$1</em>')
-            .replace(/^\d+\.\s+(.*$)/gim, '<li class="ml-4 mb-1">$1</li>')
-            .replace(/^-\s+(.*$)/gim, '<li class="ml-4 mb-1">$1</li>')
-            .replace(/\n\n/gim, '</p><p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">')
-            .replace(/^(?!<[h|u|l|p])(.+)$/gim, '<p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">$1</p>');
-        html = html.replace(/(<li.*?<\/li>\n?)+/gim, '<ul class="list-disc ml-6 mb-4 space-y-2 text-gray-700 dark:text-gray-300">$&</ul>');
+        // Fallback simple implementation with improved styling
+        let html = markdown;
+        
+        // Handle code blocks first (```code```)
+        html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
+            const langClass = lang ? `language-${lang}` : '';
+            const escapedCode = code
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+            return `<pre class="bg-[#1A1A1A] dark:bg-[#0F0F0F] border border-gray-800 dark:border-gray-700 p-4 rounded-lg mb-6 overflow-x-auto"><code class="text-sm font-mono text-gray-200 dark:text-gray-300 ${langClass}">${escapedCode}</code></pre>`;
+        });
+        
+        // Handle headings
+        html = html
+            .replace(/^#### (.*$)/gim, '<h4 class="text-lg font-bold mt-4 mb-2 text-white">$1</h4>')
+            .replace(/^### (.*$)/gim, '<h3 class="text-xl font-bold mt-6 mb-3 text-white">$1</h3>')
+            .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-8 mb-4 text-white">$1</h2>')
+            .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mt-8 mb-4 text-white">$1</h1>');
+        
+        // Handle inline code (backticks) - but not inside code blocks
+        html = html.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
+        
+        // Handle bold and italic
+        html = html
+            .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold text-white">$1</strong>')
+            .replace(/\*(.*?)\*/gim, '<em class="italic text-gray-300">$1</em>');
+        
+        // Handle lists - numbered
+        html = html.replace(/^\d+\.\s+(.*$)/gim, '<li class="mb-2 leading-relaxed text-gray-300">$1</li>');
+        // Handle lists - bulleted
+        html = html.replace(/^[-*]\s+(.*$)/gim, '<li class="mb-2 leading-relaxed text-gray-300">$1</li>');
+        
+        // Wrap consecutive list items in ul/ol
+        html = html.replace(/(<li class="mb-2 leading-relaxed text-gray-300">.*<\/li>\n?)+/gim, (match) => {
+            // Check if it's a numbered list by looking for numbers before
+            const isNumbered = /^\d+\./.test(match);
+            const listTag = isNumbered ? 'ol' : 'ul';
+            return `<${listTag} class="list-${isNumbered ? 'decimal' : 'disc'} ml-6 mb-4 space-y-2 text-gray-300">${match}</${listTag}>`;
+        });
+        
+        // Handle paragraphs
+        html = html.replace(/\n\n/gim, '</p><p class="mb-4 text-gray-300 leading-relaxed">');
+        html = html.replace(/^(?!<[h|u|o|l|p|p|b|i|t|d])(.+)$/gim, '<p class="mb-4 text-gray-300 leading-relaxed">$1</p>');
+        
         return html;
     }
 }
@@ -940,6 +1085,76 @@ function addStaggerAnimations() {
     skillItems.forEach((item, index) => {
         item.style.animationDelay = `${index * 0.1}s`;
     });
+}
+
+// Initialize skills progress bar animation on scroll
+function initSkillsAnimation() {
+    const skillsList = document.getElementById('skills-list');
+    if (!skillsList) return;
+    
+    const skillBars = skillsList.querySelectorAll('.skill-bar');
+    const skillPercentages = skillsList.querySelectorAll('.skill-percentage');
+    
+    if (skillBars.length === 0) return;
+    
+    // Check if already animated
+    if (skillsList.classList.contains('skills-animated')) return;
+    
+    // Function to animate skills
+    const animateSkills = () => {
+        skillsList.classList.add('skills-animated');
+        
+        skillBars.forEach((bar, index) => {
+            const percentage = parseInt(bar.getAttribute('data-percentage'));
+            const percentageEl = skillPercentages[index];
+            
+            // Animate the bar
+            setTimeout(() => {
+                bar.style.width = `${percentage}%`;
+                
+                // Animate the percentage text
+                let current = 0;
+                const increment = percentage / 50; // 50 steps for smooth animation
+                const interval = setInterval(() => {
+                    current += increment;
+                    if (current >= percentage) {
+                        current = percentage;
+                        clearInterval(interval);
+                    }
+                    if (percentageEl) {
+                        percentageEl.textContent = `${Math.round(current)}%`;
+                    }
+                }, 20); // Update every 20ms
+            }, index * 100); // Stagger animation by 100ms per bar
+        });
+    };
+    
+    // Create Intersection Observer
+    const observerOptions = {
+        threshold: 0.3,
+        rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateSkills();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Check if element is already visible
+    const rect = skillsList.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    
+    if (isVisible) {
+        // Small delay to ensure DOM is ready
+        setTimeout(animateSkills, 100);
+    } else {
+        // Observe the skills list container
+        observer.observe(skillsList);
+    }
 }
 
 // Initialize animations after content loads
