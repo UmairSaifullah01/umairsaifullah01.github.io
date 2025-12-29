@@ -687,6 +687,17 @@ function showPage(pageId) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
+    // Restart typing animation if showing home page
+    if (pageId === 'home') {
+        typingAnimationActive = false;
+        if (typingTimeout) {
+            clearTimeout(typingTimeout);
+        }
+        setTimeout(() => {
+            initTypingAnimation();
+        }, 300);
+    }
+    
     // Update active navigation
     updateActiveNav(pageId);
 }
@@ -949,6 +960,67 @@ function initAnimations() {
 }
 
 
+// Typing Animation for Hero Text
+let typingTimeout = null;
+let typingAnimationActive = false;
+
+function initTypingAnimation() {
+    const typingElement = document.getElementById('typing-text');
+    if (!typingElement) return;
+    
+    // Clear any existing animation
+    if (typingTimeout) {
+        clearTimeout(typingTimeout);
+        typingTimeout = null;
+    }
+    
+    // Reset to first word
+    typingElement.textContent = 'Reality';
+    
+    const words = ['Reality', 'Success', 'Excellence', 'Innovation', 'Perfection', 'Greatness', 'Mastery'];
+    let currentWordIndex = 0;
+    let currentCharIndex = 0;
+    let isDeleting = false;
+    typingAnimationActive = true;
+    
+    function type() {
+        if (!typingAnimationActive) return;
+        
+        const currentWord = words[currentWordIndex];
+        let typingSpeed = 100; // milliseconds per character
+        
+        if (isDeleting) {
+            // Delete characters
+            typingElement.textContent = currentWord.substring(0, currentCharIndex - 1);
+            currentCharIndex--;
+            typingSpeed = 50; // Faster when deleting
+        } else {
+            // Type characters
+            typingElement.textContent = currentWord.substring(0, currentCharIndex + 1);
+            currentCharIndex++;
+            typingSpeed = 100; // Normal speed when typing
+        }
+        
+        // When word is complete
+        if (!isDeleting && currentCharIndex === currentWord.length) {
+            // Wait before starting to delete
+            typingSpeed = 2000; // Pause at end of word
+            isDeleting = true;
+        } 
+        // When word is deleted
+        else if (isDeleting && currentCharIndex === 0) {
+            isDeleting = false;
+            currentWordIndex = (currentWordIndex + 1) % words.length; // Move to next word
+            typingSpeed = 500; // Pause before typing next word
+        }
+        
+        typingTimeout = setTimeout(type, typingSpeed);
+    }
+    
+    // Start typing animation after a short delay
+    typingTimeout = setTimeout(type, 1000);
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
     loadData();
@@ -959,6 +1031,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (contactForm) {
         contactForm.addEventListener('submit', handleContactForm);
     }
+    
+    // Initialize typing animation
+    initTypingAnimation();
     
     // Initialize animations after a short delay to ensure DOM is ready
     setTimeout(() => {
