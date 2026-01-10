@@ -284,8 +284,9 @@
       {
         "degree": "Bachelor of Science in Software Engineering, Government College University Faisalabad",
         "period": "2013-01 — 2017-01",
-        "description": "Completed a BS in Software Engineering with strong academic performance. Studied core subjects including Object-Oriented Programming, Data Structures & Algorithms, Software Design & Architecture, Database Systems, Operating Systems, Computer Networks, Web Development, Software Quality Assurance, and Software Project Management, with hands-on experience through academic projects and a final year project."
-      }      
+        "description": "Completed a BS in Software Engineering with strong academic performance. Studied core subjects including Object-Oriented Programming, Data Structures & Algorithms, Software Design & Architecture, Database Systems, Operating Systems, Computer Networks, Web Development, Software Quality Assurance, and Software Project Management, with hands-on experience through academic projects and a final year project.",
+        "logo": "./assets/images/gcuf.jpg"
+      }
     ],
     "tools": [
       {

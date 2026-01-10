@@ -557,17 +557,23 @@ function renderResume() {
     // Education
     const eduEl = document.getElementById('education-list');
     if (eduEl && resume.education) {
-        eduEl.innerHTML = resume.education.map(edu => `
+        eduEl.innerHTML = resume.education.map(edu => {
+            const logoHtml = edu.logo ? `<img src="${edu.logo}" alt="Education Logo" class="w-12 h-12 object-contain rounded-lg mr-4" />` : '';
+            return `
             <div class="bg-card-light dark:bg-card-dark p-5 rounded-xl border border-gray-200 dark:border-gray-800 relative overflow-hidden group hover:shadow-lg transition">
                 <!-- Progress Line -->
                 <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-48 h-0.5 bg-primary transition-all duration-300 group-hover:w-72 group-hover:h-1 rounded-full"></div>
                 <div class="flex justify-between items-start mb-2">
-                    <h4 class="font-bold text-base">${edu.degree}</h4>
+                    <div class="flex items-center">
+                        ${logoHtml}
+                        <h4 class="font-bold text-base">${edu.degree}</h4>
+                    </div>
                     <span class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap ml-4">${edu.period}</span>
                 </div>
                 <p class="text-sm text-gray-600 dark:text-gray-400">${edu.description}</p>
             </div>
-        `).join('');
+        `;
+        }).join('');
     }
 
     // Skills Title
