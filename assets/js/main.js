@@ -340,6 +340,10 @@ function stopClientsAutoScroll() {
 
 // Update on window resize
 window.addEventListener('resize', () => {
+    // Recalculate slider position on resize
+    if (projectScreenshots.length > 0) {
+        updateProjectScreenshotSlider();
+    }
     updateClientsPerView();
     // Ensure current index doesn't exceed max after resize
     const maxIndex = getMaxClientIndex();
@@ -395,9 +399,9 @@ function renderPortfolio(filter = 'all') {
                 </div>
             `;
             } else {
-                const clickHandler = item.link ? `window.open('${item.link}', '_blank')` : `openPortfolioItem(${item.id})`;
+                // Always use openPortfolioItem to show detail page
                 return `
-                <div class="portfolio-item group cursor-pointer card-hover bg-gray-900 dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 dark:border-gray-800 flex flex-col" data-category="${categoryFilter}" onclick="${clickHandler}">
+                <div class="portfolio-item group cursor-pointer card-hover bg-gray-900 dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 dark:border-gray-800 flex flex-col" data-category="${categoryFilter}" onclick="openPortfolioItem(${item.id})">
                     <div class="bg-[#151515] rounded-t-2xl overflow-hidden relative aspect-[4/3]">
                         <img alt="${item.alt || item.title}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-100" src="${item.image}" />
                     </div>
@@ -460,19 +464,29 @@ function renderResume() {
     const expEl = document.getElementById('experience-list');
     if (expEl && resume.experience) {
         expEl.innerHTML = resume.experience.map((exp, index) => {
-            // Extract company name from position (e.g., "Senior Game Developer at ZPlay" -> "ZPlay")
-            const companyMatch = exp.position.match(/at\s+(.+)$/i);
-            const company = companyMatch ? companyMatch[1] : exp.position;
+            // Get company name - prefer explicit company field, otherwise extract from position
+            const company = exp.company || (() => {
+                const companyMatch = exp.position.match(/at\s+(.+)$/i);
+                return companyMatch ? companyMatch[1] : exp.position;
+            })();
             // Combine description items into a single paragraph, removing bullet points
             const description = exp.description ? exp.description
                 .filter(item => item && item.trim())
                 .map(item => item.replace(/^[•\-\*]\s*/, '').trim())
                 .join(' ') : '';
             
+            // Logo HTML if available
+            const logoHtml = exp.logo ? `<img src="${exp.logo}" alt="${company} Logo" class="w-12 h-12 object-contain rounded-lg mr-4" />` : '';
+            
             return `
-            <div class="bg-card-light dark:bg-card-dark p-6 rounded-2xl border border-gray-200 dark:border-gray-800 relative cursor-pointer hover:shadow-lg transition card-hover" onclick="openExperience(${index})">
+            <div class="bg-card-light dark:bg-card-dark p-6 rounded-2xl border border-gray-200 dark:border-gray-800 relative cursor-pointer hover:shadow-lg transition card-hover group overflow-hidden" onclick="openExperience(${index})">
+                <!-- Progress Line -->
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-48 h-0.5 bg-primary transition-all duration-300 group-hover:w-72 group-hover:h-1 rounded-full"></div>
                 <div class="flex justify-between items-start mb-4">
-                    <h4 class="text-2xl font-bold text-white dark:text-white">${company}</h4>
+                    <div class="flex items-center">
+                        ${logoHtml}
+                        <h4 class="text-2xl font-bold text-white dark:text-white">${company}</h4>
+                    </div>
                     <button class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:scale-110 transition shadow-lg shadow-primary/50 flex-shrink-0">
                         <span class="material-symbols-outlined text-lg transform -rotate-45">arrow_forward</span>
                     </button>
@@ -488,7 +502,9 @@ function renderResume() {
     const eduEl = document.getElementById('education-list');
     if (eduEl && resume.education) {
         eduEl.innerHTML = resume.education.map(edu => `
-            <div class="bg-card-light dark:bg-card-dark p-5 rounded-xl border border-gray-200 dark:border-gray-800">
+            <div class="bg-card-light dark:bg-card-dark p-5 rounded-xl border border-gray-200 dark:border-gray-800 relative overflow-hidden group hover:shadow-lg transition">
+                <!-- Progress Line -->
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-48 h-0.5 bg-primary transition-all duration-300 group-hover:w-72 group-hover:h-1 rounded-full"></div>
                 <div class="flex justify-between items-start mb-2">
                     <h4 class="font-bold text-base">${edu.degree}</h4>
                     <span class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap ml-4">${edu.period}</span>
@@ -805,14 +821,274 @@ function formatDate(dateString) {
     return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
 }
 
-// Open Portfolio Item (for videos or items without links)
+// Global variable for project screenshot slider
+let currentProjectScreenshotIndex = 0;
+let projectScreenshots = [];
+
+// Open Portfolio Item
 function openPortfolioItem(itemId) {
     const item = portfolioData.find(p => p.id === itemId);
-    if (!item) return;
+    if (!item) {
+        console.error('Project not found:', itemId);
+        return;
+    }
     
-    if (item.type === 'video') {
-        // Could open in a modal or fullscreen
-        window.open(item.video, '_blank');
+    // Handle videos - show detail page instead of opening in new tab
+    // Videos will be displayed in the screenshot slider
+    
+    console.log('Opening project:', item);
+    
+    // Get all elements
+    const titleEl = document.getElementById('project-title');
+    const logoEl = document.getElementById('project-logo');
+    const descriptionEl = document.getElementById('project-description');
+    const descriptionSection = document.getElementById('project-description-section');
+    const screenshotsSection = document.getElementById('project-screenshots-section');
+    const screenshotsSlider = document.getElementById('project-screenshots-slider');
+    const screenshotsContainer = document.getElementById('project-screenshots-container');
+    const prevBtn = document.getElementById('project-screenshot-prev');
+    const nextBtn = document.getElementById('project-screenshot-next');
+    const dotsContainer = document.getElementById('project-screenshot-dots');
+    const googlePlayLink = document.getElementById('project-google-play');
+    const appStoreLink = document.getElementById('project-app-store');
+    const customLink = document.getElementById('project-custom-link');
+    const linksSection = document.getElementById('project-links-section');
+    
+    // Set project title
+    if (titleEl) titleEl.textContent = item.title;
+    
+    // Set project logo
+    if (logoEl) {
+        if (item.logo) {
+            // Check if logo is a video file, if so use a placeholder or hide it
+            const isVideoFile = item.logo.includes('.mp4') || item.logo.includes('.webm') || item.logo.includes('.mov');
+            if (isVideoFile && item.image) {
+                logoEl.src = item.image;
+            } else if (!isVideoFile) {
+                logoEl.src = item.logo;
+            } else {
+                logoEl.classList.add('hidden');
+            }
+            if (!isVideoFile || item.image) {
+                logoEl.classList.remove('hidden');
+            }
+        } else if (item.image) {
+            logoEl.src = item.image;
+            logoEl.classList.remove('hidden');
+        } else {
+            logoEl.classList.add('hidden');
+        }
+    }
+    
+    // Set description
+    if (descriptionEl && item.description) {
+        descriptionEl.textContent = item.description;
+        if (descriptionSection) descriptionSection.classList.remove('hidden');
+    } else if (descriptionSection) {
+        descriptionSection.classList.add('hidden');
+    }
+    
+    // Handle screenshots/videos slider - show 3 at a time, move by 1
+    projectScreenshots = item.screenshots || [];
+    // If it's a video and no screenshots, use the video itself
+    if (item.type === 'video' && item.video && projectScreenshots.length === 0) {
+        projectScreenshots = [item.video];
+    }
+    currentProjectScreenshotIndex = 0;
+    const screenshotsPerView = 3;
+    
+    if (screenshotsSection && projectScreenshots.length > 0) {
+        screenshotsSection.classList.remove('hidden');
+        
+        // Render screenshots or videos - each takes ~26.67% of container width (20% smaller than 33.33%)
+        if (screenshotsSlider) {
+            // Original would be 33.33% for 3 items, make it 20% smaller = 26.67%
+            const itemWidthPercent = (100 / screenshotsPerView) * 0.8; // ~26.67% per item (20% smaller)
+            // gap-4 is 1rem (16px), calculate item width accounting for gap
+            // Formula: (containerWidth * itemWidthPercent / 100) - gap
+            // But we'll use CSS calc for better accuracy
+            const itemWidthCalc = `calc(${itemWidthPercent}% - 0.67rem)`;
+            
+            // Set slider to auto width (flex will handle it)
+            screenshotsSlider.style.width = 'auto';
+            
+            screenshotsSlider.innerHTML = projectScreenshots.map((media, index) => {
+                // Check if it's a video file
+                const isVideo = media.includes('.mp4') || media.includes('.webm') || media.includes('.mov') || item.type === 'video';
+                if (isVideo) {
+                    return `
+                        <div class="flex-shrink-0 rounded-lg overflow-hidden" style="width: ${itemWidthCalc}; min-width: 0;">
+                            <video class="w-full h-auto object-cover rounded-lg" controls autoplay muted loop>
+                                <source src="${media}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="flex-shrink-0 rounded-lg overflow-hidden" style="width: ${itemWidthCalc}; min-width: 0;">
+                            <img src="${media}" alt="Screenshot ${index + 1}" class="w-full h-auto object-cover rounded-lg" />
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+        
+        // Show/hide navigation buttons - only show if more than 3 screenshots
+        if (prevBtn) {
+            if (projectScreenshots.length > screenshotsPerView) {
+                prevBtn.classList.remove('hidden');
+            } else {
+                prevBtn.classList.add('hidden');
+            }
+        }
+        if (nextBtn) {
+            if (projectScreenshots.length > screenshotsPerView) {
+                nextBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.add('hidden');
+            }
+        }
+        
+        // Render dots - one per screenshot (since we move by 1)
+        if (dotsContainer) {
+            if (projectScreenshots.length > screenshotsPerView) {
+                dotsContainer.innerHTML = projectScreenshots.map((_, index) => `
+                    <button onclick="goToProjectScreenshot(${index})" class="w-2 h-2 rounded-full transition ${index === 0 ? 'bg-primary' : 'bg-gray-600'}" data-index="${index}"></button>
+                `).join('');
+            } else {
+                dotsContainer.innerHTML = '';
+            }
+        }
+        
+        // Update slider position - use setTimeout to ensure DOM is ready
+        setTimeout(() => {
+            updateProjectScreenshotSlider();
+        }, 100);
+    } else if (screenshotsSection) {
+        screenshotsSection.classList.add('hidden');
+    }
+    
+    // Handle links - only show if they exist
+    let hasAnyLink = false;
+    
+    if (googlePlayLink && item.googlePlayLink) {
+        googlePlayLink.href = item.googlePlayLink;
+        googlePlayLink.classList.remove('hidden');
+        hasAnyLink = true;
+    } else if (googlePlayLink) {
+        googlePlayLink.classList.add('hidden');
+    }
+    
+    if (appStoreLink && item.appStoreLink) {
+        appStoreLink.href = item.appStoreLink;
+        appStoreLink.classList.remove('hidden');
+        hasAnyLink = true;
+    } else if (appStoreLink) {
+        appStoreLink.classList.add('hidden');
+    }
+    
+    if (customLink && item.customLink) {
+        customLink.href = item.customLink;
+        customLink.classList.remove('hidden');
+        hasAnyLink = true;
+    } else if (customLink) {
+        customLink.classList.add('hidden');
+    }
+    
+    // Show/hide links section
+    if (linksSection) {
+        if (hasAnyLink) {
+            linksSection.classList.remove('hidden');
+        } else {
+            linksSection.classList.add('hidden');
+        }
+    }
+    
+    // Show project page
+    showPage('project');
+    // Scroll to top
+    window.scrollTo(0, 0);
+}
+
+// Change project screenshot - moves by 1 screenshot at a time
+function changeProjectScreenshot(direction) {
+    if (projectScreenshots.length === 0) return;
+    
+    const screenshotsPerView = 3;
+    
+    // Move by 1 screenshot
+    currentProjectScreenshotIndex += direction;
+    
+    // Clamp to valid range
+    const maxIndex = Math.max(0, projectScreenshots.length - screenshotsPerView);
+    if (currentProjectScreenshotIndex < 0) {
+        currentProjectScreenshotIndex = 0;
+    } else if (currentProjectScreenshotIndex > maxIndex) {
+        currentProjectScreenshotIndex = maxIndex;
+    }
+    
+    updateProjectScreenshotSlider();
+}
+
+// Go to specific screenshot
+function goToProjectScreenshot(index) {
+    const screenshotsPerView = 3;
+    const maxIndex = Math.max(0, projectScreenshots.length - screenshotsPerView);
+    
+    if (index >= 0 && index <= maxIndex) {
+        currentProjectScreenshotIndex = index;
+        updateProjectScreenshotSlider();
+    }
+}
+
+// Update project screenshot slider position
+function updateProjectScreenshotSlider() {
+    const slider = document.getElementById('project-screenshots-slider');
+    const container = document.getElementById('project-screenshots-container');
+    const dots = document.querySelectorAll('#project-screenshot-dots button');
+    
+    if (slider && container && projectScreenshots.length > 0) {
+        const screenshotsPerView = 3;
+        
+        // Get container width in pixels
+        const containerWidth = container.offsetWidth;
+        if (containerWidth === 0) {
+            // Container not yet rendered, retry after a short delay
+            setTimeout(updateProjectScreenshotSlider, 50);
+            return;
+        }
+        
+        // Get the first item to measure actual width
+        const firstItem = slider.querySelector('div');
+        if (!firstItem) {
+            setTimeout(updateProjectScreenshotSlider, 50);
+            return;
+        }
+        
+        // Get actual item width including margin/padding
+        const itemWidthPx = firstItem.offsetWidth;
+        // Get computed gap (from gap-4 = 1rem = 16px typically)
+        const gapPx = 16; // gap-4 is 1rem
+        // Total width per item including gap
+        const itemWithGapPx = itemWidthPx + gapPx;
+        
+        // Calculate translateX in pixels - move by 1 screenshot at a time
+        const translateXPx = -(currentProjectScreenshotIndex * itemWithGapPx);
+        slider.style.transform = `translateX(${translateXPx}px)`;
+    }
+    
+    // Update dots - highlight the current starting screenshot
+    if (dots && projectScreenshots.length > 3) {
+        dots.forEach((dot, index) => {
+            if (index === currentProjectScreenshotIndex) {
+                dot.classList.remove('bg-gray-600');
+                dot.classList.add('bg-primary');
+            } else {
+                dot.classList.remove('bg-primary');
+                dot.classList.add('bg-gray-600');
+            }
+        });
     }
 }
 
@@ -854,24 +1130,113 @@ function scrollToSection(sectionId) {
 
 // Open Experience Detail
 function openExperience(index) {
-    if (!contentData?.resume?.experience) return;
+    if (!contentData?.resume?.experience) {
+        console.error('No experience data available');
+        return;
+    }
     
     const experience = contentData.resume.experience[index];
-    if (!experience) return;
+    if (!experience) {
+        console.error('Experience not found at index:', index);
+        return;
+    }
     
-    // Extract company name from position
-    const companyMatch = experience.position.match(/at\s+(.+)$/i);
-    const company = companyMatch ? companyMatch[1] : experience.position;
+    console.log('Opening experience:', experience);
     
+    // Get company name - prefer explicit company field, otherwise extract from position
+    const company = experience.company || (() => {
+        const companyMatch = experience.position.match(/at\s+(.+)$/i);
+        return companyMatch ? companyMatch[1] : experience.position;
+    })();
+    
+    // Get all elements
     const companyEl = document.getElementById('experience-company');
     const periodEl = document.getElementById('experience-period');
+    const logoEl = document.getElementById('experience-logo');
+    const overviewEl = document.getElementById('experience-overview');
+    const roleEl = document.getElementById('experience-role');
+    const skillsEl = document.getElementById('experience-skills');
+    const impactEl = document.getElementById('experience-impact');
+    const linkEl = document.getElementById('experience-link');
     const descriptionEl = document.getElementById('experience-description');
     
+    // Section containers
+    const overviewSection = document.getElementById('experience-overview-section');
+    const roleSection = document.getElementById('experience-role-section');
+    const skillsSection = document.getElementById('experience-skills-section');
+    const impactSection = document.getElementById('experience-impact-section');
+    const linkSection = document.getElementById('experience-link-section');
+    
+    // Set company name and period
     if (companyEl) companyEl.textContent = company;
     if (periodEl) periodEl.textContent = experience.period;
     
-    // Format description with proper HTML
-    if (descriptionEl && experience.description) {
+    // Set company logo
+    if (logoEl && experience.logo) {
+        logoEl.src = experience.logo;
+        logoEl.classList.remove('hidden');
+        console.log('Logo set:', experience.logo);
+    } else if (logoEl) {
+        logoEl.classList.add('hidden');
+    }
+    
+    // Set overview
+    if (overviewEl && experience.overview) {
+        overviewEl.textContent = experience.overview;
+        if (overviewSection) {
+            overviewSection.classList.remove('hidden');
+            console.log('Overview section displayed');
+        }
+    } else if (overviewSection) {
+        overviewSection.classList.add('hidden');
+    }
+    
+    // Set my role
+    if (roleEl && experience.myRole) {
+        roleEl.textContent = experience.myRole;
+        if (roleSection) {
+            roleSection.classList.remove('hidden');
+            console.log('Role section displayed');
+        }
+    } else if (roleSection) {
+        roleSection.classList.add('hidden');
+    }
+    
+    // Set skills acquired
+    if (skillsEl && experience.skillsAcquired) {
+        skillsEl.textContent = experience.skillsAcquired;
+        if (skillsSection) {
+            skillsSection.classList.remove('hidden');
+            console.log('Skills section displayed');
+        }
+    } else if (skillsSection) {
+        skillsSection.classList.add('hidden');
+    }
+    
+    // Set impact
+    if (impactEl && experience.impact) {
+        impactEl.textContent = experience.impact;
+        if (impactSection) {
+            impactSection.classList.remove('hidden');
+            console.log('Impact section displayed');
+        }
+    } else if (impactSection) {
+        impactSection.classList.add('hidden');
+    }
+    
+    // Set company link
+    if (linkEl && experience.link) {
+        linkEl.href = experience.link;
+        if (linkSection) {
+            linkSection.classList.remove('hidden');
+            console.log('Link section displayed');
+        }
+    } else if (linkSection) {
+        linkSection.classList.add('hidden');
+    }
+    
+    // Fallback: Use description if new format fields are not available
+    if (!experience.overview && descriptionEl && experience.description) {
         const formattedDescription = experience.description
             .filter(item => item && item.trim())
             .map(item => {
@@ -885,12 +1250,17 @@ function openExperience(index) {
             })
             .join('');
         descriptionEl.innerHTML = formattedDescription;
+        descriptionEl.classList.remove('hidden');
+    } else if (descriptionEl) {
+        descriptionEl.classList.add('hidden');
     }
     
     // Show experience page
     showPage('experience');
     // Scroll to top
     window.scrollTo(0, 0);
+    
+    console.log('Experience page displayed');
 }
 
 // Update active navigation button

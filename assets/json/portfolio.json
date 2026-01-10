@@ -5,7 +5,17 @@
     "category": "Mobile Casual",
     "image": "./assets/images/idle-bank.jpg",
     "alt": "Idle Bank - Money Games",
-    "link": "https://play.google.com/store/apps/details?id=com.doublefun.moneyflow"
+    "link": "https://play.google.com/store/apps/details?id=com.doublefun.moneyflow",
+    "logo": "./assets/images/idle-bank.jpg",
+    "screenshots": [
+      "./assets/images/idle-bank_01.jpg",
+      "./assets/images/idle-bank_02.jpg",
+      "./assets/images/idle-bank_03.jpg",
+      "./assets/images/idle-bank_04.jpg",
+      "./assets/images/idle-bank_05.jpg"
+    ],
+    "description": "Idle Bank is an engaging money management game where players build and expand their banking empire. Experience the thrill of growing your wealth through strategic investments and idle gameplay mechanics.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.doublefun.moneyflow"
   },
   {
     "id": 2,
@@ -13,7 +23,16 @@
     "category": "Mobile Casual",
     "image": "./assets/images/figurine-art.jpg",
     "alt": "Figurine Art",
-    "link": "https://play.google.com/store/apps/details?id=com.hcg.figurineart"
+    "link": "https://play.google.com/store/apps/details?id=com.hcg.figurineart",
+    "logo": "./assets/images/figurine-art.jpg",
+    "screenshots": [
+      "./assets/images/figurine-art-1.jpg",
+      "./assets/images/figurine-art-2.jpg",
+      "./assets/images/figurine-art-3.jpg",
+      "./assets/images/figurine-art-4.jpg"
+    ],
+    "description": "Description will be added later.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.hcg.figurineart"
   },
   {
     "id": 3,
@@ -21,7 +40,17 @@
     "category": "Mobile Casual",
     "image": "./assets/images/sneaker-art.jpg",
     "alt": "Sneaker Art! (Hit)",
-    "link": "https://play.google.com/store/apps/details?id=com.majorfrank.sneakerart"
+    "link": "https://play.google.com/store/apps/details?id=com.majorfrank.sneakerart",
+    "logo": "./assets/images/sneaker-art.jpg",
+    "screenshots": [
+      "./assets/images/sneaker-art_01.jpg",
+      "./assets/images/sneaker-art_02.jpg",
+      "./assets/images/sneaker-art_03.jpg",
+      "./assets/images/sneaker-art_04.jpg",
+      "./assets/images/sneaker-art_05.jpg"
+    ],
+    "description": "Description will be added later.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.majorfrank.sneakerart"
   },
   {
     "id": 4,
@@ -29,7 +58,13 @@
     "category": "Mobile Puzzle",
     "image": "./assets/images/match-cruise.jpg",
     "alt": "Match Cruise (LiveOps)",
-    "link": "https://apps.apple.com/sa/app/match-cruise-match3-adventure/id6443736204"
+    "link": "https://apps.apple.com/sa/app/match-cruise-match3-adventure/id6443736204",
+    "logo": "./assets/images/match-cruise.jpg",
+    "screenshots": [
+      "./assets/images/match-cruise.jpg"
+    ],
+    "description": "Match Cruise is an exciting match-3 puzzle game with live operations features. Embark on a cruise adventure and solve challenging puzzles while enjoying regular content updates and events.",
+    "appStoreLink": "https://apps.apple.com/sa/app/match-cruise-match3-adventure/id6443736204"
   },
   {
     "id": 5,
@@ -37,7 +72,13 @@
     "category": "Mobile Puzzle",
     "image": "./assets/images/fill-puzzle.jpg",
     "alt": "Fill The Puzzle",
-    "link": "https://play.google.com/store/apps/details?id=com.kobgames.fillthepuzzle"
+    "link": "https://play.google.com/store/apps/details?id=com.kobgames.fillthepuzzle",
+    "logo": "./assets/images/fill-puzzle.jpg",
+    "screenshots": [
+      "./assets/images/fill-puzzle.jpg"
+    ],
+    "description": "Description will be added later.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.kobgames.fillthepuzzle"
   },
   {
     "id": 6,
@@ -45,7 +86,16 @@
     "category": "Mobile Puzzle",
     "image": "./assets/images/nuts-bolts.jpg",
     "alt": "Nuts and Bolts",
-    "link": "https://play.google.com/store/apps/details?id=com.wood.nuts.bolts.screw.puzzle"
+    "link": "https://play.google.com/store/apps/details?id=com.wood.nuts.bolts.screw.puzzle",
+    "logo": "./assets/images/nuts-bolts.jpg",
+    "screenshots": [
+      "./assets/images/nuts-bolts_01.jpg",
+      "./assets/images/nuts-bolts_02.jpg",
+      "./assets/images/nuts-bolts_03.jpg",
+      "./assets/images/nuts-bolts_04.jpg"
+    ],
+    "description": "Description will be added later.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.wood.nuts.bolts.screw.puzzle"
   },
   {
     "id": 7,
@@ -53,7 +103,17 @@
     "category": "Mobile Casual",
     "image": "./assets/images/web-master.jpg",
     "alt": "Web Master 3D",
-    "link": "https://play.google.com/store/apps/details?id=com.ouazgames.SpiderMaster"
+    "link": "https://play.google.com/store/apps/details?id=com.ouazgames.SpiderMaster",
+    "logo": "./assets/images/web-master.jpg",
+    "screenshots": [
+      "./assets/images/web-master-01.jpg",
+      "./assets/images/web-master-02.jpg",
+      "./assets/images/web-master-03.jpg",
+      "./assets/images/web-master-04.jpg",
+      "./assets/images/web-master-05.jpg"
+    ],
+    "description": "Description will be added later.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.ouazgames.SpiderMaster"
   },
   {
     "id": 8,
@@ -61,7 +121,16 @@
     "category": "Mobile Casual",
     "image": "./assets/images/dino-run.jpg",
     "alt": "Dino Run: Dinosaur Runner Game",
-    "link": "https://play.google.com/store/apps/details?id=com.spiky.DinoRun"
+    "link": "https://play.google.com/store/apps/details?id=com.spiky.DinoRun",
+    "logo": "./assets/images/dino-run.jpg",
+    "screenshots": [
+      "./assets/images/dino-run_01.jpg",
+      "./assets/images/dino-run_02.jpg",
+      "./assets/images/dino-run_03.jpg",
+      "./assets/images/dino-run_04.jpg"
+    ],
+    "description": "Description will be added later.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.spiky.DinoRun"
   },
   {
     "id": 9,
@@ -69,7 +138,16 @@
     "category": "Mobile Puzzle",
     "image": "./assets/images/car-escape.jpg",
     "alt": "Car Escape - Parking Jam Games",
-    "link": "https://play.google.com/store/apps/details?id=com.trafficescape.master.car.parkingjam"
+    "link": "https://play.google.com/store/apps/details?id=com.trafficescape.master.car.parkingjam",
+    "logo": "./assets/images/car-escape.jpg",
+    "screenshots": [
+      "./assets/images/car-escape-01.jpg",
+      "./assets/images/car-escape-02.jpg",
+      "./assets/images/car-escape-03.jpg",
+      "./assets/images/car-escape-04.jpg"
+    ],
+    "description": "Description will be added later.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.trafficescape.master.car.parkingjam"
   },
   {
     "id": 10,
@@ -77,7 +155,13 @@
     "category": "GameVideos",
     "type": "video",
     "video": "./assets/videos/Hunter%27sJungle%20Path.mp4",
-    "alt": "Hunter's Jungle Path"
+    "alt": "Hunter's Jungle Path",
+    "logo": "./assets/videos/Hunter%27sJungle%20Path.mp4",
+    "screenshots": [
+      "./assets/videos/Hunter%27sJungle%20Path.mp4"
+    ],
+    "description": "Description will be added later.",
+    "customLink": "#"
   },
   {
     "id": 11,
@@ -85,7 +169,13 @@
     "category": "GameVideos",
     "type": "video",
     "video": "./assets/videos/TeasureHunter.mp4",
-    "alt": "Treasure Hunter"
+    "alt": "Treasure Hunter",
+    "logo": "./assets/videos/TeasureHunter.mp4",
+    "screenshots": [
+      "./assets/videos/TeasureHunter.mp4"
+    ],
+    "description": "Description will be added later.",
+    "customLink": "#"
   },
   {
     "id": 12,
@@ -93,7 +183,13 @@
     "category": "GameVideos",
     "type": "video",
     "video": "./assets/videos/PrisonEscape.mp4",
-    "alt": "Prison Escape"
+    "alt": "Prison Escape",
+    "logo": "./assets/videos/PrisonEscape.mp4",
+    "screenshots": [
+      "./assets/videos/PrisonEscape.mp4"
+    ],
+    "description": "Description will be added later.",
+    "customLink": "#"
   },
   {
     "id": 13,
@@ -101,7 +197,13 @@
     "category": "Mobile Puzzle",
     "image": "./assets/images/cup-jam-escape.jpg",
     "alt": "Cup Jam Escape",
-    "link": "https://play.google.com/store/apps/details?id=com.together.CupManiaGP"
+    "link": "https://play.google.com/store/apps/details?id=com.together.CupManiaGP",
+    "logo": "./assets/images/cup-jam-escape.jpg",
+    "screenshots": [
+      "./assets/images/cup-jam-escape.jpg"
+    ],
+    "description": "Description will be added later.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.together.CupManiaGP"
   },
   {
     "id": 14,
@@ -109,7 +211,13 @@
     "category": "GameVideos",
     "type": "video",
     "video": "./assets/videos/CubeSurfer.mp4",
-    "alt": "Cube Surfer"
+    "alt": "Cube Surfer",
+    "logo": "./assets/videos/CubeSurfer.mp4",
+    "screenshots": [
+      "./assets/videos/CubeSurfer.mp4"
+    ],
+    "description": "Description will be added later.",
+    "customLink": "#"
   },
   {
     "id": 15,
@@ -117,7 +225,16 @@
     "category": "Mobile Puzzle",
     "image": "./assets/images/Merge2048Puzzle.jpg",
     "alt": "Merge the Number - 2048 Puzzle",
-    "link": "https://play.google.com/store/apps/details?id=com.merge.number.block.puzzle.games"
+    "link": "https://play.google.com/store/apps/details?id=com.merge.number.block.puzzle.games",
+    "logo": "./assets/images/Merge2048Puzzle.jpg",
+    "screenshots": [
+      "./assets/images/Merge2048Puzzle-01.jpg",
+      "./assets/images/Merge2048Puzzle-02.jpg",
+      "./assets/images/Merge2048Puzzle-03.jpg",
+      "./assets/images/Merge2048Puzzle-04.jpg"
+    ],
+    "description": "Description will be added later.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.merge.number.block.puzzle.games"
   },
   {
     "id": 16,
@@ -125,7 +242,13 @@
     "category": "Mobile Puzzle",
     "image": "./assets/images/gotravel.jpg",
     "alt": "Go Travel Mania",
-    "link": "https://play.google.com/store/apps/details?id=com.zplay.GoTravel&gl=US"
+    "link": "https://play.google.com/store/apps/details?id=com.zplay.GoTravel&gl=US",
+    "logo": "./assets/images/gotravel.jpg",
+    "screenshots": [
+      "./assets/images/gotravel.jpg"
+    ],
+    "description": "Description will be added later.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.zplay.GoTravel&gl=US"
   },
   {
     "id": 17,
@@ -133,7 +256,13 @@
     "category": "Mobile Puzzle",
     "image": "./assets/images/pjm.jpg",
     "alt": "ParkJamMaster",
-    "link": "https://apps.apple.com/us/app/park-jam-escape-master/id6751706860"
+    "link": "https://apps.apple.com/us/app/park-jam-escape-master/id6751706860",
+    "logo": "./assets/images/pjm.jpg",
+    "screenshots": [
+      "./assets/images/pjm.jpg"
+    ],
+    "description": "Park Jam Master is a challenging parking puzzle game where players must navigate vehicles through tight spaces. Test your strategic thinking and parking skills in this addictive puzzle experience.",
+    "appStoreLink": "https://apps.apple.com/us/app/park-jam-escape-master/id6751706860"
   },
   {
     "id": 18,
@@ -141,7 +270,13 @@
     "category": "Mobile Puzzle",
     "image": "./assets/images/card-sort-blast.png",
     "alt": "Card Sort Blast",
-    "link": "https://play.google.com/store/apps/details?id=com.hcgames.cardsortblastgp"
+    "link": "https://play.google.com/store/apps/details?id=com.hcgames.cardsortblastgp",
+    "logo": "./assets/images/card-sort-blast.png",
+    "screenshots": [
+      "./assets/images/card-sort-blast.png"
+    ],
+    "description": "Description will be added later.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.hcgames.cardsortblastgp"
   },
   {
     "id": 19,
@@ -149,6 +284,12 @@
     "category": "Mobile Puzzle",
     "image": "./assets/images/knit-sort-puzzle.png",
     "alt": "Knit Sort Puzzle - Color Paint",
-    "link": "https://play.google.com/store/apps/details?id=com.zplay.KnitColorSort"
+    "link": "https://play.google.com/store/apps/details?id=com.zplay.KnitColorSort",
+    "logo": "./assets/images/knit-sort-puzzle.png",
+    "screenshots": [
+      "./assets/images/knit-sort-puzzle.png"
+    ],
+    "description": "Description will be added later.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.zplay.KnitColorSort"
   }
 ]

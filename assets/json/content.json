@@ -128,6 +128,21 @@
         "name": "Leyla Games",
         "logo": "./assets/images/leyla-logo.png",
         "link": "https://leyla.games/"
+      },
+      {
+        "name": "HazelMobile",
+        "logo": "./assets/images/hazelmobile-logo.png",
+        "link": "#"
+      },
+      {
+        "name": "Ozi Technology",
+        "logo": "./assets/images/Ozi-logo.png",
+        "link": "#"
+      },
+      {
+        "name": "Occess Inc",
+        "logo": "./assets/images/occess-logo.png",
+        "link": "#"
       }
     ]
   },
@@ -135,8 +150,15 @@
     "title": "Resume",
     "experience": [
       {
-        "position": "Senior Game Developer at ZPlay",
+        "position": "Senior Game Developer",
+        "company": "ZPlay",
         "period": "2025-01 — Present",
+        "logo": "./assets/images/zplay-logo.png",
+        "link": "https://www.zplay.com/",
+        "overview": "At ZPlay, I have the opportunity to work in a dynamic and creative environment that specializes in developing engaging puzzle casual games. The company is known for its innovative approach to game development, combining technical expertise with creative design to create memorable gaming experiences that captivate players worldwide.",
+        "myRole": "As a Senior Game Developer at ZPlay, I am responsible for developing and optimizing puzzle casual games that engage players and drive retention. My work involves close collaboration with designers, artists, and product managers to ensure that games are both technically sound and creatively compelling. I contribute to several high-profile projects, implementing innovative game mechanics and features that enhance player engagement. I also work on performance optimization and user experience improvements, ensuring seamless gameplay across all platforms. ZPlay encourages a culture of innovation and continuous learning. I regularly participate in brainstorming sessions where we explore new game mechanics and experiment with emerging technologies. This collaborative approach allows us to push the boundaries of what's possible in casual game development.",
+        "skillsAcquired": "Advanced proficiency in Unity3D game development and C# programming. Deepened understanding of puzzle game mechanics and player psychology. Enhanced ability to optimize game performance for mobile platforms. Improved skills in cross-functional collaboration and agile development methodologies.",
+        "impact": "My experience at ZPlay has significantly enhanced my expertise in casual game development, emphasizing the importance of balancing technical excellence with player engagement. The projects I work on not only expand my skill set but also contribute to games that bring joy to millions of players worldwide.",
         "description": [
           "• Specialized in developing and optimizing puzzle casual games",
           "• Implemented innovative game mechanics and features for enhanced player engagement",
@@ -145,8 +167,15 @@
         ]
       },
       {
-        "position": "Lead Game Developer at HazelMobile",
+        "position": "Lead Game Developer",
+        "company": "HazelMobile",
         "period": "2024-05 — 2025-01",
+        "logo": "./assets/images/hazelmobile-logo.png",
+        "link": "#",
+        "overview": "At HazelMobile, I worked in an innovative game development environment focused on creating engaging puzzle games and implementing effective live operations strategies. The company was known for its data-driven approach to game development, combining creative design with analytics to create successful mobile games that resonated with players globally.",
+        "myRole": "As a Lead Game Developer at HazelMobile, I spearheaded the development of innovative puzzle games, including the successful \"Nuts and Bolts\" title. My responsibilities included evaluating current market trends, designing game mechanics, and implementing effective live operations strategies to maximize player engagement and retention. I worked closely with cross-functional teams including designers, artists, and product managers to ensure games were both fun and commercially viable. I led the technical implementation of live ops features, including event systems, analytics integration, and A/B testing frameworks. This role allowed me to combine my technical expertise with strategic thinking to drive significant growth in both player base and revenue.",
+        "skillsAcquired": "Advanced skills in live operations strategy and implementation. Enhanced expertise in market trend analysis and game design for puzzle genres. Improved abilities in data-driven decision making and A/B testing. Strengthened leadership skills in game development project management.",
+        "impact": "My work at HazelMobile resulted in the successful launch of \"Nuts and Bolts\" and contributed to significant growth in the company's player base and revenue. The live operations strategies I implemented became a model for future projects, demonstrating the importance of combining technical excellence with strategic market insights.",
         "description": [
           "• Spearheaded the development of innovative puzzle games, including \"Nuts and Bolts,\" by evaluating current trends and implementing effective live operations strategies.",
           "• Implemented live ops strategies for real-time engagement",
@@ -154,8 +183,15 @@
         ]
       },
       {
-        "position": "Senior Game Developer at Tap Nation",
+        "position": "Senior Game Developer",
+        "company": "Tap Nation",
         "period": "2023-01 — 2024-05",
+        "logo": "./assets/images/tapnation-logo.png",
+        "link": "https://tapnation.io/",
+        "overview": "At Tap Nation, I worked on cutting-edge metaverse game production in a forward-thinking environment that pushed the boundaries of interactive gaming experiences. The company was at the forefront of combining traditional game development with emerging metaverse technologies, creating immersive virtual worlds that connected players in new and exciting ways.",
+        "myRole": "As a Senior Game Developer at Tap Nation, I was responsible for developing a complex metaverse game with 30 distinct areas, requiring sophisticated content delivery systems and scalable architecture. I architected and implemented a content delivery system using Unity Addressables, enabling efficient management and loading of game assets across the extensive metaverse. I developed a fully customizable avatar system with a custom rig system, allowing players to personalize their virtual presence. I integrated multiplayer functionality using DarkRift2, implementing real-time player interactions, chat systems, and virtual stores. I designed and implemented REST APIs for all remote operations, including user data management and registration systems. I managed project version control using Plastic SCM and implemented MVVM design patterns for the UI architecture, ensuring maintainable and scalable code.",
+        "skillsAcquired": "Expert-level proficiency in Unity Addressables and content delivery systems. Advanced skills in multiplayer game development using DarkRift2. Enhanced expertise in REST API design and implementation. Deepened understanding of MVVM architecture patterns. Improved skills in large-scale project management and version control systems.",
+        "impact": "My contributions to the metaverse game at Tap Nation resulted in a scalable, maintainable system that supported 30 distinct areas and thousands of concurrent players. The technical architecture I implemented became a foundation for future metaverse projects, demonstrating the importance of proper system design in complex game development.",
         "description": [
           "Metaverse Game Production:",
           "• Manage 30 metaverse areas inside game by making content delivery system with Addressables",
@@ -167,8 +203,15 @@
         ]
       },
       {
-        "position": "Senior Game Developer at Tap Nation",
+        "position": "Senior Game Developer",
+        "company": "Tap Nation",
         "period": "2022-04 — 2023-01",
+        "logo": "./assets/images/tapnation-logo.png",
+        "link": "https://tapnation.io/",
+        "overview": "During this period at Tap Nation, I worked in a fast-paced environment focused on both maintaining successful live games and creating new hyper-casual and hybrid-casual prototypes. The company emphasized rapid iteration, data-driven development, and continuous improvement of existing titles to maximize player engagement and retention.",
+        "myRole": "As a Senior Game Developer at Tap Nation, I worked on two main fronts: live operations for successful games and rapid prototype development. For live ops, I maintained and improved hit games including Rock Crawling, Teeth Runner, Color Water Sort, and Tippy Toe. I used advanced debugging techniques to identify and resolve issues, ensuring smooth gameplay experiences for millions of players. I implemented A/B testing frameworks and analytics techniques to improve key performance indicators (KPIs) such as retention, engagement, and monetization. For new game production, I created multiple hyper-casual and hybrid-casual prototypes including Hive Takeover, Pixel Fall Run, and Color Mixing. I developed a comprehensive game base project with fully generic and reusable patterns, which accelerated development across multiple projects. I actively participated in game storming sessions and idea creation meetings, contributing both technical insights and creative concepts.",
+        "skillsAcquired": "Advanced expertise in live operations and game maintenance. Enhanced skills in A/B testing and analytics-driven development. Improved abilities in rapid prototyping and hyper-casual game development. Strengthened knowledge of reusable code patterns and architecture. Better understanding of KPI optimization and player retention strategies.",
+        "impact": "My work on live ops games at Tap Nation helped maintain and improve the performance of several hit titles, contributing to sustained player engagement and revenue. The reusable game base project I created accelerated development of new prototypes, enabling faster iteration and more efficient resource utilization. My contributions to game storming sessions led to several successful prototype concepts.",
         "description": [
           "Live Ops Games:",
           "• Worked and improved already hit games like Rock Crawling, Teeth Runner, Color Water Sort and Tippy Toe",
@@ -182,8 +225,15 @@
         ]
       },
       {
-        "position": "Senior Game Developer at Mood Games",
+        "position": "Senior Game Developer",
+        "company": "Mood Games",
         "period": "2021-09 — 2022-03",
+        "logo": "./assets/images/mood-games-logo.png",
+        "link": "https://mood.games/",
+        "overview": "At Mood Games, I worked in a creative and collaborative environment focused on hyper-casual game development. The company was known for its rapid prototyping approach and ability to identify market trends, resulting in several hit games that achieved significant success in app stores worldwide.",
+        "myRole": "As a Senior Game Developer at Mood Games, I produced numerous hyper-casual game prototypes, including the highly successful Queen Bee, which became a hit game of 2021. I also developed prototypes for Hammer, Smash, Unstoppable!, and several other titles. This role provided me with extensive experience in hyper-casual game design, learning the principles of creating games with simple mechanics that are instantly engaging. I worked closely with the marketing department, design team, and upper management to ensure prototypes aligned with market trends and company strategy. Additionally, I took on a mentorship role, guiding newly hired and junior developers in office policies, departmental procedures, and best practices in game development.",
+        "skillsAcquired": "Expert-level proficiency in hyper-casual game development and rapid prototyping. Deepened understanding of hyper-casual game design principles and market trends. Enhanced skills in cross-departmental collaboration and communication. Improved abilities in mentoring and knowledge transfer. Better understanding of the mobile game market and player psychology.",
+        "impact": "My work at Mood Games contributed to the development of Queen Bee, which became one of the hit games of 2021, demonstrating the company's ability to create successful hyper-casual titles. The mentorship I provided helped onboard new developers more efficiently, strengthening the team's overall capabilities. My collaboration with marketing and design teams improved the alignment between game development and market strategy.",
         "description": [
           "• Produce a lot of Hyper Casual games prototypes like Queen Bee (Hit game of 2021), Hammer, Smash, Unstoppable! and more",
           "• Learn Game Designing for Hyper Casual",
@@ -192,8 +242,15 @@
         ]
       },
       {
-        "position": "Tech Lead/Senior Game Developer at OZI Technology",
+        "position": "Tech Lead/Senior Game Developer",
+        "company": "OZI Technology",
         "period": "2019-04 — 2021-09",
+        "logo": "./assets/images/Ozi-logo.png",
+        "link": "#",
+        "overview": "At OZI Technology, I worked in a leadership role that combined technical expertise with team management responsibilities. The company provided an environment where I could both develop games and lead a development team, fostering growth in both technical and leadership capabilities.",
+        "myRole": "As Tech Lead and Senior Game Developer at OZI Technology, I managed a team of 10 developers while simultaneously contributing to game development projects. I balanced hands-on coding with leadership responsibilities, ensuring both team productivity and high-quality game output. I created game prototypes based on design concepts using C# for Unity development and Python for Blender scripting. I introduced modern game design principles and programming design patterns to the team, elevating the overall code quality and development practices. I implemented Git version control systems across the team and established agile workflows, improving collaboration and project management. I developed a CCID (Creative Build System) for Android builds integrated with Bitbucket, streamlining the build and deployment process. I was also part of the hiring management system, contributing to recruitment and team building efforts. Throughout my work, I used comprehensive debugging techniques and test cases to identify and resolve code issues, ensuring robust and reliable game releases.",
+        "skillsAcquired": "Advanced leadership and team management skills. Enhanced expertise in introducing and implementing development best practices. Improved abilities in build systems and CI/CD processes. Strengthened skills in mentoring and team development. Better understanding of agile methodologies and project management.",
+        "impact": "My leadership at OZI Technology transformed the development team's practices, introducing modern tools and methodologies that improved code quality and project delivery. The CCID build system I created streamlined the development workflow, saving significant time in the build and deployment process. My contributions to hiring and team building helped establish a stronger, more capable development team.",
         "description": [
           "• Manage a team (10 persons) and made games too at same time",
           "• Created prototypes based upon design ideas using such programming languages as C# and Python(Blender Only)",
@@ -205,8 +262,15 @@
         ]
       },
       {
-        "position": "Game Developer at Occess Inc",
+        "position": "Game Developer",
+        "company": "Occess Inc",
         "period": "2020-01 — 2021-09",
+        "logo": "./assets/images/occess-logo.png",
+        "link": "#",
+        "overview": "At Occess Inc, I worked in a diverse game development environment that focused on simulation and multiplayer games. The company provided opportunities to work on both live projects requiring maintenance and new projects built from scratch, offering a well-rounded experience in game development lifecycle.",
+        "myRole": "As a Game Developer at Occess Inc, I worked on a variety of projects spanning different genres and development stages. I maintained and improved multiple live projects including Bus Simulator and Offroad Driving Truck, fixing bugs, optimizing performance, and adding new features to keep players engaged. I also developed several games from scratch, including Farming Simulator, Stunt Quad Bike, Limo Taxi, and Tractor Farming, handling all aspects of development from initial design to final release. I significantly improved my C# programming skills and gained expertise in multiplayer game development using Photon multiplayer system, working on games like Kung Fu Fighting. Throughout my time at Occess Inc, I demonstrated consistent dedication and hard work, contributing to improved operations and successful game launches.",
+        "skillsAcquired": "Advanced proficiency in C# programming and Unity development. Enhanced expertise in multiplayer game development using Photon. Improved abilities in game maintenance and live operations. Strengthened skills in full-cycle game development from concept to release. Better understanding of simulation game mechanics and design.",
+        "impact": "My work at Occess Inc contributed to the successful maintenance of live games and the launch of several new titles. The multiplayer games I developed expanded the company's portfolio into new genres. My consistent dedication and skill development helped improve overall team operations and project delivery.",
         "description": [
           "• Worked on multiple live project to improve them (Bus Simulator, Offroad Driving Truck)",
           "• Worked on projects from scratch (Farming Simulator, Stunt Quad bike, Limo Taxi, tractor farming)",
@@ -217,10 +281,10 @@
     ],
     "education": [
       {
-        "degree": "Bachelor's degree at Government College University",
+        "degree": "Bachelor of Science in Software Engineering, Government College University Faisalabad",
         "period": "2013-01 — 2017-01",
-        "description": "Studies BS Software Engineering with remarkable grades"
-      }
+        "description": "Completed a BS in Software Engineering with strong academic performance. Studied core subjects including Object-Oriented Programming, Data Structures & Algorithms, Software Design & Architecture, Database Systems, Operating Systems, Computer Networks, Web Development, Software Quality Assurance, and Software Project Management, with hands-on experience through academic projects and a final year project."
+      }      
     ],
     "tools": [
       {
@@ -316,6 +380,30 @@
       {
         "name": "Adobe Photoshop",
         "percentage": 75
+      },
+      {
+        "name": "Mobile Game Development",
+        "percentage": 90
+      },
+      {
+        "name": "Performance Optimization",
+        "percentage": 88
+      },
+      {
+        "name": "UI/UX Design",
+        "percentage": 82
+      },
+      {
+        "name": "Shader Programming",
+        "percentage": 78
+      },
+      {
+        "name": "Networking & Multiplayer",
+        "percentage": 80
+      },
+      {
+        "name": "Version Control (Git)",
+        "percentage": 85
       }
     ]
   }
