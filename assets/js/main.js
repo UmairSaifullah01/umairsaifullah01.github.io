@@ -251,140 +251,89 @@ function updateStatistics() {
 }
 
 // Render Clients
-let currentClientIndex = 0;
-let clientsPerView = 4; // Number of logos visible at once
+let clientsScrollPosition = 0;
+let clientsScrollSpeed = 0.5; // pixels per frame
+let clientsAnimationFrame = null;
+let isClientsScrolling = true;
 
 function renderClients() {
     if (!contentData?.about?.clients) return;
 
     const clientsEl = document.getElementById('clients-section');
     if (clientsEl) {
-        clientsEl.innerHTML = contentData.about.clients.map(client => `
-            <a href="${client.link}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center flex-shrink-0 opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
+        // Duplicate clients for seamless loop
+        const clientsHTML = contentData.about.clients.map(client => `
+            <a href="${client.link}" target="_blank" rel="noopener noreferrer" class="client-icon flex items-center justify-center flex-shrink-0 opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300 mx-4">
                 <img src="${client.logo}" alt="${client.name}" class="h-20 max-w-[230px] object-contain rounded-xl" />
             </a>
         `).join('');
 
-        // Wait for images to load, then update position
+        // Duplicate the content for seamless scrolling
+        clientsEl.innerHTML = clientsHTML + clientsHTML;
+
+        // Add hover event listeners to each client icon
+        const clientIcons = clientsEl.querySelectorAll('.client-icon');
+        clientIcons.forEach(icon => {
+            icon.addEventListener('mouseenter', stopClientsAutoScroll);
+            icon.addEventListener('mouseleave', startClientsAutoScroll);
+        });
+
+        // Wait for images to load, then start smooth scrolling
         setTimeout(() => {
-            updateClientsPerView();
-            updateClientsPosition();
+            clientsScrollPosition = 0;
+            // Start smooth auto-scroll after clients are rendered
+            startClientsAutoScroll();
         }, 100);
     }
 }
 
-// Update clients per view based on screen size
-function updateClientsPerView() {
-    if (window.innerWidth >= 1024) {
-        clientsPerView = 5;
-    } else if (window.innerWidth >= 768) {
-        clientsPerView = 4;
-    } else if (window.innerWidth >= 640) {
-        clientsPerView = 3;
-    } else {
-        clientsPerView = 2;
-    }
-}
-
-// Scroll clients slider
-function scrollClients(direction) {
-    if (!contentData?.about?.clients) return;
-
-    const totalClients = contentData.about.clients.length;
-    const maxIndex = getMaxClientIndex();
-
-    currentClientIndex += direction;
-
-    if (currentClientIndex < 0) {
-        currentClientIndex = maxIndex;
-    } else if (currentClientIndex > maxIndex) {
-        currentClientIndex = 0;
+// Smooth continuous scrolling for clients
+function animateClients() {
+    if (!isClientsScrolling) {
+        clientsAnimationFrame = requestAnimationFrame(animateClients);
+        return;
     }
 
-    updateClientsPosition();
-}
-
-// Get maximum scroll index to ensure last item is visible
-function getMaxClientIndex() {
     const clientsEl = document.getElementById('clients-section');
-    const containerEl = document.getElementById('clients-container');
-    if (!clientsEl || !containerEl || !contentData?.about?.clients) return 0;
-
-    const firstItem = clientsEl.querySelector('a');
-    if (!firstItem) return 0;
-
-    const containerWidth = containerEl.offsetWidth;
-    const itemWidth = firstItem.offsetWidth;
-    const totalWidth = clientsEl.scrollWidth;
-
-    // Calculate how many items can fit in the container
-    const itemsThatFit = Math.floor(containerWidth / itemWidth);
-
-    // Calculate max index to ensure last item is fully visible
-    const totalClients = contentData.about.clients.length;
-    const maxIndex = Math.max(0, totalClients - itemsThatFit);
-
-    return maxIndex;
-}
-
-// Update clients position
-function updateClientsPosition() {
-    const clientsEl = document.getElementById('clients-section');
-    const containerEl = document.getElementById('clients-container');
-    if (!clientsEl || !containerEl || !contentData?.about?.clients) return;
-
-    // Get the first client item to calculate width
-    const firstItem = clientsEl.querySelector('a');
-    if (!firstItem) return;
-
-    // Calculate item width
-    const itemWidth = firstItem.offsetWidth;
-    const containerWidth = containerEl.offsetWidth;
-    const totalWidth = clientsEl.scrollWidth;
-
-    // Calculate the maximum translateX to ensure last item is visible
-    const maxTranslateX = -(totalWidth - containerWidth);
-
-    // Calculate desired translateX
-    let translateX = -(currentClientIndex * itemWidth);
-
-    // Ensure we don't scroll past the last item
-    if (Math.abs(translateX) > Math.abs(maxTranslateX)) {
-        translateX = maxTranslateX;
+    if (!clientsEl || !contentData?.about?.clients) {
+        clientsAnimationFrame = requestAnimationFrame(animateClients);
+        return;
     }
 
-    // Ensure we don't scroll before the first item
-    if (translateX > 0) {
-        translateX = 0;
+    // Get the first item to calculate width
+    const firstItem = clientsEl.querySelector('a');
+    if (!firstItem) {
+        clientsAnimationFrame = requestAnimationFrame(animateClients);
+        return;
     }
 
-    clientsEl.style.transform = `translateX(${translateX}px)`;
-}
+    // Calculate half width (since we duplicated the content)
+    // Use scrollWidth which includes margins
+    const halfWidth = (clientsEl.scrollWidth / 2);
 
-// Auto-scroll clients (optional)
-let clientsAutoScrollInterval = null;
+    // Update scroll position
+    clientsScrollPosition -= clientsScrollSpeed;
+
+    // Reset position when we've scrolled through half the content (seamless loop)
+    if (Math.abs(clientsScrollPosition) >= halfWidth) {
+        clientsScrollPosition = 0;
+    }
+
+    // Apply transform
+    clientsEl.style.transform = `translateX(${clientsScrollPosition}px)`;
+
+    clientsAnimationFrame = requestAnimationFrame(animateClients);
+}
 
 function startClientsAutoScroll() {
-    if (clientsAutoScrollInterval) clearInterval(clientsAutoScrollInterval);
-
-    clientsAutoScrollInterval = setInterval(() => {
-        if (!contentData?.about?.clients) return;
-        const maxIndex = getMaxClientIndex();
-
-        if (currentClientIndex >= maxIndex) {
-            currentClientIndex = 0;
-        } else {
-            currentClientIndex++;
-        }
-        updateClientsPosition();
-    }, 3000); // Auto-scroll every 3 seconds
+    isClientsScrolling = true;
+    if (!clientsAnimationFrame) {
+        animateClients();
+    }
 }
 
 function stopClientsAutoScroll() {
-    if (clientsAutoScrollInterval) {
-        clearInterval(clientsAutoScrollInterval);
-        clientsAutoScrollInterval = null;
-    }
+    isClientsScrolling = false;
 }
 
 // Update on window resize

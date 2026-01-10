@@ -222,6 +222,7 @@ html {
     display: flex;
     will-change: transform;
     align-items: center;
+    transition: none;
 }
 
 #clients-section a {
@@ -600,9 +601,7 @@ section h2 {
 }
 
 /* Clients slider smooth transition */
-#clients-section {
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
+/* Removed transition for smooth continuous scrolling */
 
 /* Loading spinner animation */
 @keyframes spin {
