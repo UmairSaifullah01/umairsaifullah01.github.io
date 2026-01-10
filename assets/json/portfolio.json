@@ -124,10 +124,10 @@
     "link": "https://play.google.com/store/apps/details?id=com.spiky.DinoRun",
     "logo": "./assets/images/dino-run.jpg",
     "screenshots": [
-      "./assets/images/dino-run_01.jpg",
-      "./assets/images/dino-run_02.jpg",
-      "./assets/images/dino-run_03.jpg",
-      "./assets/images/dino-run_04.jpg"
+      "./assets/images/dino-run-01.jpg",
+      "./assets/images/dino-run-02.jpg",
+      "./assets/images/dino-run-03.jpg",
+      "./assets/images/dino-run-04.jpg"
     ],
     "description": "Description will be added later.",
     "googlePlayLink": "https://play.google.com/store/apps/details?id=com.spiky.DinoRun"

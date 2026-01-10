@@ -19,17 +19,17 @@ async function loadData() {
             fetch('./assets/json/portfolio.json'),
             fetch('./assets/json/blogs.json')
         ]);
-        
+
         if (!contentRes.ok) throw new Error(`Content JSON failed: ${contentRes.status}`);
         if (!portfolioRes.ok) throw new Error(`Portfolio JSON failed: ${portfolioRes.status}`);
         if (!blogsRes.ok) throw new Error(`Blogs JSON failed: ${blogsRes.status}`);
-        
+
         contentData = await contentRes.json();
         portfolioData = await portfolioRes.json();
         blogsData = await blogsRes.json();
-        
+
         console.log('Data loaded successfully:', { contentData, portfolioData, blogsData });
-        
+
         // Wait for DOM to be fully ready before rendering
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
@@ -69,12 +69,12 @@ function renderAllSections() {
         renderTestimonials();
         updateContact();
         renderContactInfo();
-        
+
         console.log('All sections rendered');
-        
+
         // Start clients auto-scroll
         startClientsAutoScroll();
-        
+
         // Use double requestAnimationFrame to ensure DOM is fully updated before showing page
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
@@ -82,12 +82,12 @@ function renderAllSections() {
                 setTimeout(() => {
                     // Show home page by default
                     showPage('home');
-                    
+
                     // Re-initialize animations after content is loaded
                     setTimeout(() => {
                         initAnimations();
                     }, 300);
-                    
+
                     // Hide loading indicator
                     const loadingIndicator = document.getElementById('loading-indicator');
                     if (loadingIndicator) {
@@ -113,32 +113,32 @@ function renderAllSections() {
 // Render Sidebar
 function renderSidebar() {
     if (!contentData?.sidebar) return;
-    
+
     const sidebar = contentData.sidebar;
-    
+
     // Avatar
     const avatarImg = document.getElementById('sidebar-avatar');
     if (avatarImg) {
         avatarImg.src = sidebar.avatar;
         avatarImg.alt = `Profile of ${sidebar.name}`;
     }
-    
+
     // Name and Title
     const nameEl = document.getElementById('sidebar-name');
     if (nameEl) nameEl.textContent = sidebar.name;
-    
+
     const titleEl = document.getElementById('sidebar-title');
     if (titleEl) titleEl.textContent = sidebar.title;
-    
+
     // Location (set to Pakistan)
     const locationEl = document.getElementById('sidebar-location');
     if (locationEl) locationEl.textContent = 'Pakistan';
-    
+
     // Social Links - combine contacts and social
     const socialEl = document.getElementById('sidebar-social');
     if (socialEl) {
         const allLinks = [];
-        
+
         // Add contact icons (email, github, linkedin)
         if (sidebar.contacts) {
             sidebar.contacts.forEach(contact => {
@@ -152,14 +152,14 @@ function renderSidebar() {
                 }
             });
         }
-        
+
         // Add social media icons
         if (sidebar.social) {
             sidebar.social.forEach(social => {
                 allLinks.push(social);
             });
         }
-        
+
         const iconMap = {
             'mail-outline': './assets/images/email-icon.svg',
             'logo-github': './assets/images/github-icon.svg',
@@ -168,7 +168,7 @@ function renderSidebar() {
             'logo-facebook': './assets/images/facebook-icon.svg',
             'logo-twitter': './assets/images/twitter-icon.svg'
         };
-        
+
         socialEl.innerHTML = allLinks.map(item => {
             const iconPath = iconMap[item.icon] || `./assets/images/${item.platform || item.type}-icon.svg`;
             return `
@@ -184,16 +184,16 @@ function renderSidebar() {
 // Render About Section
 function renderAbout() {
     if (!contentData?.about) return;
-    
+
     const about = contentData.about;
-    
+
     // Title
     const titleEl = document.getElementById('about-title');
     if (titleEl) titleEl.textContent = about.title;
-    
+
     // Update statistics
     updateStatistics();
-    
+
     // Services
     const servicesEl = document.getElementById('services-grid');
     if (servicesEl && about.services) {
@@ -204,7 +204,7 @@ function renderAbout() {
             'Mobile Development': 'phone_android',
             'Technical Leadership': 'groups'
         };
-        
+
         servicesEl.innerHTML = about.services.map(service => {
             const iconName = iconMap[service.title] || 'code';
             return `
@@ -229,10 +229,10 @@ function updateStatistics() {
     // Set fixed statistics values
     const yearsEl = document.getElementById('stat-years');
     if (yearsEl) yearsEl.textContent = '+8';
-    
+
     const projectsEl = document.getElementById('stat-projects');
     if (projectsEl) projectsEl.textContent = '+100';
-    
+
     const clientsEl = document.getElementById('stat-clients');
     if (clientsEl) clientsEl.textContent = '+10';
 }
@@ -243,7 +243,7 @@ let clientsPerView = 4; // Number of logos visible at once
 
 function renderClients() {
     if (!contentData?.about?.clients) return;
-    
+
     const clientsEl = document.getElementById('clients-section');
     if (clientsEl) {
         clientsEl.innerHTML = contentData.about.clients.map(client => `
@@ -251,7 +251,7 @@ function renderClients() {
                 <img src="${client.logo}" alt="${client.name}" class="h-20 max-w-[230px] object-contain rounded-xl" />
             </a>
         `).join('');
-        
+
         // Wait for images to load, then update position
         setTimeout(() => {
             updateClientsPerView();
@@ -276,18 +276,18 @@ function updateClientsPerView() {
 // Scroll clients slider
 function scrollClients(direction) {
     if (!contentData?.about?.clients) return;
-    
+
     const totalClients = contentData.about.clients.length;
     const maxIndex = getMaxClientIndex();
-    
+
     currentClientIndex += direction;
-    
+
     if (currentClientIndex < 0) {
         currentClientIndex = maxIndex;
     } else if (currentClientIndex > maxIndex) {
         currentClientIndex = 0;
     }
-    
+
     updateClientsPosition();
 }
 
@@ -296,21 +296,21 @@ function getMaxClientIndex() {
     const clientsEl = document.getElementById('clients-section');
     const containerEl = document.getElementById('clients-container');
     if (!clientsEl || !containerEl || !contentData?.about?.clients) return 0;
-    
+
     const firstItem = clientsEl.querySelector('a');
     if (!firstItem) return 0;
-    
+
     const containerWidth = containerEl.offsetWidth;
     const itemWidth = firstItem.offsetWidth;
     const totalWidth = clientsEl.scrollWidth;
-    
+
     // Calculate how many items can fit in the container
     const itemsThatFit = Math.floor(containerWidth / itemWidth);
-    
+
     // Calculate max index to ensure last item is fully visible
     const totalClients = contentData.about.clients.length;
     const maxIndex = Math.max(0, totalClients - itemsThatFit);
-    
+
     return maxIndex;
 }
 
@@ -319,32 +319,32 @@ function updateClientsPosition() {
     const clientsEl = document.getElementById('clients-section');
     const containerEl = document.getElementById('clients-container');
     if (!clientsEl || !containerEl || !contentData?.about?.clients) return;
-    
+
     // Get the first client item to calculate width
     const firstItem = clientsEl.querySelector('a');
     if (!firstItem) return;
-    
+
     // Calculate item width
     const itemWidth = firstItem.offsetWidth;
     const containerWidth = containerEl.offsetWidth;
     const totalWidth = clientsEl.scrollWidth;
-    
+
     // Calculate the maximum translateX to ensure last item is visible
     const maxTranslateX = -(totalWidth - containerWidth);
-    
+
     // Calculate desired translateX
     let translateX = -(currentClientIndex * itemWidth);
-    
+
     // Ensure we don't scroll past the last item
     if (Math.abs(translateX) > Math.abs(maxTranslateX)) {
         translateX = maxTranslateX;
     }
-    
+
     // Ensure we don't scroll before the first item
     if (translateX > 0) {
         translateX = 0;
     }
-    
+
     clientsEl.style.transform = `translateX(${translateX}px)`;
 }
 
@@ -353,11 +353,11 @@ let clientsAutoScrollInterval = null;
 
 function startClientsAutoScroll() {
     if (clientsAutoScrollInterval) clearInterval(clientsAutoScrollInterval);
-    
+
     clientsAutoScrollInterval = setInterval(() => {
         if (!contentData?.about?.clients) return;
         const maxIndex = getMaxClientIndex();
-        
+
         if (currentClientIndex >= maxIndex) {
             currentClientIndex = 0;
         } else {
@@ -423,19 +423,19 @@ function getCategoryFilter(category, type) {
 // Render Portfolio
 function renderPortfolio(filter = 'all') {
     if (!portfolioData) return;
-    
+
     const portfolioEl = document.getElementById('portfolio-grid');
     if (!portfolioEl) return;
-    
+
     // Filter items based on selected category
-    const filteredItems = filter === 'all' 
-        ? portfolioData 
+    const filteredItems = filter === 'all'
+        ? portfolioData
         : portfolioData.filter(item => getCategoryFilter(item.category, item.type) === filter);
-    
-        portfolioEl.innerHTML = filteredItems.map((item, index) => {
-            const categoryFilter = getCategoryFilter(item.category, item.type);
-            if (item.type === 'video') {
-                return `
+
+    portfolioEl.innerHTML = filteredItems.map((item, index) => {
+        const categoryFilter = getCategoryFilter(item.category, item.type);
+        if (item.type === 'video') {
+            return `
                 <div class="portfolio-item group cursor-pointer card-hover bg-gray-900 dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 dark:border-gray-800 flex flex-col" data-category="${categoryFilter}" onclick="openPortfolioItem(${item.id})">
                     <div class="bg-[#151515] rounded-t-2xl overflow-hidden relative aspect-[4/3]">
                         <video class="w-full h-full object-cover transition duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-100" muted loop>
@@ -451,9 +451,9 @@ function renderPortfolio(filter = 'all') {
                     </div>
                 </div>
             `;
-            } else {
-                // Always use openPortfolioItem to show detail page
-                return `
+        } else {
+            // Always use openPortfolioItem to show detail page
+            return `
                 <div class="portfolio-item group cursor-pointer card-hover bg-gray-900 dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 dark:border-gray-800 flex flex-col" data-category="${categoryFilter}" onclick="openPortfolioItem(${item.id})">
                     <div class="bg-[#151515] rounded-t-2xl overflow-hidden relative aspect-[4/3]">
                         <img alt="${item.alt || item.title}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-100" src="${item.image}" />
@@ -464,9 +464,9 @@ function renderPortfolio(filter = 'all') {
                     </div>
                 </div>
             `;
-            }
-        }).join('');
-    
+        }
+    }).join('');
+
     // Auto-play videos on hover
     portfolioEl.querySelectorAll('video').forEach(video => {
         const parent = video.closest('.group');
@@ -493,28 +493,29 @@ function filterPortfolio(category) {
             tab.classList.add('bg-gray-100', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300', 'hover:bg-gray-200', 'dark:hover:bg-gray-700');
         }
     });
-    
+
     // Re-render portfolio with filter
     renderPortfolio(category);
-    
+
     // Re-add stagger animations after filtering
     setTimeout(() => {
         addStaggerAnimations();
+        initScrollAnimations();
     }, 100);
 }
 
 // Render Resume Section
 function renderResume() {
     if (!contentData?.resume) return;
-    
+
     const resume = contentData.resume;
-    
+
     // Main Title
     const mainTitleEl = document.getElementById('resume-main-title');
     if (mainTitleEl && resume.mainTitle) {
         mainTitleEl.textContent = resume.mainTitle;
     }
-    
+
     // Experience
     const expEl = document.getElementById('experience-list');
     if (expEl && resume.experience) {
@@ -529,10 +530,10 @@ function renderResume() {
                 .filter(item => item && item.trim())
                 .map(item => item.replace(/^[•\-\*]\s*/, '').trim())
                 .join(' ') : '';
-            
+
             // Logo HTML if available
             const logoHtml = exp.logo ? `<img src="${exp.logo}" alt="${company} Logo" class="w-12 h-12 object-contain rounded-lg mr-4" />` : '';
-            
+
             return `
             <div class="bg-card-light dark:bg-card-dark p-6 rounded-2xl border border-gray-200 dark:border-gray-800 relative cursor-pointer hover:shadow-lg transition card-hover group overflow-hidden" onclick="openExperience(${index})">
                 <!-- Progress Line -->
@@ -552,7 +553,7 @@ function renderResume() {
         `;
         }).join('');
     }
-    
+
     // Education
     const eduEl = document.getElementById('education-list');
     if (eduEl && resume.education) {
@@ -568,13 +569,13 @@ function renderResume() {
             </div>
         `).join('');
     }
-    
+
     // Skills Title
     const skillsTitleEl = document.getElementById('skills-main-title');
     if (skillsTitleEl && resume.skillsTitle) {
         skillsTitleEl.textContent = resume.skillsTitle;
     }
-    
+
     // Skills
     const skillsEl = document.getElementById('skills-list');
     if (skillsEl && resume.skills) {
@@ -589,11 +590,11 @@ function renderResume() {
                 </div>
             </div>
         `).join('');
-        
+
         // Initialize scroll animation for skills
         initSkillsAnimation();
     }
-    
+
     // Tools
     const toolsEl = document.getElementById('tools-grid');
     if (toolsEl && resume.tools) {
@@ -611,10 +612,10 @@ function renderResume() {
 // Render Blogs
 function renderBlogs() {
     if (!blogsData) return;
-    
+
     const blogsEl = document.getElementById('blog-grid');
     if (!blogsEl) return;
-    
+
     blogsEl.innerHTML = blogsData.map(blog => `
         <article class="bg-card-light dark:bg-card-dark rounded-2xl p-4 border border-gray-200 dark:border-gray-800 cursor-pointer hover:shadow-lg transition card-hover" onclick="openBlog(${blog.id})">
             <div class="rounded-xl overflow-hidden h-40 mb-4 relative">
@@ -631,9 +632,9 @@ function renderBlogs() {
 // Render Testimonials
 function renderTestimonials() {
     if (!contentData?.about?.testimonials) return;
-    
+
     const testimonials = contentData.about.testimonials;
-    
+
     // Update testimonials array
     window.testimonials = testimonials.map(t => ({
         name: t.name,
@@ -641,14 +642,14 @@ function renderTestimonials() {
         img: t.avatar,
         role: t.role
     }));
-    
+
     // Initialize first testimonial
     if (testimonials.length > 0) {
         const first = testimonials[0];
         const nameEl = document.getElementById('testimonial-name');
         const textEl = document.getElementById('testimonial-text');
         const imgEl = document.getElementById('testimonial-img');
-        
+
         if (nameEl) nameEl.textContent = first.name;
         if (textEl) textEl.textContent = first.text;
         if (imgEl) {
@@ -661,7 +662,7 @@ function renderTestimonials() {
 // Update Contact Section
 function updateContact() {
     if (!contentData?.sidebar?.contacts) return;
-    
+
     const emailContact = contentData.sidebar.contacts.find(c => c.type === 'email');
     if (emailContact) {
         const btn = document.getElementById('contact-email-btn');
@@ -675,27 +676,27 @@ function updateContact() {
 async function openBlog(blogId) {
     const blog = blogsData.find(b => b.id === blogId);
     if (!blog) return;
-    
+
     const titleEl = document.getElementById('blog-post-title');
     const imageEl = document.getElementById('blog-post-image');
     const dateEl = document.getElementById('blog-post-date');
     const contentEl = document.getElementById('blog-post-content');
     const relatedPostsEl = document.getElementById('blog-post-related-grid');
-    
+
     if (titleEl) titleEl.textContent = blog.title;
     if (imageEl) {
         imageEl.src = blog.image;
         imageEl.alt = blog.alt || blog.title;
     }
     if (dateEl) dateEl.textContent = formatDate(blog.date);
-    
+
     // Load markdown content
     try {
         // Add cache-busting parameter to ensure fresh content
         const cacheBuster = `?v=${Date.now()}`;
         const markdownUrl = blog.markdown + cacheBuster;
         console.log('Loading markdown from:', markdownUrl);
-        
+
         const response = await fetch(markdownUrl, {
             cache: 'no-store', // Prevent caching
             headers: {
@@ -704,14 +705,14 @@ async function openBlog(blogId) {
                 'Expires': '0'
             }
         });
-        
+
         if (!response.ok) {
             throw new Error(`Failed to load markdown: ${response.status} ${response.statusText}`);
         }
-        
+
         const markdown = await response.text();
         console.log('Markdown loaded, length:', markdown.length);
-        
+
         // Convert markdown to HTML
         const html = convertMarkdownToHTML(markdown);
         if (contentEl) {
@@ -725,7 +726,7 @@ async function openBlog(blogId) {
             contentEl.innerHTML = `<p class="text-red-500">Error loading blog content: ${error.message}<br/>Please try refreshing the page (Ctrl+Shift+R for hard refresh).</p>`;
         }
     }
-    
+
     // Render related posts (exclude current blog)
     const relatedPostsSection = document.getElementById('blog-post-related');
     if (relatedPostsEl && blogsData) {
@@ -749,7 +750,7 @@ async function openBlog(blogId) {
     } else {
         if (relatedPostsSection) relatedPostsSection.style.display = 'none';
     }
-    
+
     // Show blog post page
     showPage('blog-post');
     // Scroll to top
@@ -766,11 +767,11 @@ function convertMarkdownToHTML(markdown) {
             highlight: null // We'll handle syntax highlighting styling manually
         });
         let html = marked.parse(markdown);
-        
+
         // Process code blocks first (before inline code) - use placeholder approach
         const codeBlockPlaceholders = [];
         let placeholderIndex = 0;
-        
+
         // Replace code blocks with placeholders
         html = html.replace(/<pre><code(?: class="language-(\w+)")?>(.*?)<\/code><\/pre>/gs, (match, lang, code) => {
             const placeholder = `__CODE_BLOCK_${placeholderIndex}__`;
@@ -779,15 +780,15 @@ function convertMarkdownToHTML(markdown) {
             placeholderIndex++;
             return placeholder;
         });
-        
+
         // Now handle inline code (all remaining <code> tags)
         html = html.replace(/<code(?: class="[^"]*")?>(.*?)<\/code>/g, '<code class="inline-code">$1</code>');
-        
+
         // Restore code blocks
         codeBlockPlaceholders.forEach((block, index) => {
             html = html.replace(`__CODE_BLOCK_${index}__`, block);
         });
-        
+
         // Add Tailwind classes to the generated HTML
         html = html
             // Headings - white text for dark theme
@@ -821,12 +822,12 @@ function convertMarkdownToHTML(markdown) {
             .replace(/<th>/g, '<th class="px-4 py-2 text-left border border-gray-700 text-white font-bold">')
             .replace(/<td>/g, '<td class="px-4 py-2 border border-gray-700 text-gray-300">')
             .replace(/<tbody>/g, '<tbody>');
-        
+
         return html;
     } else {
         // Fallback simple implementation with improved styling
         let html = markdown;
-        
+
         // Handle code blocks first (```code```)
         html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
             const langClass = lang ? `language-${lang}` : '';
@@ -838,27 +839,27 @@ function convertMarkdownToHTML(markdown) {
                 .replace(/'/g, '&#39;');
             return `<pre class="bg-[#1A1A1A] dark:bg-[#0F0F0F] border border-gray-800 dark:border-gray-700 p-4 rounded-lg mb-6 overflow-x-auto"><code class="text-sm font-mono text-gray-200 dark:text-gray-300 ${langClass}">${escapedCode}</code></pre>`;
         });
-        
+
         // Handle headings
         html = html
             .replace(/^#### (.*$)/gim, '<h4 class="text-lg font-bold mt-4 mb-2 text-white">$1</h4>')
             .replace(/^### (.*$)/gim, '<h3 class="text-xl font-bold mt-6 mb-3 text-white">$1</h3>')
             .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-8 mb-4 text-white">$1</h2>')
             .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mt-8 mb-4 text-white">$1</h1>');
-        
+
         // Handle inline code (backticks) - but not inside code blocks
         html = html.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
-        
+
         // Handle bold and italic
         html = html
             .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold text-white">$1</strong>')
             .replace(/\*(.*?)\*/gim, '<em class="italic text-gray-300">$1</em>');
-        
+
         // Handle lists - numbered
         html = html.replace(/^\d+\.\s+(.*$)/gim, '<li class="mb-2 leading-relaxed text-gray-300">$1</li>');
         // Handle lists - bulleted
         html = html.replace(/^[-*]\s+(.*$)/gim, '<li class="mb-2 leading-relaxed text-gray-300">$1</li>');
-        
+
         // Wrap consecutive list items in ul/ol
         html = html.replace(/(<li class="mb-2 leading-relaxed text-gray-300">.*<\/li>\n?)+/gim, (match) => {
             // Check if it's a numbered list by looking for numbers before
@@ -866,11 +867,11 @@ function convertMarkdownToHTML(markdown) {
             const listTag = isNumbered ? 'ol' : 'ul';
             return `<${listTag} class="list-${isNumbered ? 'decimal' : 'disc'} ml-6 mb-4 space-y-2 text-gray-300">${match}</${listTag}>`;
         });
-        
+
         // Handle paragraphs
         html = html.replace(/\n\n/gim, '</p><p class="mb-4 text-gray-300 leading-relaxed">');
         html = html.replace(/^(?!<[h|u|o|l|p|p|b|i|t|d])(.+)$/gim, '<p class="mb-4 text-gray-300 leading-relaxed">$1</p>');
-        
+
         return html;
     }
 }
@@ -893,12 +894,12 @@ function openPortfolioItem(itemId) {
         console.error('Project not found:', itemId);
         return;
     }
-    
+
     // Handle videos - show detail page instead of opening in new tab
     // Videos will be displayed in the screenshot slider
-    
+
     console.log('Opening project:', item);
-    
+
     // Get all elements
     const titleEl = document.getElementById('project-title');
     const logoEl = document.getElementById('project-logo');
@@ -914,10 +915,10 @@ function openPortfolioItem(itemId) {
     const appStoreLink = document.getElementById('project-app-store');
     const customLink = document.getElementById('project-custom-link');
     const linksSection = document.getElementById('project-links-section');
-    
+
     // Set project title
     if (titleEl) titleEl.textContent = item.title;
-    
+
     // Set project logo
     if (logoEl) {
         if (item.logo) {
@@ -940,7 +941,7 @@ function openPortfolioItem(itemId) {
             logoEl.classList.add('hidden');
         }
     }
-    
+
     // Set description
     if (descriptionEl && item.description) {
         descriptionEl.textContent = item.description;
@@ -948,7 +949,7 @@ function openPortfolioItem(itemId) {
     } else if (descriptionSection) {
         descriptionSection.classList.add('hidden');
     }
-    
+
     // Handle screenshots/videos slider - show 3 at a time, move by 1
     projectScreenshots = item.screenshots || [];
     // If it's a video and no screenshots, use the video itself
@@ -957,22 +958,29 @@ function openPortfolioItem(itemId) {
     }
     currentProjectScreenshotIndex = 0;
     const screenshotsPerView = 3;
-    
+
     if (screenshotsSection && projectScreenshots.length > 0) {
         screenshotsSection.classList.remove('hidden');
-        
+
         // Render screenshots or videos - each takes ~26.67% of container width (20% smaller than 33.33%)
         if (screenshotsSlider) {
-            // Original would be 33.33% for 3 items, make it 20% smaller = 26.67%
-            const itemWidthPercent = (100 / screenshotsPerView) * 0.8; // ~26.67% per item (20% smaller)
+            // Original would be 33.33% for 3 items
+            const itemWidthPercent = (100 / screenshotsPerView);
             // gap-4 is 1rem (16px), calculate item width accounting for gap
             // Formula: (containerWidth * itemWidthPercent / 100) - gap
             // But we'll use CSS calc for better accuracy
             const itemWidthCalc = `calc(${itemWidthPercent}% - 0.67rem)`;
-            
+
             // Set slider to auto width (flex will handle it)
             screenshotsSlider.style.width = 'auto';
-            
+
+            // Center if only 1 screenshot
+            if (projectScreenshots.length === 1) {
+                screenshotsSlider.classList.add('justify-center');
+            } else {
+                screenshotsSlider.classList.remove('justify-center');
+            }
+
             screenshotsSlider.innerHTML = projectScreenshots.map((media, index) => {
                 // Check if it's a video file
                 const isVideo = media.includes('.mp4') || media.includes('.webm') || media.includes('.mov') || item.type === 'video';
@@ -994,7 +1002,7 @@ function openPortfolioItem(itemId) {
                 }
             }).join('');
         }
-        
+
         // Show/hide navigation buttons - only show if more than 3 screenshots
         if (prevBtn) {
             if (projectScreenshots.length > screenshotsPerView) {
@@ -1010,18 +1018,24 @@ function openPortfolioItem(itemId) {
                 nextBtn.classList.add('hidden');
             }
         }
-        
+
         // Render dots - one per screenshot (since we move by 1)
         if (dotsContainer) {
+            const maxIndex = Math.max(0, projectScreenshots.length - screenshotsPerView);
+
             if (projectScreenshots.length > screenshotsPerView) {
-                dotsContainer.innerHTML = projectScreenshots.map((_, index) => `
+                // Only create dots for valid starting positions (0 to maxIndex)
+                const numDots = maxIndex + 1;
+                const dotsArray = Array.from({ length: numDots }, (_, i) => i);
+
+                dotsContainer.innerHTML = dotsArray.map((index) => `
                     <button onclick="goToProjectScreenshot(${index})" class="w-2 h-2 rounded-full transition ${index === 0 ? 'bg-primary' : 'bg-gray-600'}" data-index="${index}"></button>
                 `).join('');
             } else {
                 dotsContainer.innerHTML = '';
             }
         }
-        
+
         // Update slider position - use setTimeout to ensure DOM is ready
         setTimeout(() => {
             updateProjectScreenshotSlider();
@@ -1029,10 +1043,10 @@ function openPortfolioItem(itemId) {
     } else if (screenshotsSection) {
         screenshotsSection.classList.add('hidden');
     }
-    
+
     // Handle links - only show if they exist
     let hasAnyLink = false;
-    
+
     if (googlePlayLink && item.googlePlayLink) {
         googlePlayLink.href = item.googlePlayLink;
         googlePlayLink.classList.remove('hidden');
@@ -1040,7 +1054,7 @@ function openPortfolioItem(itemId) {
     } else if (googlePlayLink) {
         googlePlayLink.classList.add('hidden');
     }
-    
+
     if (appStoreLink && item.appStoreLink) {
         appStoreLink.href = item.appStoreLink;
         appStoreLink.classList.remove('hidden');
@@ -1048,7 +1062,7 @@ function openPortfolioItem(itemId) {
     } else if (appStoreLink) {
         appStoreLink.classList.add('hidden');
     }
-    
+
     if (customLink && item.customLink) {
         customLink.href = item.customLink;
         customLink.classList.remove('hidden');
@@ -1056,7 +1070,7 @@ function openPortfolioItem(itemId) {
     } else if (customLink) {
         customLink.classList.add('hidden');
     }
-    
+
     // Show/hide links section
     if (linksSection) {
         if (hasAnyLink) {
@@ -1065,7 +1079,7 @@ function openPortfolioItem(itemId) {
             linksSection.classList.add('hidden');
         }
     }
-    
+
     // Show project page
     showPage('project');
     // Scroll to top
@@ -1075,12 +1089,12 @@ function openPortfolioItem(itemId) {
 // Change project screenshot - moves by 1 screenshot at a time
 function changeProjectScreenshot(direction) {
     if (projectScreenshots.length === 0) return;
-    
+
     const screenshotsPerView = 3;
-    
+
     // Move by 1 screenshot
     currentProjectScreenshotIndex += direction;
-    
+
     // Clamp to valid range
     const maxIndex = Math.max(0, projectScreenshots.length - screenshotsPerView);
     if (currentProjectScreenshotIndex < 0) {
@@ -1088,7 +1102,7 @@ function changeProjectScreenshot(direction) {
     } else if (currentProjectScreenshotIndex > maxIndex) {
         currentProjectScreenshotIndex = maxIndex;
     }
-    
+
     updateProjectScreenshotSlider();
 }
 
@@ -1096,7 +1110,7 @@ function changeProjectScreenshot(direction) {
 function goToProjectScreenshot(index) {
     const screenshotsPerView = 3;
     const maxIndex = Math.max(0, projectScreenshots.length - screenshotsPerView);
-    
+
     if (index >= 0 && index <= maxIndex) {
         currentProjectScreenshotIndex = index;
         updateProjectScreenshotSlider();
@@ -1108,10 +1122,10 @@ function updateProjectScreenshotSlider() {
     const slider = document.getElementById('project-screenshots-slider');
     const container = document.getElementById('project-screenshots-container');
     const dots = document.querySelectorAll('#project-screenshot-dots button');
-    
+
     if (slider && container && projectScreenshots.length > 0) {
         const screenshotsPerView = 3;
-        
+
         // Get container width in pixels
         const containerWidth = container.offsetWidth;
         if (containerWidth === 0) {
@@ -1119,26 +1133,26 @@ function updateProjectScreenshotSlider() {
             setTimeout(updateProjectScreenshotSlider, 50);
             return;
         }
-        
+
         // Get the first item to measure actual width
         const firstItem = slider.querySelector('div');
         if (!firstItem) {
             setTimeout(updateProjectScreenshotSlider, 50);
             return;
         }
-        
+
         // Get actual item width including margin/padding
         const itemWidthPx = firstItem.offsetWidth;
         // Get computed gap (from gap-4 = 1rem = 16px typically)
         const gapPx = 16; // gap-4 is 1rem
         // Total width per item including gap
         const itemWithGapPx = itemWidthPx + gapPx;
-        
+
         // Calculate translateX in pixels - move by 1 screenshot at a time
         const translateXPx = -(currentProjectScreenshotIndex * itemWithGapPx);
         slider.style.transform = `translateX(${translateXPx}px)`;
     }
-    
+
     // Update dots - highlight the current starting screenshot
     if (dots && projectScreenshots.length > 3) {
         dots.forEach((dot, index) => {
@@ -1162,7 +1176,7 @@ function showPage(pageId) {
         });
         return;
     }
-    
+
     showPageInternal(pageId);
 }
 
@@ -1172,7 +1186,7 @@ function showPageInternal(pageId) {
     allPages.forEach(page => {
         page.classList.add('hidden');
     });
-    
+
     // Show selected page
     const selectedPage = document.getElementById(`page-${pageId}`);
     if (selectedPage) {
@@ -1186,7 +1200,7 @@ function showPageInternal(pageId) {
             showPageInternal(pageId);
         }, 100);
     }
-    
+
     // Handle sidebar visibility on mobile
     const sidebar = document.getElementById('sidebar-profile');
     if (sidebar) {
@@ -1202,7 +1216,7 @@ function showPageInternal(pageId) {
             sidebar.classList.remove('hidden');
         }
     }
-    
+
     // Restart typing animation if showing home page
     if (pageId === 'home') {
         typingAnimationActive = false;
@@ -1213,7 +1227,7 @@ function showPageInternal(pageId) {
             initTypingAnimation();
         }, 300);
     }
-    
+
     // Update active navigation
     updateActiveNav(pageId);
 }
@@ -1229,21 +1243,21 @@ function openExperience(index) {
         console.error('No experience data available');
         return;
     }
-    
+
     const experience = contentData.resume.experience[index];
     if (!experience) {
         console.error('Experience not found at index:', index);
         return;
     }
-    
+
     console.log('Opening experience:', experience);
-    
+
     // Get company name - prefer explicit company field, otherwise extract from position
     const company = experience.company || (() => {
         const companyMatch = experience.position.match(/at\s+(.+)$/i);
         return companyMatch ? companyMatch[1] : experience.position;
     })();
-    
+
     // Get all elements
     const companyEl = document.getElementById('experience-company');
     const periodEl = document.getElementById('experience-period');
@@ -1254,18 +1268,18 @@ function openExperience(index) {
     const impactEl = document.getElementById('experience-impact');
     const linkEl = document.getElementById('experience-link');
     const descriptionEl = document.getElementById('experience-description');
-    
+
     // Section containers
     const overviewSection = document.getElementById('experience-overview-section');
     const roleSection = document.getElementById('experience-role-section');
     const skillsSection = document.getElementById('experience-skills-section');
     const impactSection = document.getElementById('experience-impact-section');
     const linkSection = document.getElementById('experience-link-section');
-    
+
     // Set company name and period
     if (companyEl) companyEl.textContent = company;
     if (periodEl) periodEl.textContent = experience.period;
-    
+
     // Set company logo
     if (logoEl && experience.logo) {
         logoEl.src = experience.logo;
@@ -1274,7 +1288,7 @@ function openExperience(index) {
     } else if (logoEl) {
         logoEl.classList.add('hidden');
     }
-    
+
     // Set overview
     if (overviewEl && experience.overview) {
         overviewEl.textContent = experience.overview;
@@ -1285,7 +1299,7 @@ function openExperience(index) {
     } else if (overviewSection) {
         overviewSection.classList.add('hidden');
     }
-    
+
     // Set my role
     if (roleEl && experience.myRole) {
         roleEl.textContent = experience.myRole;
@@ -1296,7 +1310,7 @@ function openExperience(index) {
     } else if (roleSection) {
         roleSection.classList.add('hidden');
     }
-    
+
     // Set skills acquired
     if (skillsEl && experience.skillsAcquired) {
         skillsEl.textContent = experience.skillsAcquired;
@@ -1307,7 +1321,7 @@ function openExperience(index) {
     } else if (skillsSection) {
         skillsSection.classList.add('hidden');
     }
-    
+
     // Set impact
     if (impactEl && experience.impact) {
         impactEl.textContent = experience.impact;
@@ -1318,7 +1332,7 @@ function openExperience(index) {
     } else if (impactSection) {
         impactSection.classList.add('hidden');
     }
-    
+
     // Set company link
     if (linkEl && experience.link) {
         linkEl.href = experience.link;
@@ -1329,7 +1343,7 @@ function openExperience(index) {
     } else if (linkSection) {
         linkSection.classList.add('hidden');
     }
-    
+
     // Fallback: Use description if new format fields are not available
     if (!experience.overview && descriptionEl && experience.description) {
         const formattedDescription = experience.description
@@ -1349,12 +1363,12 @@ function openExperience(index) {
     } else if (descriptionEl) {
         descriptionEl.classList.add('hidden');
     }
-    
+
     // Show experience page
     showPage('experience');
     // Scroll to top
     window.scrollTo(0, 0);
-    
+
     console.log('Experience page displayed');
 }
 
@@ -1364,8 +1378,8 @@ function updateActiveNav(activeSection) {
     navButtons.forEach(btn => {
         const section = btn.getAttribute('data-section');
         // If on blog post or experience page, highlight appropriate nav button
-        const sectionToCheck = activeSection === 'blog-post' ? 'blog' : 
-                               activeSection === 'experience' ? 'resume' : activeSection;
+        const sectionToCheck = activeSection === 'blog-post' ? 'blog' :
+            activeSection === 'experience' ? 'resume' : activeSection;
         if (section === sectionToCheck) {
             btn.classList.add('bg-primary', 'text-white');
             btn.classList.remove('hover:bg-gray-100', 'dark:hover:bg-white/10', 'text-gray-500', 'dark:text-gray-400');
@@ -1379,7 +1393,7 @@ function updateActiveNav(activeSection) {
 // Update contact info rendering
 function renderContactInfo() {
     if (!contentData?.sidebar?.contacts) return;
-    
+
     const contactInfoEl = document.getElementById('contact-info');
     if (contactInfoEl) {
         const iconMap = {
@@ -1387,7 +1401,7 @@ function renderContactInfo() {
             'logo-github': './assets/images/github-icon.svg',
             'logo-linkedin': './assets/images/linkedin-icon.svg'
         };
-        
+
         contactInfoEl.innerHTML = contentData.sidebar.contacts.map(contact => {
             const iconPath = iconMap[contact.icon] || `./assets/images/${contact.type}-icon.svg`;
             return `
@@ -1409,19 +1423,19 @@ let currentTestimonial = 0;
 
 function changeTestimonial(direction) {
     if (!window.testimonials || window.testimonials.length === 0) return;
-    
+
     currentTestimonial += direction;
     if (currentTestimonial < 0) {
         currentTestimonial = window.testimonials.length - 1;
     } else if (currentTestimonial >= window.testimonials.length) {
         currentTestimonial = 0;
     }
-    
+
     const testimonial = window.testimonials[currentTestimonial];
     const nameEl = document.getElementById('testimonial-name');
     const textEl = document.getElementById('testimonial-text');
     const imgEl = document.getElementById('testimonial-img');
-    
+
     if (nameEl) nameEl.textContent = testimonial.name;
     if (textEl) textEl.textContent = testimonial.text;
     if (imgEl) {
@@ -1439,44 +1453,71 @@ document.addEventListener('click', (e) => {
 });
 
 // Contact Form Handler
-function handleContactForm(event) {
+// Contact Form Handler
+async function handleContactForm(event) {
     event.preventDefault();
-    
+
     const form = event.target;
+    // Explicitly select the submit button to ensure we get the right element
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    // Save original button state
+    const originalContent = submitBtn.innerHTML;
+    const originalText = submitBtn.textContent;
+
+    // Create FormData
     const formData = new FormData(form);
-    const data = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        subject: formData.get('subject'),
-        message: formData.get('message')
-    };
-    
-    // Get email from contact data
-    const emailContact = contentData?.sidebar?.contacts?.find(c => c.type === 'email');
-    const email = emailContact ? emailContact.value : 'contact@example.com';
-    
-    // Create mailto link
-    const subject = encodeURIComponent(data.subject ? `${data.subject} - ${data.name}` : `Contact from ${data.name}`);
-    const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`);
-    const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
-    
-    // Open email client
-    window.location.href = mailtoLink;
-    
-    // Show success message (optional)
-    const button = form.querySelector('button[type="submit"]');
-    const originalText = button.innerHTML;
-    button.innerHTML = '<span>Message Sent!</span><span class="material-symbols-outlined">check_circle</span>';
-    button.classList.add('bg-green-500', 'hover:bg-green-600');
-    button.classList.remove('bg-primary', 'hover:bg-primary-hover');
-    
-    setTimeout(() => {
-        button.innerHTML = originalText;
-        button.classList.remove('bg-green-500', 'hover:bg-green-600');
-        button.classList.add('bg-primary', 'hover:bg-primary-hover');
-        form.reset();
-    }, 3000);
+    // Access key is already in the HTML, but we can append it here if needed, 
+    // or rely on the hidden input. The user's snippet appends it manually, 
+    // so we'll ensure it's there.
+    if (!formData.has('access_key')) {
+        formData.append("access_key", "c086f078-f1c0-4d10-8531-0d26c4539f1d");
+    }
+
+    // Update UI to sending state
+    submitBtn.textContent = "Sending...";
+    submitBtn.disabled = true;
+
+    try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            // Success state
+            submitBtn.innerHTML = '<span>Message Sent!</span><span class="material-symbols-outlined">check_circle</span>';
+            submitBtn.classList.add('bg-green-500', 'hover:bg-green-600');
+            submitBtn.classList.remove('bg-primary', 'hover:bg-primary-hover');
+
+            // Reset form
+            form.reset();
+
+            // Reset button after 5 seconds
+            setTimeout(() => {
+                submitBtn.innerHTML = originalContent;
+                submitBtn.classList.remove('bg-green-500', 'hover:bg-green-600');
+                submitBtn.classList.add('bg-primary', 'hover:bg-primary-hover');
+                submitBtn.disabled = false;
+            }, 5000);
+        } else {
+            console.error('Web3Forms Error:', data);
+            alert("Error: " + data.message);
+            submitBtn.innerHTML = originalContent;
+            submitBtn.disabled = false;
+        }
+
+    } catch (error) {
+        console.error('Submission Error:', error);
+        alert("Something went wrong. Please try again.");
+        submitBtn.innerHTML = originalContent;
+        submitBtn.disabled = false;
+    }
 }
+
+
 
 // Scroll-triggered animations using Intersection Observer
 function initScrollAnimations() {
@@ -1484,7 +1525,7 @@ function initScrollAnimations() {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -1493,16 +1534,19 @@ function initScrollAnimations() {
             }
         });
     }, observerOptions);
-    
+
     // Observe all elements with animate-on-scroll class
     document.querySelectorAll('.animate-on-scroll').forEach(el => {
-        observer.observe(el);
+        if (!el.classList.contains('animated')) {
+            observer.observe(el);
+        }
     });
-    
+
     // Observe all elements with animate-stagger class
-    document.querySelectorAll('.animate-stagger').forEach((el, index) => {
-        el.style.animationDelay = `${index * 0.1}s`;
-        observer.observe(el);
+    document.querySelectorAll('.animate-stagger').forEach((el) => {
+        if (!el.classList.contains('animated')) {
+            observer.observe(el);
+        }
     });
 }
 
@@ -1513,38 +1557,38 @@ function addStaggerAnimations() {
     portfolioItems.forEach((item, index) => {
         item.style.animationDelay = `${index * 0.1}s`;
     });
-    
+
     // Blog items
     const blogItems = document.querySelectorAll('#blog-grid article');
     blogItems.forEach((item, index) => {
         item.style.animationDelay = `${index * 0.1}s`;
     });
-    
+
     // Service cards
     const serviceCards = document.querySelectorAll('#services-grid > div');
     serviceCards.forEach((item, index) => {
         item.style.animationDelay = `${index * 0.15}s`;
         item.classList.add('animate-stagger');
     });
-    
+
     // Tools grid items
     const toolItems = document.querySelectorAll('#tools-grid a');
     toolItems.forEach((item, index) => {
         item.style.animationDelay = `${index * 0.05}s`;
     });
-    
+
     // Experience items
     const expItems = document.querySelectorAll('#experience-list > div');
     expItems.forEach((item, index) => {
         item.style.animationDelay = `${index * 0.1}s`;
     });
-    
+
     // Education items
     const eduItems = document.querySelectorAll('#education-list > div');
     eduItems.forEach((item, index) => {
         item.style.animationDelay = `${index * 0.1}s`;
     });
-    
+
     // Skills items
     const skillItems = document.querySelectorAll('#skills-list > div');
     skillItems.forEach((item, index) => {
@@ -1556,27 +1600,27 @@ function addStaggerAnimations() {
 function initSkillsAnimation() {
     const skillsList = document.getElementById('skills-list');
     if (!skillsList) return;
-    
+
     const skillBars = skillsList.querySelectorAll('.skill-bar');
     const skillPercentages = skillsList.querySelectorAll('.skill-percentage');
-    
+
     if (skillBars.length === 0) return;
-    
+
     // Check if already animated
     if (skillsList.classList.contains('skills-animated')) return;
-    
+
     // Function to animate skills
     const animateSkills = () => {
         skillsList.classList.add('skills-animated');
-        
+
         skillBars.forEach((bar, index) => {
             const percentage = parseInt(bar.getAttribute('data-percentage'));
             const percentageEl = skillPercentages[index];
-            
+
             // Animate the bar
             setTimeout(() => {
                 bar.style.width = `${percentage}%`;
-                
+
                 // Animate the percentage text
                 let current = 0;
                 const increment = percentage / 50; // 50 steps for smooth animation
@@ -1593,13 +1637,13 @@ function initSkillsAnimation() {
             }, index * 100); // Stagger animation by 100ms per bar
         });
     };
-    
+
     // Create Intersection Observer
     const observerOptions = {
         threshold: 0.3,
         rootMargin: '0px 0px -100px 0px'
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -1608,11 +1652,11 @@ function initSkillsAnimation() {
             }
         });
     }, observerOptions);
-    
+
     // Check if element is already visible
     const rect = skillsList.getBoundingClientRect();
     const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-    
+
     if (isVisible) {
         // Small delay to ensure DOM is ready
         setTimeout(animateSkills, 100);
@@ -1623,19 +1667,20 @@ function initSkillsAnimation() {
 }
 
 // Initialize animations after content loads
+// Initialize animations after content loads
 function initAnimations() {
     // Add animation classes to sections
     const sections = document.querySelectorAll('section');
     sections.forEach(section => {
         section.classList.add('animate-on-scroll');
     });
-    
-    // Initialize scroll animations
-    initScrollAnimations();
-    
-    // Add stagger animations
+
+    // Add stagger animations first so elements have the class
+    addStaggerAnimations();
+
+    // THEN initialize scroll animations to observe all elements including staggered ones
     setTimeout(() => {
-        addStaggerAnimations();
+        initScrollAnimations();
     }, 100);
 }
 
@@ -1647,28 +1692,28 @@ let typingAnimationActive = false;
 function initTypingAnimation() {
     const typingElement = document.getElementById('typing-text');
     if (!typingElement) return;
-    
+
     // Clear any existing animation
     if (typingTimeout) {
         clearTimeout(typingTimeout);
         typingTimeout = null;
     }
-    
+
     // Reset to first word
     typingElement.textContent = 'Reality';
-    
+
     const words = ['Reality', 'Success', 'Excellence', 'Innovation', 'Perfection', 'Greatness', 'Mastery'];
     let currentWordIndex = 0;
     let currentCharIndex = 0;
     let isDeleting = false;
     typingAnimationActive = true;
-    
+
     function type() {
         if (!typingAnimationActive) return;
-        
+
         const currentWord = words[currentWordIndex];
         let typingSpeed = 100; // milliseconds per character
-        
+
         if (isDeleting) {
             // Delete characters
             typingElement.textContent = currentWord.substring(0, currentCharIndex - 1);
@@ -1680,23 +1725,23 @@ function initTypingAnimation() {
             currentCharIndex++;
             typingSpeed = 100; // Normal speed when typing
         }
-        
+
         // When word is complete
         if (!isDeleting && currentCharIndex === currentWord.length) {
             // Wait before starting to delete
             typingSpeed = 2000; // Pause at end of word
             isDeleting = true;
-        } 
+        }
         // When word is deleted
         else if (isDeleting && currentCharIndex === 0) {
             isDeleting = false;
             currentWordIndex = (currentWordIndex + 1) % words.length; // Move to next word
             typingSpeed = 500; // Pause before typing next word
         }
-        
+
         typingTimeout = setTimeout(type, typingSpeed);
     }
-    
+
     // Start typing animation after a short delay
     typingTimeout = setTimeout(type, 1000);
 }
@@ -1705,16 +1750,16 @@ function initTypingAnimation() {
 document.addEventListener('DOMContentLoaded', () => {
     loadData();
     // showPage will be called after data loads
-    
+
     // Add form submit handler
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', handleContactForm);
     }
-    
+
     // Initialize typing animation
     initTypingAnimation();
-    
+
     // Initialize animations after a short delay to ensure DOM is ready
     setTimeout(() => {
         initAnimations();
