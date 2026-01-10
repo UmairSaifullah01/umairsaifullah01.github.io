@@ -9,6 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <link href="assets/css/style.css" rel="stylesheet"/>
 <script>
       tailwind.config = {
@@ -51,37 +52,29 @@
 </div>
 <!-- Top Navigation -->
 <div class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
-<div class="bg-card-light dark:bg-[#1E1E1E] dark:bg-opacity-80 backdrop-blur-md px-4 py-3 rounded-full shadow-lg border border-gray-200 dark:border-gray-800 flex items-center gap-4">
-<div class="relative group">
-<button onclick="showPage('home')" class="nav-btn w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white transition hover:opacity-90" data-section="home">
-<span class="material-symbols-outlined text-[20px]">home</span>
-</button>
-<span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-800 dark:bg-gray-700 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Home</span>
-</div>
-<div class="relative group">
-<button onclick="showPage('projects')" class="nav-btn w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 transition" data-section="projects">
-<span class="material-symbols-outlined text-[20px]">folder_open</span>
-</button>
-<span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-800 dark:bg-gray-700 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Projects</span>
-</div>
-<div class="relative group">
-<button onclick="showPage('resume')" class="nav-btn w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 transition" data-section="resume">
-<span class="material-symbols-outlined text-[20px]">work</span>
-</button>
-<span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-800 dark:bg-gray-700 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Resume</span>
-</div>
-<div class="relative group">
-<button onclick="showPage('blog')" class="nav-btn w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 transition" data-section="blog">
-<span class="material-symbols-outlined text-[20px]">edit</span>
-</button>
-<span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-800 dark:bg-gray-700 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Blog</span>
-</div>
-<div class="relative group">
-<button onclick="showPage('contact')" class="nav-btn w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 transition" data-section="contact">
-<span class="material-symbols-outlined text-[20px]">mail</span>
-</button>
-<span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-800 dark:bg-gray-700 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Contact</span>
-</div>
+<div class="bg-card-light dark:bg-[#1E1E1E] dark:bg-opacity-80 backdrop-blur-md px-4 py-3 rounded-full shadow-lg border border-gray-200 dark:border-gray-800">
+<ul class="nav-icons-list">
+<li onclick="showPage('home')" class="nav-icon-item" data-section="home" style="--i: #8B5CF6; --j: #7C3AED;">
+<span class="material-symbols-outlined">home</span>
+<span class="title">Home</span>
+</li>
+<li onclick="showPage('projects')" class="nav-icon-item" data-section="projects" style="--i: #8B5CF6; --j: #7C3AED;">
+<span class="material-symbols-outlined">folder_open</span>
+<span class="title">Projects</span>
+</li>
+<li onclick="showPage('resume')" class="nav-icon-item" data-section="resume" style="--i: #8B5CF6; --j: #7C3AED;">
+<span class="material-symbols-outlined">work</span>
+<span class="title">Resume</span>
+</li>
+<li onclick="showPage('blog')" class="nav-icon-item" data-section="blog" style="--i: #8B5CF6; --j: #7C3AED;">
+<span class="material-symbols-outlined">edit</span>
+<span class="title">Blog</span>
+</li>
+<li onclick="showPage('contact')" class="nav-icon-item" data-section="contact" style="--i: #8B5CF6; --j: #7C3AED;">
+<span class="material-symbols-outlined">mail</span>
+<span class="title">Contact</span>
+</li>
+</ul>
 </div>
 </div>
 
@@ -97,7 +90,7 @@
 </div>
 <h2 id="sidebar-name" class="text-2xl lg:text-3xl font-bold mb-2 text-white dark:text-white"></h2>
 <p id="sidebar-title" class="text-base lg:text-lg text-white dark:text-white mb-2"></p>
-<p id="sidebar-location" class="text-sm text-gray-400 dark:text-gray-400 mb-6">Pakistan</p>
+<p id="sidebar-location" class="text-sm text-gray-400 dark:text-gray-400 mb-6">Working Hard</p>
 <div id="sidebar-social" class="flex justify-center gap-4 mb-6"></div>
 <div class="flex justify-center">
 <button onclick="showPage('contact')" class="w-1/2 py-3 bg-primary text-white rounded-xl font-medium text-sm hover:bg-primary-hover transition shadow-lg shadow-primary/30">

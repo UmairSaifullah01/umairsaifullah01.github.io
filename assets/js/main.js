@@ -160,24 +160,37 @@ function renderSidebar() {
             });
         }
 
-        const iconMap = {
-            'mail-outline': './assets/images/email-icon.svg',
-            'logo-github': './assets/images/github-icon.svg',
-            'logo-linkedin': './assets/images/linkedin-icon.svg',
-            'logo-instagram': './assets/images/instagram-icon.svg',
-            'logo-facebook': './assets/images/facebook-icon.svg',
-            'logo-twitter': './assets/images/twitter-icon.svg'
+        // Map platforms to Font Awesome icon classes
+        const fontAwesomeMap = {
+            'email': 'fas fa-envelope',
+            'github': 'fab fa-github',
+            'linkedin': 'fab fa-linkedin-in',
+            'instagram': 'fab fa-instagram',
+            'facebook': 'fab fa-facebook-f',
+            'twitter': 'fab fa-twitter',
+            'google-plus': 'fab fa-google-plus-g'
         };
 
-        socialEl.innerHTML = allLinks.map(item => {
-            const iconPath = iconMap[item.icon] || `./assets/images/${item.platform || item.type}-icon.svg`;
-            return `
-                <a href="${item.link}" class="text-white dark:text-white hover:text-primary transition" aria-label="${item.platform || item.type}" target="_blank" rel="noopener noreferrer">
-                    <img src="${iconPath}" alt="${item.platform || item.type}" class="w-6 h-6 opacity-80 hover:opacity-100" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                    <span class="material-symbols-outlined text-xl" style="display:none;">${item.icon}</span>
-                </a>
-            `;
-        }).join('');
+        // Get Font Awesome class based on platform/type
+        const getFontAwesomeClass = (item) => {
+            const platform = (item.platform || item.type || '').toLowerCase();
+            return fontAwesomeMap[platform] || fontAwesomeMap['email'];
+        };
+
+        socialEl.innerHTML = `
+            <ul class="social-icons-list">
+                ${allLinks.map(item => {
+                    const platform = (item.platform || item.type || 'email').toLowerCase();
+                    return `
+                        <li>
+                            <a href="${item.link}" aria-label="${platform}" target="_blank" rel="noopener noreferrer" data-platform="${platform}">
+                                <i class="${getFontAwesomeClass(item)} icon"></i>
+                            </a>
+                        </li>
+                    `;
+                }).join('')}
+            </ul>
+        `;
     }
 }
 
@@ -1197,6 +1210,28 @@ function showPageInternal(pageId) {
     const selectedPage = document.getElementById(`page-${pageId}`);
     if (selectedPage) {
         selectedPage.classList.remove('hidden');
+        
+        // Ensure portfolio is rendered when showing projects page
+        if (pageId === 'projects') {
+            // Use requestAnimationFrame to ensure DOM is ready
+            requestAnimationFrame(() => {
+                const portfolioGrid = document.getElementById('portfolio-grid');
+                if (portfolioGrid) {
+                    // Check if portfolio is empty or if portfolioData exists but grid is empty
+                    const isEmpty = !portfolioGrid.innerHTML || portfolioGrid.innerHTML.trim() === '';
+                    if (isEmpty && portfolioData) {
+                        // Portfolio grid is empty, render it
+                        renderPortfolio('all');
+                        // Re-add stagger animations after rendering
+                        setTimeout(() => {
+                            addStaggerAnimations();
+                            initScrollAnimations();
+                        }, 100);
+                    }
+                }
+            });
+        }
+        
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
@@ -1380,18 +1415,16 @@ function openExperience(index) {
 
 // Update active navigation button
 function updateActiveNav(activeSection) {
-    const navButtons = document.querySelectorAll('.nav-btn');
-    navButtons.forEach(btn => {
-        const section = btn.getAttribute('data-section');
+    const navItems = document.querySelectorAll('.nav-icon-item');
+    navItems.forEach(item => {
+        const section = item.getAttribute('data-section');
         // If on blog post or experience page, highlight appropriate nav button
         const sectionToCheck = activeSection === 'blog-post' ? 'blog' :
             activeSection === 'experience' ? 'resume' : activeSection;
         if (section === sectionToCheck) {
-            btn.classList.add('bg-primary', 'text-white');
-            btn.classList.remove('hover:bg-gray-100', 'dark:hover:bg-white/10', 'text-gray-500', 'dark:text-gray-400');
+            item.classList.add('active');
         } else {
-            btn.classList.remove('bg-primary', 'text-white');
-            btn.classList.add('hover:bg-gray-100', 'dark:hover:bg-white/10', 'text-gray-500', 'dark:text-gray-400');
+            item.classList.remove('active');
         }
     });
 }

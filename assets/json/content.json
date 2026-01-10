@@ -28,16 +28,6 @@
     ],
     "social": [
       {
-        "platform": "instagram",
-        "icon": "logo-instagram",
-        "link": "https://www.instagram.com/umair.jutt45"
-      },
-      {
-        "platform": "facebook",
-        "icon": "logo-facebook",
-        "link": "https://www.facebook.com/umair.jutt45"
-      },
-      {
         "platform": "twitter",
         "icon": "logo-twitter",
         "link": "#"
