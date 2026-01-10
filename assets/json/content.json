@@ -147,7 +147,8 @@
     ]
   },
   "resume": {
-    "title": "Resume",
+    "title": "Work Experience",
+    "mainTitle": "Over 8 Years of Game Development",
     "experience": [
       {
         "position": "Senior Game Developer",
@@ -348,6 +349,7 @@
         "link": "https://aws.amazon.com/"
       }
     ],
+    "skillsTitle": "Skills",
     "skills": [
       {
         "name": "Unity3D",

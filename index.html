@@ -89,7 +89,7 @@
 <div class="container mx-auto px-4 lg:px-8 xl:px-12 pt-28 pb-20 max-w-7xl">
 <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16">
 <!-- Left Column - Profile Card (Floating) -->
-<aside class="w-full lg:w-80 xl:w-96 flex-shrink-0 mb-8 lg:mb-0">
+<aside id="sidebar-profile" class="w-full lg:w-80 xl:w-96 flex-shrink-0 mb-8 lg:mb-0 hidden lg:block">
 <div class="lg:sticky lg:top-28">
 <div class="bg-card-light dark:bg-card-dark rounded-3xl p-6 lg:p-8 border border-gray-200 dark:border-gray-800 shadow-sm text-center">
 <div class="w-full max-w-[280px] mx-auto rounded-2xl overflow-hidden mb-6 relative aspect-[3/4]">
@@ -219,7 +219,12 @@ Unlock the potential of your product with expert design and development services
 <!-- Projects Page -->
 <div id="page-projects" class="page-content hidden">
 <section id="projects" class="mb-16">
-<h2 class="text-3xl font-bold mb-6">Recent Projects and <span class="text-primary">Achievements</span></h2>
+<!-- Projects Title Section -->
+<div class="mb-12">
+<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+<span class="text-white">Recent Projects and</span> <span class="text-primary">Achievements</span>
+</h1>
+</div>
 
 <!-- Filter Tabs -->
 <div class="flex flex-wrap gap-2 mb-6">
@@ -265,11 +270,15 @@ Unlock the potential of your product with expert design and development services
 <!-- Resume/Work Experience Page -->
 <div id="page-resume" class="page-content hidden">
 <section id="resume" class="mb-16">
-<h2 class="text-3xl font-bold mb-6" id="resume-title">Work Experience</h2>
+<!-- Resume Title Section -->
+<div class="mb-12">
+<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+<span id="resume-main-title" class="text-white">Over 8 Years of Game Development</span> <span class="text-primary">Expertise</span>
+</h1>
+</div>
 
 <!-- Experience -->
 <div class="mb-12">
-<h3 class="text-xl font-bold mb-4">Experience</h3>
 <div id="experience-list" class="space-y-6"></div>
 </div>
 
@@ -281,13 +290,24 @@ Unlock the potential of your product with expert design and development services
 
 <!-- Skills -->
 <div class="mb-12">
-<h3 class="text-xl font-bold mb-4">Skills</h3>
+<!-- Skills Title Section -->
+<div class="mb-8">
+<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+<span id="skills-main-title" class="text-white">Skills</span>
+</h2>
+</div>
 <div id="skills-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
 </div>
 
 <!-- Tools Section -->
 <div class="mb-12">
-<h3 class="text-xl font-bold mb-4">Tools & Technologies</h3>
+<!-- Tools Title Section -->
+<div class="mb-8">
+<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+<span class="text-white">Top-Tier Tools for</span><br/>
+<span class="text-primary">Exceptional Results</span>
+</h2>
+</div>
 <div id="tools-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div>
 </div>
 </section>
@@ -317,7 +337,12 @@ Unlock the potential of your product with expert design and development services
 <!-- Blog Page -->
 <div id="page-blog" class="page-content hidden">
 <section id="blog" class="mb-16">
-<h2 class="text-3xl font-bold mb-6">Design Thoughts and <span class="text-primary">Perspectives</span></h2>
+<!-- Blog Title Section -->
+<div class="mb-12">
+<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+<span class="text-white">Design Thoughts and</span> <span class="text-primary">Perspectives</span>
+</h1>
+</div>
 <div id="blog-grid" class="grid grid-cols-1 gap-6"></div>
 </section>
 
@@ -517,7 +542,12 @@ Company Link
 <!-- Contact Page -->
 <div id="page-contact" class="page-content hidden">
 <section id="contact" class="mb-16">
-<h2 class="text-3xl font-bold mb-6">Let's<br/><span class="text-primary">collaborate</span></h2>
+<!-- Contact Title Section -->
+<div class="mb-12">
+<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+<span class="text-white">Let's</span> <span class="text-primary">Collaborate</span>
+</h1>
+</div>
 <div class="bg-card-light dark:bg-card-dark rounded-3xl p-8 border border-gray-200 dark:border-gray-800">
 <form id="contact-form" class="space-y-6">
 <div class="space-y-2">

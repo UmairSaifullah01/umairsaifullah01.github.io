@@ -30,6 +30,35 @@ async function loadData() {
         
         console.log('Data loaded successfully:', { contentData, portfolioData, blogsData });
         
+        // Wait for DOM to be fully ready before rendering
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                renderAllSections();
+            });
+        } else {
+            // DOM is already ready, but use requestAnimationFrame to ensure all elements exist
+            requestAnimationFrame(() => {
+                renderAllSections();
+            });
+        }
+    } catch (error) {
+        console.error('Error loading data:', error);
+        // Hide loading indicator
+        const loadingIndicator = document.getElementById('loading-indicator');
+        if (loadingIndicator) {
+            loadingIndicator.style.display = 'none';
+        }
+        // Show error message on page
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; background: red; color: white; padding: 20px; z-index: 9999;';
+        errorDiv.textContent = `Error loading data: ${error.message}. Check console for details.`;
+        document.body.appendChild(errorDiv);
+    }
+}
+
+// Render all sections - separated for better control
+function renderAllSections() {
+    try {
         // Render all sections
         renderSidebar();
         renderAbout();
@@ -46,31 +75,38 @@ async function loadData() {
         // Start clients auto-scroll
         startClientsAutoScroll();
         
-        // Show home page by default
-        showPage('home');
-        
-        // Re-initialize animations after content is loaded
-        setTimeout(() => {
-            initAnimations();
-        }, 300);
-        
-        // Hide loading indicator
-        const loadingIndicator = document.getElementById('loading-indicator');
-        if (loadingIndicator) {
-            loadingIndicator.style.display = 'none';
-        }
+        // Use double requestAnimationFrame to ensure DOM is fully updated before showing page
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                // Small delay to ensure all elements are in DOM
+                setTimeout(() => {
+                    // Show home page by default
+                    showPage('home');
+                    
+                    // Re-initialize animations after content is loaded
+                    setTimeout(() => {
+                        initAnimations();
+                    }, 300);
+                    
+                    // Hide loading indicator
+                    const loadingIndicator = document.getElementById('loading-indicator');
+                    if (loadingIndicator) {
+                        loadingIndicator.style.display = 'none';
+                    }
+                }, 50);
+            });
+        });
     } catch (error) {
-        console.error('Error loading data:', error);
-        // Hide loading indicator
+        console.error('Error rendering sections:', error);
+        // Hide loading indicator even on error
         const loadingIndicator = document.getElementById('loading-indicator');
         if (loadingIndicator) {
             loadingIndicator.style.display = 'none';
         }
-        // Show error message on page
-        const errorDiv = document.createElement('div');
-        errorDiv.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; background: red; color: white; padding: 20px; z-index: 9999;';
-        errorDiv.textContent = `Error loading data: ${error.message}. Check console for details.`;
-        document.body.appendChild(errorDiv);
+        // Retry rendering after a short delay
+        setTimeout(() => {
+            renderAllSections();
+        }, 500);
     }
 }
 
@@ -351,6 +387,23 @@ window.addEventListener('resize', () => {
         currentClientIndex = maxIndex;
     }
     updateClientsPosition();
+    // Update sidebar visibility on resize
+    const currentPage = document.querySelector('.page-content:not(.hidden)');
+    if (currentPage) {
+        const pageId = currentPage.id.replace('page-', '');
+        const sidebar = document.getElementById('sidebar-profile');
+        if (sidebar) {
+            if (window.innerWidth < 1024) { // lg breakpoint
+                if (pageId === 'home') {
+                    sidebar.classList.remove('hidden');
+                } else {
+                    sidebar.classList.add('hidden');
+                }
+            } else {
+                sidebar.classList.remove('hidden');
+            }
+        }
+    }
 });
 
 // Get category filter value from item
@@ -456,9 +509,11 @@ function renderResume() {
     
     const resume = contentData.resume;
     
-    // Title
-    const titleEl = document.getElementById('resume-title');
-    if (titleEl) titleEl.textContent = resume.title;
+    // Main Title
+    const mainTitleEl = document.getElementById('resume-main-title');
+    if (mainTitleEl && resume.mainTitle) {
+        mainTitleEl.textContent = resume.mainTitle;
+    }
     
     // Experience
     const expEl = document.getElementById('experience-list');
@@ -512,6 +567,12 @@ function renderResume() {
                 <p class="text-sm text-gray-600 dark:text-gray-400">${edu.description}</p>
             </div>
         `).join('');
+    }
+    
+    // Skills Title
+    const skillsTitleEl = document.getElementById('skills-main-title');
+    if (skillsTitleEl && resume.skillsTitle) {
+        skillsTitleEl.textContent = resume.skillsTitle;
     }
     
     // Skills
@@ -1094,6 +1155,18 @@ function updateProjectScreenshotSlider() {
 
 // Page Navigation System
 function showPage(pageId) {
+    // Ensure DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            showPageInternal(pageId);
+        });
+        return;
+    }
+    
+    showPageInternal(pageId);
+}
+
+function showPageInternal(pageId) {
     // Hide all pages
     const allPages = document.querySelectorAll('.page-content');
     allPages.forEach(page => {
@@ -1106,6 +1179,28 @@ function showPage(pageId) {
         selectedPage.classList.remove('hidden');
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        console.warn(`Page element not found: page-${pageId}, retrying...`);
+        // Retry after a short delay if element not found
+        setTimeout(() => {
+            showPageInternal(pageId);
+        }, 100);
+    }
+    
+    // Handle sidebar visibility on mobile
+    const sidebar = document.getElementById('sidebar-profile');
+    if (sidebar) {
+        // On mobile: show only on home page, on desktop: always show
+        if (window.innerWidth < 1024) { // lg breakpoint
+            if (pageId === 'home') {
+                sidebar.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('hidden');
+            }
+        } else {
+            // Desktop: always show (lg:block handles this via CSS)
+            sidebar.classList.remove('hidden');
+        }
     }
     
     // Restart typing animation if showing home page
