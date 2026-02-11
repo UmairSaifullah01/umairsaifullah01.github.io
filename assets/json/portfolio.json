@@ -291,5 +291,39 @@
     ],
     "description": "Description will be added later.",
     "googlePlayLink": "https://play.google.com/store/apps/details?id=com.zplay.KnitColorSort"
+  },
+  {
+    "id": 20,
+    "title": "Cube Match - Color Sort Puzzle",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/cube-match.png",
+    "alt": "Knit Sort Puzzle - Color Paint",
+    "link": "https://play.google.com/store/apps/details?id=com.zplay.cubeMatch",
+    "logo": "./assets/images/cube-match.png",
+    "screenshots": [
+      "./assets/images/cube-match-1.png",
+      "./assets/images/cube-match-2.png",
+      "./assets/images/cube-match-3.png",
+      "./assets/images/cube-match-4.png"
+    ],
+    "description": "Cube Match is a fun and brain-teasing 3D puzzle game where strategy meets smooth rotation.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.zplay.cubeMatch"
+  },
+  {
+    "id": 21,
+    "title": "Sizzle Sort",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/sizzle-sort.png",
+    "alt": "Knit Sort Puzzle - Color Paint",
+    "link": "https://play.google.com/store/apps/details?id=com.hcgames.sizzlesort",
+    "logo": "./assets/images/sizzle-sort.png",
+    "screenshots": [
+      "./assets/images/sizzle-sort-1.png",
+      "./assets/images/sizzle-sort-2.png",
+      "./assets/images/sizzle-sort-3.png",
+      "./assets/images/sizzle-sort-4.png"
+    ],
+    "description": "Fire up the grill and get ready to think! Sizzle Sort is a fun and satisfying 3D puzzle game where every move crackles with delicious BBQ energy. Each level is filled with skewers stacked with different ingredients — and your goal is simple: sort them so each skewer holds only one type of food.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.hcgames.sizzlesort"
   }
 ]
