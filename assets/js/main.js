@@ -1159,27 +1159,27 @@ function showPageInternal(pageId) {
     const selectedPage = document.getElementById(`page-${pageId}`);
     if (selectedPage) {
         selectedPage.classList.remove('hidden');
-        
-        // Ensure portfolio is rendered when showing projects page
-        if (pageId === 'projects') {
-            // Use requestAnimationFrame to ensure DOM is ready
-            requestAnimationFrame(() => {
+
+        // After display:none → visible, force-reveal in-view animations.
+        // Otherwise mobile Safari can leave opacity:0 until zoom/resize.
+        requestAnimationFrame(() => {
+            revealPageAnimations(selectedPage);
+
+            // Ensure portfolio is rendered when showing projects page
+            if (pageId === 'projects') {
                 const portfolioGrid = document.getElementById('portfolio-grid');
                 if (portfolioGrid) {
-                    // Check if portfolio is empty or if portfolioData exists but grid is empty
                     const isEmpty = !portfolioGrid.innerHTML || portfolioGrid.innerHTML.trim() === '';
                     if (isEmpty && portfolioData) {
-                        // Portfolio grid is empty, render it
                         renderPortfolio('all');
-                        // Re-add stagger animations after rendering
                         setTimeout(() => {
                             addStaggerAnimations();
-                            initScrollAnimations();
+                            revealPageAnimations(selectedPage);
                         }, 100);
                     }
                 }
-            });
-        }
+            }
+        });
         
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1508,17 +1508,23 @@ async function handleContactForm(event) {
 
 
 // Scroll-triggered animations using Intersection Observer
+let scrollAnimationObserver = null;
+
 function initScrollAnimations() {
+    if (scrollAnimationObserver) {
+        scrollAnimationObserver.disconnect();
+    }
+
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    scrollAnimationObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animated');
-                observer.unobserve(entry.target);
+                scrollAnimationObserver.unobserve(entry.target);
             }
         });
     }, observerOptions);
@@ -1526,16 +1532,43 @@ function initScrollAnimations() {
     // Observe all elements with animate-on-scroll class
     document.querySelectorAll('.animate-on-scroll').forEach(el => {
         if (!el.classList.contains('animated')) {
-            observer.observe(el);
+            scrollAnimationObserver.observe(el);
         }
     });
 
     // Observe all elements with animate-stagger class
     document.querySelectorAll('.animate-stagger').forEach((el) => {
         if (!el.classList.contains('animated')) {
-            observer.observe(el);
+            scrollAnimationObserver.observe(el);
         }
     });
+}
+
+// Reveal animations for a page that was display:none.
+// Mobile Safari often won't fire IntersectionObserver until a zoom/reflow.
+function revealPageAnimations(pageEl) {
+    if (!pageEl) return;
+
+    // Force layout so newly shown elements get real dimensions
+    void pageEl.offsetHeight;
+
+    const candidates = pageEl.querySelectorAll(
+        '.animate-on-scroll:not(.animated), .animate-stagger:not(.animated)'
+    );
+
+    candidates.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const inView = rect.height > 0 &&
+            rect.top < window.innerHeight &&
+            rect.bottom > 0;
+
+        if (inView) {
+            el.classList.add('animated');
+        }
+    });
+
+    // Re-observe anything still waiting (below the fold, etc.)
+    initScrollAnimations();
 }
 
 // Add stagger delays to grid items
