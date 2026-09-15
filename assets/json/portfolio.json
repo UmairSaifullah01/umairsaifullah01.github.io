@@ -325,5 +325,56 @@
     ],
     "description": "Fire up the grill and get ready to think! Sizzle Sort is a fun and satisfying 3D puzzle game where every move crackles with delicious BBQ energy. Each level is filled with skewers stacked with different ingredients — and your goal is simple: sort them so each skewer holds only one type of food.",
     "googlePlayLink": "https://play.google.com/store/apps/details?id=com.hcgames.sizzlesort"
+  },
+  {
+    "id": 22,
+    "title": "Pixel Jam Blaster",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/pixel-jam-blaster.png",
+    "alt": "Pixel Jam Blaster",
+    "link": "https://play.google.com/store/apps/details?id=com.zplay.pixelBlaster",
+    "logo": "./assets/images/pixel-jam-blaster.png",
+    "screenshots": [
+      "./assets/images/pixel-jam-blaster-1.png",
+      "./assets/images/pixel-jam-blaster-2.png",
+      "./assets/images/pixel-jam-blaster-3.png",
+      "./assets/images/pixel-jam-blaster-4.png"
+    ],
+    "description": "Pixel Jam Blaster is a fresh and addictive 3D puzzle where you fill colorful pixel block shapes with limited cube bullets. Plan each move carefully, trigger explosive clears, and enjoy satisfying chain reactions.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.zplay.pixelBlaster"
+  },
+  {
+    "id": 23,
+    "title": "Crate Blaster",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/crate-blaster.png",
+    "alt": "Crate Blaster",
+    "link": "https://play.google.com/store/apps/details?id=com.zplay.crateBlaster",
+    "logo": "./assets/images/crate-blaster.png",
+    "screenshots": [
+      "./assets/images/crate-blaster-1.png",
+      "./assets/images/crate-blaster-2.png",
+      "./assets/images/crate-blaster-3.png",
+      "./assets/images/crate-blaster-4.png"
+    ],
+    "description": "Crate Blaster is a colorful puzzle adventure where you match colored crates to maze paths and watch them fill automatically. Plan the right order, unlock new routes, and clear every level with smart strategy.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.zplay.crateBlaster"
+  },
+  {
+    "id": 24,
+    "title": "Water Block Jam",
+    "category": "Mobile Puzzle",
+    "image": "./assets/images/water-block-jam.png",
+    "alt": "Water Block Jam",
+    "link": "https://play.google.com/store/apps/details?id=com.zplay.waterBlockJam",
+    "logo": "./assets/images/water-block-jam.png",
+    "screenshots": [
+      "./assets/images/water-block-jam-1.png",
+      "./assets/images/water-block-jam-2.png",
+      "./assets/images/water-block-jam-3.png",
+      "./assets/images/water-block-jam-4.png"
+    ],
+    "description": "Water Block Jam is a satisfying water-filling puzzle where you guide colorful streams into matching block shapes. Fill every block to make it burst, plan your order carefully, and clear the board with smart strategy.",
+    "googlePlayLink": "https://play.google.com/store/apps/details?id=com.zplay.waterBlockJam"
   }
 ]
