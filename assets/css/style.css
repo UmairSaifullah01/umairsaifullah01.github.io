@@ -48,8 +48,15 @@ body {
         radial-gradient(ellipse at bottom right, rgba(67, 21, 96, 0.06) 0%, transparent 50%),
         linear-gradient(135deg, #0A070D 0%, #0D0812 25%, #0A070D 50%, #08050A 75%, #0A070D 100%) !important;
     background-size: 100% 100%, 100% 100%, 400% 400%;
-    background-attachment: fixed;
+    /* fixed backgrounds cause blank/unpainted content on iOS until zoom/scroll */
+    background-attachment: scroll;
     animation: gradientShift 20s ease infinite;
+}
+
+@media (min-width: 1024px) {
+    .dark body {
+        background-attachment: fixed;
+    }
 }
 
 /* Ensure content appears above noise overlay */
@@ -66,7 +73,7 @@ body {
         radial-gradient(ellipse at bottom right, rgba(67, 21, 96, 0.06) 0%, transparent 50%),
         linear-gradient(135deg, #0A070D 0%, #0D0812 25%, #0A070D 50%, #08050A 75%, #0A070D 100%) !important;
     background-size: 100% 100%, 100% 100%, 400% 400%;
-    background-attachment: fixed;
+    background-attachment: scroll;
     animation: gradientShift 20s ease infinite;
     position: relative;
 }
@@ -116,6 +123,10 @@ html {
 /* Page Content Transitions */
 .page-content {
     animation: fadeIn 0.3s ease-in;
+    /* Promote a stable compositing layer so mobile browsers paint after display:none → visible */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .page-content.hidden {
@@ -131,6 +142,20 @@ html {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* Avoid transform-based page fades on mobile — they often leave content unpainted until zoom */
+@media (max-width: 1023px) {
+    .page-content {
+        animation: fadeInOpacity 0.25s ease-in;
+        -webkit-transform: none;
+        transform: none;
+    }
+
+    @keyframes fadeInOpacity {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 }
 
@@ -614,9 +639,11 @@ section h2 {
     animation: spin 1s linear infinite;
 }
 
-/* Smooth page transitions */
-.page-content {
-    animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+/* Smooth page transitions (desktop); mobile override above uses fadeInOpacity */
+@media (min-width: 1024px) {
+    .page-content {
+        animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 }
 
 /* Loading indicator fade out */

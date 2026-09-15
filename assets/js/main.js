@@ -338,9 +338,22 @@ function stopClientsAutoScroll() {
 
 // Update on window resize
 window.addEventListener('resize', () => {
-    // Recalculate slider position on resize
+    // Rebuild project slider when visible so mobile/desktop per-view widths stay correct
     if (projectScreenshots.length > 0) {
-        updateProjectScreenshotSlider();
+        const projectPage = document.getElementById('page-project');
+        if (projectPage && !projectPage.classList.contains('hidden') && portfolioData) {
+            const title = document.getElementById('project-title')?.textContent;
+            const matched = portfolioData.find(p => p.title === title);
+            const maxIndex = Math.max(0, projectScreenshots.length - getScreenshotsPerView());
+            if (currentProjectScreenshotIndex > maxIndex) {
+                currentProjectScreenshotIndex = maxIndex;
+            }
+            if (matched) {
+                renderProjectScreenshots(matched);
+            } else {
+                updateProjectScreenshotSlider();
+            }
+        }
     }
     updateClientsPerView();
     // Ensure current index doesn't exceed max after resize
@@ -855,6 +868,92 @@ function formatDate(dateString) {
 let currentProjectScreenshotIndex = 0;
 let projectScreenshots = [];
 
+function getScreenshotsPerView() {
+    return window.innerWidth < 768 ? 1 : 3;
+}
+
+function forcePagePaint(el) {
+    if (!el) return;
+    // Read layout + toggle a harmless property to force mobile browsers to composite/paint
+    void el.offsetHeight;
+    el.style.opacity = '0.999';
+    requestAnimationFrame(() => {
+        el.style.opacity = '';
+    });
+}
+
+function renderProjectScreenshots(item) {
+    const screenshotsSection = document.getElementById('project-screenshots-section');
+    const screenshotsSlider = document.getElementById('project-screenshots-slider');
+    const prevBtn = document.getElementById('project-screenshot-prev');
+    const nextBtn = document.getElementById('project-screenshot-next');
+    const dotsContainer = document.getElementById('project-screenshot-dots');
+    const screenshotsPerView = getScreenshotsPerView();
+
+    if (!screenshotsSection || projectScreenshots.length === 0) {
+        if (screenshotsSection) screenshotsSection.classList.add('hidden');
+        return;
+    }
+
+    screenshotsSection.classList.remove('hidden');
+
+    if (screenshotsSlider) {
+        const gapRem = screenshotsPerView > 1 ? 0.67 : 0;
+        const itemWidthCalc = screenshotsPerView === 1
+            ? '100%'
+            : `calc(${100 / screenshotsPerView}% - ${gapRem}rem)`;
+
+        screenshotsSlider.style.width = 'auto';
+        screenshotsSlider.style.transform = 'translateX(0)';
+
+        if (projectScreenshots.length === 1) {
+            screenshotsSlider.classList.add('justify-center');
+        } else {
+            screenshotsSlider.classList.remove('justify-center');
+        }
+
+        screenshotsSlider.innerHTML = projectScreenshots.map((media, index) => {
+            const isVideo = media.includes('.mp4') || media.includes('.webm') || media.includes('.mov') || item.type === 'video';
+            if (isVideo) {
+                return `
+                    <div class="flex-shrink-0 rounded-lg overflow-hidden" style="width: ${itemWidthCalc}; min-width: 0;">
+                        <video class="w-full h-auto object-cover rounded-lg" controls autoplay muted loop playsinline>
+                            <source src="${media}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                `;
+            }
+            return `
+                <div class="flex-shrink-0 rounded-lg overflow-hidden" style="width: ${itemWidthCalc}; min-width: 0;">
+                    <img src="${media}" alt="Screenshot ${index + 1}" class="w-full h-auto object-cover rounded-lg" loading="eager" />
+                </div>
+            `;
+        }).join('');
+    }
+
+    const showNav = projectScreenshots.length > screenshotsPerView;
+    if (prevBtn) prevBtn.classList.toggle('hidden', !showNav);
+    if (nextBtn) nextBtn.classList.toggle('hidden', !showNav);
+
+    if (dotsContainer) {
+        if (showNav) {
+            const maxIndex = Math.max(0, projectScreenshots.length - screenshotsPerView);
+            const dotsArray = Array.from({ length: maxIndex + 1 }, (_, i) => i);
+            dotsContainer.innerHTML = dotsArray.map((index) => `
+                <button onclick="goToProjectScreenshot(${index})" class="w-2 h-2 rounded-full transition ${index === 0 ? 'bg-primary' : 'bg-gray-600'}" data-index="${index}"></button>
+            `).join('');
+        } else {
+            dotsContainer.innerHTML = '';
+        }
+    }
+
+    requestAnimationFrame(() => {
+        updateProjectScreenshotSlider();
+        requestAnimationFrame(updateProjectScreenshotSlider);
+    });
+}
+
 // Open Portfolio Item
 function openPortfolioItem(itemId) {
     const item = portfolioData.find(p => p.id === itemId);
@@ -863,34 +962,39 @@ function openPortfolioItem(itemId) {
         return;
     }
 
-    // Handle videos - show detail page instead of opening in new tab
-    // Videos will be displayed in the screenshot slider
-
     console.log('Opening project:', item);
 
-    // Get all elements
     const titleEl = document.getElementById('project-title');
     const logoEl = document.getElementById('project-logo');
     const descriptionEl = document.getElementById('project-description');
     const descriptionSection = document.getElementById('project-description-section');
     const screenshotsSection = document.getElementById('project-screenshots-section');
     const screenshotsSlider = document.getElementById('project-screenshots-slider');
-    const screenshotsContainer = document.getElementById('project-screenshots-container');
-    const prevBtn = document.getElementById('project-screenshot-prev');
-    const nextBtn = document.getElementById('project-screenshot-next');
-    const dotsContainer = document.getElementById('project-screenshot-dots');
     const googlePlayLink = document.getElementById('project-google-play');
     const appStoreLink = document.getElementById('project-app-store');
     const customLink = document.getElementById('project-custom-link');
     const linksSection = document.getElementById('project-links-section');
 
-    // Set project title
+    // Prepare screenshot data first; render AFTER the page is visible (mobile layout bug fix)
+    projectScreenshots = item.screenshots || [];
+    if (item.type === 'video' && item.video && projectScreenshots.length === 0) {
+        projectScreenshots = [item.video];
+    }
+    currentProjectScreenshotIndex = 0;
+
+    // Clear previous slider so stale content doesn't flash
+    if (screenshotsSlider) {
+        screenshotsSlider.innerHTML = '';
+        screenshotsSlider.style.transform = 'translateX(0)';
+    }
+    if (screenshotsSection) {
+        screenshotsSection.classList.toggle('hidden', projectScreenshots.length === 0);
+    }
+
     if (titleEl) titleEl.textContent = item.title;
 
-    // Set project logo
     if (logoEl) {
         if (item.logo) {
-            // Check if logo is a video file, if so use a placeholder or hide it
             const isVideoFile = item.logo.includes('.mp4') || item.logo.includes('.webm') || item.logo.includes('.mov');
             if (isVideoFile && item.image) {
                 logoEl.src = item.image;
@@ -910,7 +1014,6 @@ function openPortfolioItem(itemId) {
         }
     }
 
-    // Set description
     if (descriptionEl && item.description) {
         descriptionEl.textContent = item.description;
         if (descriptionSection) descriptionSection.classList.remove('hidden');
@@ -918,101 +1021,6 @@ function openPortfolioItem(itemId) {
         descriptionSection.classList.add('hidden');
     }
 
-    // Handle screenshots/videos slider - show 3 at a time, move by 1
-    projectScreenshots = item.screenshots || [];
-    // If it's a video and no screenshots, use the video itself
-    if (item.type === 'video' && item.video && projectScreenshots.length === 0) {
-        projectScreenshots = [item.video];
-    }
-    currentProjectScreenshotIndex = 0;
-    const screenshotsPerView = 3;
-
-    if (screenshotsSection && projectScreenshots.length > 0) {
-        screenshotsSection.classList.remove('hidden');
-
-        // Render screenshots or videos - each takes ~26.67% of container width (20% smaller than 33.33%)
-        if (screenshotsSlider) {
-            // Original would be 33.33% for 3 items
-            const itemWidthPercent = (100 / screenshotsPerView);
-            // gap-4 is 1rem (16px), calculate item width accounting for gap
-            // Formula: (containerWidth * itemWidthPercent / 100) - gap
-            // But we'll use CSS calc for better accuracy
-            const itemWidthCalc = `calc(${itemWidthPercent}% - 0.67rem)`;
-
-            // Set slider to auto width (flex will handle it)
-            screenshotsSlider.style.width = 'auto';
-
-            // Center if only 1 screenshot
-            if (projectScreenshots.length === 1) {
-                screenshotsSlider.classList.add('justify-center');
-            } else {
-                screenshotsSlider.classList.remove('justify-center');
-            }
-
-            screenshotsSlider.innerHTML = projectScreenshots.map((media, index) => {
-                // Check if it's a video file
-                const isVideo = media.includes('.mp4') || media.includes('.webm') || media.includes('.mov') || item.type === 'video';
-                if (isVideo) {
-                    return `
-                        <div class="flex-shrink-0 rounded-lg overflow-hidden" style="width: ${itemWidthCalc}; min-width: 0;">
-                            <video class="w-full h-auto object-cover rounded-lg" controls autoplay muted loop>
-                                <source src="${media}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                    `;
-                } else {
-                    return `
-                        <div class="flex-shrink-0 rounded-lg overflow-hidden" style="width: ${itemWidthCalc}; min-width: 0;">
-                            <img src="${media}" alt="Screenshot ${index + 1}" class="w-full h-auto object-cover rounded-lg" />
-                        </div>
-                    `;
-                }
-            }).join('');
-        }
-
-        // Show/hide navigation buttons - only show if more than 3 screenshots
-        if (prevBtn) {
-            if (projectScreenshots.length > screenshotsPerView) {
-                prevBtn.classList.remove('hidden');
-            } else {
-                prevBtn.classList.add('hidden');
-            }
-        }
-        if (nextBtn) {
-            if (projectScreenshots.length > screenshotsPerView) {
-                nextBtn.classList.remove('hidden');
-            } else {
-                nextBtn.classList.add('hidden');
-            }
-        }
-
-        // Render dots - one per screenshot (since we move by 1)
-        if (dotsContainer) {
-            const maxIndex = Math.max(0, projectScreenshots.length - screenshotsPerView);
-
-            if (projectScreenshots.length > screenshotsPerView) {
-                // Only create dots for valid starting positions (0 to maxIndex)
-                const numDots = maxIndex + 1;
-                const dotsArray = Array.from({ length: numDots }, (_, i) => i);
-
-                dotsContainer.innerHTML = dotsArray.map((index) => `
-                    <button onclick="goToProjectScreenshot(${index})" class="w-2 h-2 rounded-full transition ${index === 0 ? 'bg-primary' : 'bg-gray-600'}" data-index="${index}"></button>
-                `).join('');
-            } else {
-                dotsContainer.innerHTML = '';
-            }
-        }
-
-        // Update slider position - use setTimeout to ensure DOM is ready
-        setTimeout(() => {
-            updateProjectScreenshotSlider();
-        }, 100);
-    } else if (screenshotsSection) {
-        screenshotsSection.classList.add('hidden');
-    }
-
-    // Handle links - only show if they exist
     let hasAnyLink = false;
 
     if (googlePlayLink && item.googlePlayLink) {
@@ -1039,31 +1047,30 @@ function openPortfolioItem(itemId) {
         customLink.classList.add('hidden');
     }
 
-    // Show/hide links section
     if (linksSection) {
-        if (hasAnyLink) {
-            linksSection.classList.remove('hidden');
-        } else {
-            linksSection.classList.add('hidden');
-        }
+        linksSection.classList.toggle('hidden', !hasAnyLink);
     }
 
-    // Show project page
+    // Show page first so widths/paint are correct on mobile, then build the slider
     showPage('project');
-    // Scroll to top
     window.scrollTo(0, 0);
+
+    const projectPage = document.getElementById('page-project');
+    forcePagePaint(projectPage);
+
+    requestAnimationFrame(() => {
+        renderProjectScreenshots(item);
+        forcePagePaint(projectPage);
+    });
 }
 
 // Change project screenshot - moves by 1 screenshot at a time
 function changeProjectScreenshot(direction) {
     if (projectScreenshots.length === 0) return;
 
-    const screenshotsPerView = 3;
-
-    // Move by 1 screenshot
+    const screenshotsPerView = getScreenshotsPerView();
     currentProjectScreenshotIndex += direction;
 
-    // Clamp to valid range
     const maxIndex = Math.max(0, projectScreenshots.length - screenshotsPerView);
     if (currentProjectScreenshotIndex < 0) {
         currentProjectScreenshotIndex = 0;
@@ -1076,7 +1083,7 @@ function changeProjectScreenshot(direction) {
 
 // Go to specific screenshot
 function goToProjectScreenshot(index) {
-    const screenshotsPerView = 3;
+    const screenshotsPerView = getScreenshotsPerView();
     const maxIndex = Math.max(0, projectScreenshots.length - screenshotsPerView);
 
     if (index >= 0 && index <= maxIndex) {
@@ -1090,39 +1097,34 @@ function updateProjectScreenshotSlider() {
     const slider = document.getElementById('project-screenshots-slider');
     const container = document.getElementById('project-screenshots-container');
     const dots = document.querySelectorAll('#project-screenshot-dots button');
+    const screenshotsPerView = getScreenshotsPerView();
 
     if (slider && container && projectScreenshots.length > 0) {
-        const screenshotsPerView = 3;
-
-        // Get container width in pixels
         const containerWidth = container.offsetWidth;
         if (containerWidth === 0) {
-            // Container not yet rendered, retry after a short delay
             setTimeout(updateProjectScreenshotSlider, 50);
             return;
         }
 
-        // Get the first item to measure actual width
         const firstItem = slider.querySelector('div');
         if (!firstItem) {
             setTimeout(updateProjectScreenshotSlider, 50);
             return;
         }
 
-        // Get actual item width including margin/padding
         const itemWidthPx = firstItem.offsetWidth;
-        // Get computed gap (from gap-4 = 1rem = 16px typically)
-        const gapPx = 16; // gap-4 is 1rem
-        // Total width per item including gap
-        const itemWithGapPx = itemWidthPx + gapPx;
+        if (itemWidthPx === 0) {
+            setTimeout(updateProjectScreenshotSlider, 50);
+            return;
+        }
 
-        // Calculate translateX in pixels - move by 1 screenshot at a time
+        const gapPx = screenshotsPerView > 1 ? 16 : 0;
+        const itemWithGapPx = itemWidthPx + gapPx;
         const translateXPx = -(currentProjectScreenshotIndex * itemWithGapPx);
         slider.style.transform = `translateX(${translateXPx}px)`;
     }
 
-    // Update dots - highlight the current starting screenshot
-    if (dots && projectScreenshots.length > 3) {
+    if (dots && projectScreenshots.length > screenshotsPerView) {
         dots.forEach((dot, index) => {
             if (index === currentProjectScreenshotIndex) {
                 dot.classList.remove('bg-gray-600');
@@ -1181,8 +1183,9 @@ function showPageInternal(pageId) {
             });
         }
         
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Instant scroll avoids iOS paint glitches from smooth-scroll during page swaps
+        window.scrollTo(0, 0);
+        forcePagePaint(selectedPage);
     } else {
         console.warn(`Page element not found: page-${pageId}, retrying...`);
         // Retry after a short delay if element not found
